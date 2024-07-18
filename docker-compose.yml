@@ -1,0 +1,38 @@
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: db_precification
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$KNEX_PASSWORD
+      - MYSQL_DATABASE=$KNEX_DATABASE
+      - MYSQL_TCP_PORT=$MYSQL_DOCKER_PORT
+    ports:
+      - $MYSQL_DOCKER_PORT:$MYSQL_DOCKER_PORT
+    expose:
+      - $MYSQL_DOCKER_PORT:$MYSQL_DOCKER_PORT
+  app:
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    working_dir: /PRECIFICATION-BACK-END
+    container_name: precification-back-end
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      - KNEX_HOST=mysqldb
+      - KNEX_PORT=$MYSQL_DOCKER_PORT
+      - KNEX_DATABASE=$KNEX_DATABASE
+      - KNEX_USER=$KNEX_USER
+      - KNEX_PASSWORD=$KNEX_PASSWORD
+      - TZ=America/Sao_Paulo
+    ports:
+      - $SERVER_PORT:$SERVER_PORT
+    stdin_open: true
+    tty: true

@@ -1,0 +1,37 @@
+{
+  "name": "precification-back-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsx ./src/test/testValidation.ts",
+    "dev": "tsx watch ./src/server.ts",
+    "build": "tsup src",
+    "start": "node ./dist/server.js",
+    "migrate": "knex migrate:latest",
+    "make": "knex migrate:make",
+    "seed:make": "knex seed:make"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@types/shortid": "^0.0.32",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "knex": "^3.1.0",
+    "moment": "^2.30.1",
+    "mysql2": "^3.9.7",
+    "shortid": "^2.2.16",
+    "tsx": "^4.10.5",
+    "zod": "^3.23.8"
+  }
+}

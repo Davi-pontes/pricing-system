@@ -1,19 +1,15 @@
-FROM node:latest
+FROM node:lts-alpine
 
 WORKDIR /PRECIFICATION-BACK-END
 
-RUN apt update && apt upgrade -y
-#RUN apt install -y git
+COPY package*.json ./
 
-#RUN apt install -y bash
-
-RUN rm -rf ./node_modules
-RUN rm -rf package-lock.json
-
-COPY ./package.json .
 RUN npm install
-RUN npm run migrate
 
 COPY . .
 
-CMD npm run dev
+#RUN npm run migrate
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]

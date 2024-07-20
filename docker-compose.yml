@@ -16,6 +16,8 @@ services:
       - $MYSQL_DOCKER_PORT:$MYSQL_DOCKER_PORT
     expose:
       - $MYSQL_DOCKER_PORT:$MYSQL_DOCKER_PORT
+    volumes:
+      - db_data:/var/lib/mysql
     networks:
       - precification_network
     healthcheck:
@@ -31,8 +33,9 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    image: davjose/back-end-precification:latest
     working_dir: /PRECIFICATION-BACK-END
-    container_name: precification-back-end
+    container_name: back-end-precification
     restart: unless-stopped
     env_file:
       - ./.env
@@ -54,3 +57,5 @@ services:
 networks:
   precification_network:
     external: true
+volumes:
+  db_data:

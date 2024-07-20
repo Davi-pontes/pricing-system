@@ -6,7 +6,7 @@ export interface IProductIngredient{
     price: number
     unit2: string
     ingredient_cost: number
-    product_id_product: string
+    id_product: string
 }
 export interface ICreateProductIngredientParams{
     name: string
@@ -15,7 +15,7 @@ export interface ICreateProductIngredientParams{
     price: number
     unit2: string
     ingredient_cost: number
-    product_id_product: string
+    id_product: string
 }
 
 export interface IUpdateProductIngredient{
@@ -25,7 +25,7 @@ export interface IUpdateProductIngredient{
     price?: number
     unit2?: string
     ingredient_cost?: number
-    product_id_product?: string
+    id_product?: string
 
 }
 
@@ -46,6 +46,9 @@ export interface ICreateProductController {
 export interface IGetProductIngredient{
     getProductIngredient(idProduct: string): Promise<IProductIngredient[]>
 }
+export interface IGetSpecificProductIngredient{
+    getSpecificProductIngredient(idProductIngredient: string): Promise<IProductIngredient>
+}
 export interface IGetAllProductIngredient{
     getAllProductIngredient(): Promise<IProductIngredient[]>
 }
@@ -60,4 +63,12 @@ export interface IDeleteProductIngredientController{
 
 export interface IUpdateProductIngredientController{
     updateProductIngredientController(id_product: string, params: IUpdateProductIngredient[]): Promise<IProductIngredient>
+}
+
+export interface IUpdateSpecificProductIngredientController{
+    updateSpecificProductIngredientController(id_product: string, params: IUpdateProductIngredient): Promise<IProductIngredient>
+}
+
+export interface IUpdateSpecificProductIngredientRepository{
+    updateSpecificProductIngredientController(id_productIngredient: string, params: IUpdateProductIngredient): Promise<number>
 }

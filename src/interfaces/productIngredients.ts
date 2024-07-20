@@ -46,6 +46,9 @@ export interface ICreateProductController {
 export interface IGetProductIngredient{
     getProductIngredient(idProduct: string): Promise<IProductIngredient[]>
 }
+export interface IGetAllProductIngredient{
+    getAllProductIngredient(): Promise<IProductIngredient[]>
+}
 
 export interface IDeleteProductIngredientRepository{
     deleteProductIngredient(product_id_product: string): Promise<IProductIngredient>

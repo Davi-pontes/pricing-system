@@ -2,8 +2,11 @@ import { badRequest, ok, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { IProductIngredient } from "@/interfaces/productIngredients";
+import { MySqlGetProductRepository } from "@/repository/product/get-product";
 import { MySqlGetSpecificProductIngredientRepository } from "@/repository/productIngredient/get-specificProductIngredient";
 import { MySqlUpdateSpecificProductIngredientRepository } from "@/repository/productIngredient/update-specificProductIngredient";
+import { UpdateProductComingIngredientController } from "../product/update-productComingIngredient";
+import { MySqlGetIngredientByNameRepository } from "@/repository/productIngredient/get-ingredientByName";
 
 export class UpdateSpecificProductIngredientController implements IController {
 
@@ -13,22 +16,33 @@ export class UpdateSpecificProductIngredientController implements IController {
         try {
             if (!httpRequest.body) return badRequest('Please specify a body')
 
-            const datasProductIngredient = httpRequest.body
+            const currentProductIngredient = httpRequest.body
 
-            const updateSpecificProductIngredient = await this.mySqlUpdateSpecificProducIngredientRepository.updateSpecificProductIngredientController(datasProductIngredient.id, datasProductIngredient)
-
-            if (updateSpecificProductIngredient === 0) {
-                return badRequest('Not possible updated product ingredient')
-            }
             const getSpecificProductIngredient = new MySqlGetSpecificProductIngredientRepository()
+            // Get updated product
+            const ingredientPreviousProduct = await getSpecificProductIngredient.getSpecificProductIngredient(currentProductIngredient.id)
+            
+            if (!ingredientPreviousProduct) return badRequest('Not possible updated product ingredient')
 
-            const productIgredientUpdated = await getSpecificProductIngredient.getSpecificProductIngredient(datasProductIngredient.id)
+            const mySqlGetIngredientByNameRepository = new MySqlGetIngredientByNameRepository()
+            // Get all products that have the ingredient
+            const ids_products = await mySqlGetIngredientByNameRepository.getIngredientByName(ingredientPreviousProduct.name)
 
-            if (!productIgredientUpdated) {
-                return badRequest('Not possible updated product ingredient')
-            }
+            if (ids_products.length === 0 ) return badRequest('Not possible updated product ingredient')
 
-            return ok<IProductIngredient>(productIgredientUpdated)
+            const getProductRepository = new MySqlGetProductRepository()
+
+            const updateProductsThatTheIngredientBelongsTo = new UpdateProductComingIngredientController(getProductRepository)
+            // Updare numbers
+            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ids_products,ingredientPreviousProduct, currentProductIngredient)
+            
+            if (!updatedNumbersIngredient) return badRequest('Not possible updated product ingredient')
+
+            const updateSpecificProductIngredient = await this.mySqlUpdateSpecificProducIngredientRepository.updateSpecificProductIngredientController(updatedNumbersIngredient.id, updatedNumbersIngredient)
+
+            if (updateSpecificProductIngredient === 0) return badRequest('Not possible updated product ingredient')
+
+            return ok<IProductIngredient>(ingredientPreviousProduct)
 
         } catch (error) {
             return serverError()

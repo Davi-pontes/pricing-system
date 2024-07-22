@@ -4,6 +4,7 @@ export interface IProductIngredient{
     weight: number
     unit1: string
     price: number
+    quantity: number
     unit2: string
     ingredient_cost: number
     id_product: string
@@ -53,6 +54,10 @@ export interface IGetAllProductIngredient{
     getAllProductIngredient(): Promise<IProductIngredient[]>
 }
 
+export interface IGetIngredientByName{
+    getIngredientByName(name: string): Promise<Array<object>>
+}
+
 export interface IDeleteProductIngredientRepository{
     deleteProductIngredient(product_id_product: string): Promise<IProductIngredient>
 }
@@ -70,5 +75,5 @@ export interface IUpdateSpecificProductIngredientController{
 }
 
 export interface IUpdateSpecificProductIngredientRepository{
-    updateSpecificProductIngredientController(id_productIngredient: string, params: IUpdateProductIngredient): Promise<number>
+    updateSpecificProductIngredientController(id_productIngredient: number, params: IUpdateProductIngredient): Promise<number>
 }

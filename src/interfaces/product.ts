@@ -1,3 +1,5 @@
+import { IProductIngredient } from "./productIngredients"
+
 export interface IProduct {
     id_product: string
     name: string
@@ -10,7 +12,10 @@ export interface IProduct {
     profit: number
     final_recipe_price: number
     price_per_unit: number
+    operacional_cost: number
+    cost_of_all_ingredients: number
     update_at: number | null
+    id_category: string
 }
 export interface ICreateProductParams {
     name: string
@@ -22,6 +27,7 @@ export interface ICreateProductParams {
     labor: number
     profit: number
     final_recipe_price: number
+    cost_of_all_ingredients: number
     price_per_unit: number
 }
 
@@ -36,6 +42,7 @@ export interface IUpdateProductParams {
     profit?: number
     final_recipe_price?: number
     price_per_unit?: number
+    cost_of_all_ingredients?:number
     update_at?: number | null
 }
 
@@ -45,6 +52,9 @@ export interface IValidatePropsProduct {
     error?: unknown
 }
 
+export interface IUpdateProductComingIngredient {
+    id_product: string
+}
 export interface ICreateProductRepository {
     createProduct(params: ICreateProductParams): Promise<IProduct>
 }
@@ -61,4 +71,8 @@ export interface IUpdateProductRepository {
 
 export interface IDeleteProductRepository {
     deleteProduct(id_product: string): Promise<IProduct>
+}
+
+export interface IUpdateProductComingIngredientController{
+    updateProduct(ids_products: Array<IUpdateProductComingIngredient>, ingredientPreviousProduct: IProductIngredient, currentProductIngredient: IProductIngredient): Promise<IProductIngredient | null>
 }

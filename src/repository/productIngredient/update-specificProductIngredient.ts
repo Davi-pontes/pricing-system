@@ -2,7 +2,7 @@ import connection from "@/database/connectionKnex";
 import { IUpdateProductIngredient, IUpdateSpecificProductIngredientRepository } from "@/interfaces/productIngredients";
 
 export class MySqlUpdateSpecificProductIngredientRepository implements IUpdateSpecificProductIngredientRepository{
-    async updateSpecificProductIngredientController(id_productIngredient: string, params: IUpdateProductIngredient): Promise<number> {
+    async updateSpecificProductIngredientController(id_productIngredient: number, params: IUpdateProductIngredient): Promise<number> {
         try {
             const updatedProductIngredient = await connection.update(params).table('product_ingredients').where({id:id_productIngredient})
             

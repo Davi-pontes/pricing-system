@@ -5,6 +5,8 @@ import { MySqlGetAllProductIngredientRepository } from "@/repository/productIngr
 import { Router } from "express";
 import { MySqlUpdateSpecificProductIngredientRepository } from "@/repository/productIngredient/update-specificProductIngredient";
 import { UpdateSpecificProductIngredientController } from "@/controller/productIngredien/update-specificProductIngredient";
+import { MySqlUpdateStockRepository } from "@/repository/productIngredient/update-stock";
+import { UpdateStockController } from "@/controller/productIngredien/update-stock";
 
 const routes = Router();
 
@@ -35,6 +37,18 @@ routes.patch("/specific", async(req,res) => {
     const getSpecificProductIngredientController = new UpdateSpecificProductIngredientController(mySqlGetSpecificProductIngredientRepository)
 
     const {body,statusCode} = await getSpecificProductIngredientController.handle({
+        body: req.body
+    })
+
+    res.status(statusCode).send(body)
+})
+
+routes.patch("/stock", async(req,res) => {
+    const mySqlUpdateStockRepository = new MySqlUpdateStockRepository()
+
+    const updateStockController = new UpdateStockController(mySqlUpdateStockRepository)
+
+    const {body, statusCode} = await updateStockController.handle({
         body: req.body
     })
 

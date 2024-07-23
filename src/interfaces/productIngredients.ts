@@ -8,6 +8,8 @@ export interface IProductIngredient{
     unit2: string
     ingredient_cost: number
     id_product: string
+    quantity_in_stock: number
+    total_cash_in_stock: number
 }
 export interface ICreateProductIngredientParams{
     name: string
@@ -17,6 +19,8 @@ export interface ICreateProductIngredientParams{
     unit2: string
     ingredient_cost: number
     id_product: string
+    quantity_in_stock: number
+    total_cash_in_stock: number
 }
 
 export interface IUpdateProductIngredient{
@@ -27,7 +31,8 @@ export interface IUpdateProductIngredient{
     unit2?: string
     ingredient_cost?: number
     id_product?: string
-
+    quantity_in_stock?: number
+    total_cash_in_stock?: number
 }
 
 export interface IValidatePropsProductIngredient {
@@ -76,4 +81,8 @@ export interface IUpdateSpecificProductIngredientController{
 
 export interface IUpdateSpecificProductIngredientRepository{
     updateSpecificProductIngredientController(id_productIngredient: number, params: IUpdateProductIngredient): Promise<number>
+}
+
+export interface IUpdateStockRepository{
+    updateStock(id_productIngredient: number, params: IUpdateProductIngredient): Promise<number>
 }

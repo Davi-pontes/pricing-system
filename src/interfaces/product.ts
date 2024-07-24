@@ -15,6 +15,7 @@ export interface IProduct {
     operacional_cost: number
     cost_of_all_ingredients: number
     update_at: number | null
+    chengeIncome?: number
     id_category: string
 }
 export interface ICreateProductParams {

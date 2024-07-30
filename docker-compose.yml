@@ -52,7 +52,7 @@ services:
     volumes:
       - .:/PRECIFICATION-BACK-END
       - /PRECIFICATION-BACK-END/node_modules
-    command: ["sh", "-c", "npm install && npm run dev"]
+    command: ["sh", "-c", "npm install && npm run createDataBase && npm run migrate && npm run build && npm run start"]
 
 networks:
   precification_network:

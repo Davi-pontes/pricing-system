@@ -6,10 +6,14 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+RUN npm run createDataBase
 
-#RUN npm run migrate
+RUN npm run migrate
+
+RUN npm run build
+
+COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]

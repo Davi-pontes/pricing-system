@@ -2,17 +2,15 @@ FROM node:lts-alpine
 
 WORKDIR /PRECIFICATION-BACK-END
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-RUN npm run createDataBase
+#RUN npm run createDataBase
 
-RUN npm run migrate
+#RUN npm run migrate
 
 RUN npm run build
-
-COPY . .
 
 EXPOSE 3000
 

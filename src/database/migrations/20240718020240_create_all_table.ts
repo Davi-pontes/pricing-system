@@ -3,13 +3,13 @@ import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
     return knex.transaction(async trx => {
-        await trx.schema.createTable('category', (table) => {
+        await trx.schema.createTableIfNotExists('category', (table) => {
             table.string('id', 20).primary()
             table.string('name', 150).nullable()
             table.timestamps(true, true)
         })
 
-        await trx.schema.createTable('product', (table) => {
+        await trx.schema.createTableIfNotExists('product', (table) => {
             table.string('id_product', 20).primary()
             table.string('name', 150).notNullable()
             table.float('income')
@@ -32,7 +32,7 @@ export async function up(knex: Knex): Promise<void> {
             table.timestamps(true, true)
         })
 
-        await trx.schema.createTable('product_ingredients', (table) => {
+        await trx.schema.createTableIfNotExists('product_ingredients', (table) => {
             table.increments('id').primary()
             table.string('name', 150).notNullable()
             table.float('weight')

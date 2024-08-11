@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsx ./src/repository/productIngredient/get-ingredientByName.ts ",
+    "test": "tsx ./src/test/testValidation.ts",
     "createDataBase": "tsx ./src/database/createDataBase.ts",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",

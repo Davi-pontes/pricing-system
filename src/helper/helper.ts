@@ -23,3 +23,10 @@ export const ok = <T>(body: any): HttpResponse<T> => ({
       body: "Something went wrong",
     };
   };
+
+  export const unauthorized = (): HttpResponse<string> => {
+    return {
+      statusCode: HttpStatusCode.UNAUTHORIZED,
+      body: "Unauthorized"
+    }
+  }

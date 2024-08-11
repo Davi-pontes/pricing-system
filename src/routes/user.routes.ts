@@ -4,18 +4,16 @@ import { Router } from "express";
 
 const routes = Router();
 
-routes.post("/", async(req,res) => {
+routes.post("/", async (req, res) => {
     const mySqlCreateUserRepository = new MySqlCreateUserRepository()
 
     const createUserController = new CreateUserController(mySqlCreateUserRepository)
 
-    const {body,statusCode} = await createUserController.handle({
+    const { body, statusCode } = await createUserController.handle({
         body: req.body
     })
     res.status(statusCode).send(body)
 })
 
 
-
-
-export {routes as UserRoutes}
+export { routes as UserRoutes }

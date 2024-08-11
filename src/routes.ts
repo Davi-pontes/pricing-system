@@ -4,6 +4,7 @@ import { ProductIngredientRoutes } from "./routes/productIngredients.routes";
 import { CategoryRoutes } from "./routes/category.routes";
 import { StockRoutes } from "./routes/stock.routes";
 import { UserRoutes } from "./routes/user.routes";
+import { LoginRoutes } from "./routes/login.routes";
 
 const routes = Router()
 
@@ -13,5 +14,6 @@ routes.use('/product/ingredient', ProductIngredientRoutes)
 routes.use('/category', CategoryRoutes)
 routes.use('/stock', StockRoutes)
 routes.use('/user', UserRoutes)
+routes.use('/login', LoginRoutes)
 
 export { routes }

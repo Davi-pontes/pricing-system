@@ -14,14 +14,19 @@ routes.post("/", async (req, res) => {
         body: req.body
     })
 
-    res.status(statusCode).send(body)
+    res.cookie('token', body.token, {
+        maxAge: 1800000,
+        httpOnly: true,
+        secure: false
+    })
+    res.status(statusCode).send(body.user)
 })
 
 routes.get("/validate", async (req, res) => {
     const validateLoginController = new ValidateLoginController()
 
     const { body, statusCode } = await validateLoginController.handle({
-        headers: req.headers
+        cookies: req.cookies
     })
 
     res.status(statusCode).send(body)

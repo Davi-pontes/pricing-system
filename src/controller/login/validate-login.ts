@@ -6,7 +6,11 @@ import { HttpRequest, HttpResponse } from "@/interfaces/http";
 export class ValidateLoginController implements IController {
     async handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>> {
         try {
-            const authorization = httpRequest.headers.authorization
+            const authorization = httpRequest.cookies.token
+
+            if(!authorization){
+                return unauthorized()
+            }
 
             const token = authorization.replace('Bearer ', '')
 

@@ -16,4 +16,5 @@ export interface HttpRequest<B> {
     headers?: any
     body?: B
     file?: B
+    cookies?: any
 }

@@ -36,7 +36,6 @@ export class LoginController implements IController {
         } catch (error) {
             return serverError()
         }
-        throw new Error("Method not implemented.");
     }
 
 }

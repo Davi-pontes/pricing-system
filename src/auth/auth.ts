@@ -25,4 +25,11 @@ export class Auth {
             throw new Error('Not created token.')
         }
     }
+
+    static validate(token: string): string| JWT.JwtPayload {
+            const secret = process.env.SECRET || 'testeprocessenv'
+            const validate = JWT.verify(token, secret)
+
+            return validate
+    }
 }

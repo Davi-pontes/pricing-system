@@ -1,22 +1,10 @@
-import { z } from 'zod';
+import { randomBytes } from 'crypto';
 
-class Teste {
-    constructor(readonly data: object) {}
-
-    validate() {
-        const schema = z.object({
-            name: z.string({ message: 'Name é necessário ser uma string' }).max(20, { message: 'O máximo de caracteres é 20' }),
-            phone_number: z.string({ message: 'Phone number is necessary' })
-                .min(11, { message: 'Formato de número errado' })
-                .max(11, { message: 'Formato de número errado' })
-        });
-        
-        const result = schema.safeParse(this.data);
-
-        console.log(result.error);
-    }
+// Função para gerar uma chave secreta
+function generateSecretKey(length: number = 32): string {
+    return randomBytes(length).toString('hex');
 }
 
-const t = new Teste({ name: 'davi', phone_number: '1234567891011' });
-
-t.validate();
+// Exemplo de uso
+const secretKey = generateSecretKey(32); // Gera uma chave secreta de 32 bytes
+console.log('Generated Secret Key:', secretKey);

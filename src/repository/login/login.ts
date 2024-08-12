@@ -1,11 +1,11 @@
-import { IGetLogin, ILogin } from "@/interfaces/login";
+import { IGetLogin, ILogin, ILoginAuthorized } from "@/interfaces/login";
 import connection from "@/database/connectionKnex";
 
 export class MySqlLoginRepository implements IGetLogin{
-    async getLogin(params: ILogin): Promise<ILogin> {
+    async getLogin(params: ILogin): Promise<ILoginAuthorized> {
         try {
             const login = await connection
-            .select('id','name','phone_number','is_admin')
+            .select('id','name')
             .table('users')
             .where({email: params.email})
             .andWhere({ password: params.password })

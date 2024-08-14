@@ -61,7 +61,7 @@ export interface ICreateProductRepository {
 }
 
 export interface IGetProductRepository {
-    getProduct(idUser: string): Promise<IProduct[]>
+    getProduct(user_id: string): Promise<IProduct[]>
     getProductById(id_product: string): Promise<IProduct>
     getProductJoker(): Promise<IProduct[] | null>
 }

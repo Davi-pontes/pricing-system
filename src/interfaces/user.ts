@@ -35,6 +35,7 @@ export interface ICreateUserRepository {
 }
 
 export interface IGetUserRepository {
+    getUser():Promise<IUser[]>
     getUserById(id_User: string): Promise<IUser>
 }
 

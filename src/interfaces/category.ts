@@ -1,9 +1,10 @@
 export interface ICategory {
     id: string
     name: string
+    user_id: string
 }
 export interface IGetCategoryRepository {
-    getCategory(): Promise<ICategory[]>
+    getCategory(user_id: string): Promise<ICategory[]>
 }
 
 export interface ICreateCategoryRepository {

@@ -1,15 +1,17 @@
 import { ok, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
-import { HttpResponse } from "@/interfaces/http";
+import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { IProductIngredient } from "@/interfaces/productIngredients";
 import { MySqlGetAllProductIngredientRepository } from "@/repository/productIngredient/get-all-ingredient";
 
 export class GetAllProductIngredientController implements IController {
     constructor(private readonly mySqlGetAllProductIngredientRepository: MySqlGetAllProductIngredientRepository) { }
 
-    async handle(): Promise<HttpResponse<IProductIngredient[] | string>> {
+    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<IProductIngredient[] | string>> {
         try {
-            const productsIngredients = await this.mySqlGetAllProductIngredientRepository.getAllProductIngredient()
+            const idUser = httpRequest.params.idUser
+            
+            const productsIngredients = await this.mySqlGetAllProductIngredientRepository.getAllProductIngredient(idUser)
 
             return ok<IProductIngredient[]>(productsIngredients)
 

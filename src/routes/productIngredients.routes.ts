@@ -26,7 +26,9 @@ routes.get("/all", async (req, res) => {
 
     const getProductIngredientController = new GetAllProductIngredientController(mySqlGetAllProductIngredientRepository)
 
-    const { body, statusCode } = await getProductIngredientController.handle()
+    const { body, statusCode } = await getProductIngredientController.handle({
+        params: req.query
+    })
 
     res.status(statusCode).send(body)
 })

@@ -7,9 +7,11 @@ import { MySqlGetProductRepository } from "@/repository/product/get-product";
 export class GetCategoryController implements IController{
     constructor(private readonly getCategoryRepository: IGetCategoryRepository) {}
 
-    async handle(): Promise<HttpResponse<any>> {
+    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
         try {
-            const allCategory = await this.getCategoryRepository.getCategory()
+            const user_id = httpRequest.params.idUser
+
+            const allCategory = await this.getCategoryRepository.getCategory(user_id)
 
             const categoriesProducts = await this.AssembleDatasCategoriesAndProducts(allCategory)
 

@@ -15,7 +15,9 @@ routes.get("/", async (req, res) => {
 
     const getProductController = new GetProductController(mySqlGetRepository)
 
-    const { body, statusCode } = await getProductController.handle()
+    const { body, statusCode } = await getProductController.handle({
+        params: req.query
+    })
 
     res.status(statusCode).send(body)
 })

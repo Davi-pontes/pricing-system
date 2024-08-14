@@ -56,7 +56,7 @@ export interface IGetSpecificProductIngredient{
     getSpecificProductIngredient(idProductIngredient: string): Promise<IProductIngredient>
 }
 export interface IGetAllProductIngredient{
-    getAllProductIngredient(): Promise<IProductIngredient[]>
+    getAllProductIngredient(idUser:string): Promise<IProductIngredient[]>
 }
 
 export interface IGetIngredientByName{

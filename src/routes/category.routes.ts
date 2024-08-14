@@ -11,7 +11,9 @@ routes.get("/", async (req,res) => {
 
     const getCategoryController = new GetCategoryController(mySqlGetCategoryRepository)
 
-    const {body,statusCode} = await getCategoryController.handle()
+    const {body,statusCode} = await getCategoryController.handle({
+        params: req.query
+    })
 
     res.status(statusCode).send(body)
 })

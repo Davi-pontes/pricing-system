@@ -39,7 +39,9 @@ routes.get("/joker", async(req,res) => {
 
     const getProductController = new GetProductController(mySqlGetRepository)
 
-    const { body, statusCode } = await getProductController.getProductJoker()
+    const { body, statusCode } = await getProductController.getProductJoker({
+        params: req.query
+    })
 
     res.status(statusCode).send(body)
 })

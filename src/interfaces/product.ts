@@ -1,3 +1,4 @@
+import { HttpRequest } from "./http"
 import { IProductIngredient } from "./productIngredients"
 
 export interface IProduct {
@@ -63,7 +64,7 @@ export interface ICreateProductRepository {
 export interface IGetProductRepository {
     getProduct(user_id: string): Promise<IProduct[]>
     getProductById(id_product: string): Promise<IProduct>
-    getProductJoker(): Promise<IProduct[] | null>
+    getProductJoker(user_id: string): Promise<IProduct[] | null>
 }
 
 export interface IUpdateProductRepository {

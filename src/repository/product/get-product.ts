@@ -25,8 +25,14 @@ export class MySqlGetProductRepository implements IGetProductRepository {
       return Product
    }
 
-   async getProductJoker(): Promise<IProduct[] | null> {
-      const Product = await connection.select('*').table('product').where({ is_joker: 1 })
+   async getProductJoker(user_id: string): Promise<IProduct[] | null> {
+      const Product = await connection
+         .select('p.*')
+         .from('category as c')
+         .rightJoin('product as p', 'c.id', 'p.id_category')
+         .where('c.user_id', user_id)
+         .where({ is_joker: 1 })
+         .orderBy('name')
 
       return Product
    }

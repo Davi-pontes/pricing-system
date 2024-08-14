@@ -30,9 +30,10 @@ export class GetProductController implements IController{
            }
         }
 
-    async getProductJoker(): Promise<HttpResponse<IProduct[] | string>> {
+    async getProductJoker(httpRequest: HttpRequest<any>): Promise<HttpResponse<IProduct[] | string>> {
         try {
-            const productJoker = await this.getProductRepository.getProductJoker()
+            const idUser = httpRequest.params.idUser
+            const productJoker = await this.getProductRepository.getProductJoker(idUser)
 
             return ok<IProduct []>(productJoker)
         } catch (error) {

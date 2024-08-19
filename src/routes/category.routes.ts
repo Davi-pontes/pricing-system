@@ -1,7 +1,9 @@
 import { CreateCategoryController } from "@/controller/category/create-category";
 import { GetCategoryController } from "@/controller/category/get-category";
+import { UpdateCategoryController } from "@/controller/category/update-category";
 import { MySqlCreateCategoryRepository } from "@/repository/category/create-category";
 import { MySqlGetCategoryRepository } from "@/repository/category/get-category";
+import { MySqlUpdateCategoryRepository } from "@/repository/category/update-category";
 import { Router } from "express";
 
 const routes = Router();
@@ -24,6 +26,18 @@ routes.post("/", async(req,res) => {
     const createCategoryController = new CreateCategoryController(mySqlCreateCategoryRepository)
 
     const{body,statusCode} = await createCategoryController.handle({
+        body: req.body
+    })
+
+    res.status(statusCode).send(body)
+})
+
+routes.patch("/", async(req,res) => {
+    const mySqlUpdateCategoryRepository = new MySqlUpdateCategoryRepository()
+
+    const updateCategoryController = new UpdateCategoryController(mySqlUpdateCategoryRepository)
+
+    const {body,statusCode} = await updateCategoryController.handle({
         body: req.body
     })
 

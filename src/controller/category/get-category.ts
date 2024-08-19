@@ -22,6 +22,16 @@ export class GetCategoryController implements IController{
         }
     }
 
+    async getSpecificCategory(id_category: string): Promise<ICategory>{
+        try {
+            const specificCategory = await this.getCategoryRepository.getSpecificCategory(id_category)
+
+            return specificCategory
+        } catch (error) {
+            throw new Error('Not possible get category.')
+        }
+    }
+
     private async  AssembleDatasCategoriesAndProducts(categories: Array<ICategory>){
         const datas = []
 

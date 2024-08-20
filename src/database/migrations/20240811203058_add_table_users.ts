@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string('name',150).notNullable()
         table.string('phone_number',13).notNullable
         table.string('email',250)
-        table.string('password',32)
+        table.string('password',64)
         table.boolean('is_admin').defaultTo(true)
         table.timestamps(true,true)
     })

@@ -8,6 +8,8 @@ export class MySqlCreateUserRepository implements ICreateUserRepository{
 
             return createdUser[0]
         } catch (error) {
+            console.log(error);
+            
             throw new Error("User not created")
         }
     }

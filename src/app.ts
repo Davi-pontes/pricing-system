@@ -21,7 +21,7 @@ class AppPrecification {
         this.app.disable("x-powered-by")
 
         this.app.use(cors({
-            origin: process.env.CLIENT_FRONT,
+            origin: ['http://147.79.104.163', 'http://localhost:3000'],
             credentials: true,
             allowedHeaders: ['Content-Type', 'Authorization']
         }))

@@ -10,6 +10,7 @@ export interface IProductIngredient{
     id_product: string
     quantity_in_stock: number
     total_cash_in_stock: number
+    updated_at: string
 }
 export interface ICreateProductIngredientParams{
     name: string

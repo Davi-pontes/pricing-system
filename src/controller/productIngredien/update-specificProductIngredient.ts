@@ -7,11 +7,12 @@ import { MySqlGetSpecificProductIngredientRepository } from "@/repository/produc
 import { MySqlUpdateSpecificProductIngredientRepository } from "@/repository/productIngredient/update-specificProductIngredient";
 import { UpdateProductComingIngredientController } from "../product/update-productComingIngredient";
 import { MySqlGetIngredientByNameRepository } from "@/repository/productIngredient/get-ingredientByName";
+import { GetDateAndHoursCurrent } from "@/generators/dateCurrent";
 
 export class UpdateSpecificProductIngredientController implements IController {
 
     constructor(private readonly mySqlUpdateSpecificProducIngredientRepository: MySqlUpdateSpecificProductIngredientRepository) { }
-    
+
     async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
         try {
             if (!httpRequest.body) return badRequest('Please specify a body')
@@ -21,22 +22,24 @@ export class UpdateSpecificProductIngredientController implements IController {
             const getSpecificProductIngredient = new MySqlGetSpecificProductIngredientRepository()
             // Get updated product
             const ingredientPreviousProduct = await getSpecificProductIngredient.getSpecificProductIngredient(currentProductIngredient.id)
-            
+
             if (!ingredientPreviousProduct) return badRequest('Not possible updated product ingredient')
 
             const mySqlGetIngredientByNameRepository = new MySqlGetIngredientByNameRepository()
             // Get all products that have the ingredient
             const ids_products = await mySqlGetIngredientByNameRepository.getIngredientByName(ingredientPreviousProduct.name)
 
-            if (ids_products.length === 0 ) return badRequest('Not possible updated product ingredient')
+            if (ids_products.length === 0) return badRequest('Not possible updated product ingredient')
 
             const getProductRepository = new MySqlGetProductRepository()
 
             const updateProductsThatTheIngredientBelongsTo = new UpdateProductComingIngredientController(getProductRepository)
             // Updare numbers
-            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ids_products,ingredientPreviousProduct, currentProductIngredient)
-            
+            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ids_products, ingredientPreviousProduct, currentProductIngredient)
+
             if (!updatedNumbersIngredient) return badRequest('Not possible updated product ingredient')
+
+            updatedNumbersIngredient.updated_at = GetDateAndHoursCurrent.dateTime()
 
             const updateSpecificProductIngredient = await this.mySqlUpdateSpecificProducIngredientRepository.updateSpecificProductIngredientController(updatedNumbersIngredient.id, updatedNumbersIngredient)
 

@@ -10,7 +10,8 @@
     "start": "node ./dist/server.js",
     "migrate": "knex migrate:latest",
     "make": "knex migrate:make",
-    "seed:make": "knex seed:make"
+    "seed:make": "knex seed:make",
+    "delete": "tsx ./src/deleteProduct.ts"
   },
   "keywords": [],
   "author": "",

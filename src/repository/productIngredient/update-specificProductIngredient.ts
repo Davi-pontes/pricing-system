@@ -8,6 +8,8 @@ export class MySqlUpdateSpecificProductIngredientRepository implements IUpdateSp
             
             return updatedProductIngredient
         } catch (error) {
+            console.log(error);
+            
             throw new Error('Product not update')
         }
     }

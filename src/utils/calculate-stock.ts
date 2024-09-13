@@ -34,13 +34,15 @@ export class CalculateStock {
 
             const numbersCurrent = this.calculateIngredient(usagePerProduct, product)
 
-            const quantityToBuy = this.calculateDifferenceBetweenCurrentAndRequiredStock(ingredient.quantity_in_stock,numbersCurrent)
+            const quantity_in_stock = ingredient.quantity_in_stock * ingredient.weight
 
-            const state = VStock.validateStateStock(numbersCurrent,ingredient.quantity_in_stock)
+            const quantityToBuy = this.calculateDifferenceBetweenCurrentAndRequiredStock(quantity_in_stock,numbersCurrent)
+
+            const state = VStock.validateStateStock(numbersCurrent,quantity_in_stock)
 
             const dataToSend: INecessaryStock = {
                 name: ingredient.name,
-                quantityCurrent: ingredient.quantity_in_stock,
+                quantityCurrent: quantity_in_stock,
                 necessaryAmount: numbersCurrent,
                 state: state,
                 quantityToBuy: quantityToBuy

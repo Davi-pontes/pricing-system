@@ -21,3 +21,6 @@ export interface IUpdateCategoryRepository {
     updateCategory(id_category: string, params: IUpdateCategoryParams): Promise<number>
 }
 
+export interface IDeleteCategoryRepository {
+    deleteCategory(id_category: string): Promise<number>
+}

@@ -21,7 +21,7 @@ class AppPrecification {
         this.app.disable("x-powered-by")
 
         this.app.use(cors({
-            origin: ['http://147.79.104.163:3000', 'http://147.79.104.163:5173' ,'http://localhost:3000','http://localhost:5173'],
+            origin: ['https://helqui.com.br:3000', 'https://helqui.com.br:5173' ,'http://localhost:3000','http://localhost:5173'],
             credentials: true,
             allowedHeaders: ['Content-Type', 'Authorization']
         }))

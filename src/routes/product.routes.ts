@@ -1,5 +1,6 @@
 import { CreateProductController } from "@/controller/product/create-product";
 import { DeleteProductController } from "@/controller/product/delete-product";
+import { DuplicateProductController } from "@/controller/product/duplicate-product";
 import { GetProductController } from "@/controller/product/get-product";
 import { UpdateProductAndProductIngredientController } from "@/controller/product/update-product";
 import { MySqlCreateProductRepository } from "@/repository/product/create-product";
@@ -34,7 +35,7 @@ routes.get("/specific", async (req, res) => {
     res.status(statusCode).send(body)
 })
 
-routes.get("/joker", async(req,res) => {
+routes.get("/joker", async (req, res) => {
     const mySqlGetRepository = new MySqlGetProductRepository()
 
     const getProductController = new GetProductController(mySqlGetRepository)
@@ -58,12 +59,22 @@ routes.post("/", async (req, res) => {
     res.status(statusCode).send(body)
 })
 
+routes.post("/duplicate", async (req, res) => {
+    const duplicateProduct = new DuplicateProductController()
+
+    const { body, statusCode } = await duplicateProduct.handle({
+        body: req.body
+    })
+
+    res.status(statusCode).send(body)
+})
+
 routes.put("/", async (req, res) => {
     const mySqlUpdateProductRepository = new MySqlUpdateProductRepository()
 
     const updateProductAndProductIngredientController = new UpdateProductAndProductIngredientController(mySqlUpdateProductRepository)
 
-    const {body, statusCode} = await updateProductAndProductIngredientController.handle({
+    const { body, statusCode } = await updateProductAndProductIngredientController.handle({
         params: req.body.params,
         body: req.body
     })
@@ -71,12 +82,12 @@ routes.put("/", async (req, res) => {
     res.status(statusCode).send(body)
 })
 
-routes.delete("/", async (req,res) =>{
+routes.delete("/", async (req, res) => {
     const mySqlDeleteProductRepository = new MySqlDeleteProductRepository()
 
     const deleteProductController = new DeleteProductController(mySqlDeleteProductRepository)
 
-    const {body,statusCode} = await deleteProductController.handle({
+    const { body, statusCode } = await deleteProductController.handle({
         params: req.query
     })
 

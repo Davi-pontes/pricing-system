@@ -44,7 +44,7 @@ export class Calculate {
         return parseFloat(profit.toFixed(2))
     }
     private calculateFinalRevenuePrice(datasProduct: IProduct): number {
-        const finalRevenuePrice = datasProduct.cost_of_all_ingredients + datasProduct.fixed_cost + datasProduct.profit
+        const finalRevenuePrice = datasProduct.cost_of_all_ingredients + datasProduct.fixed_cost
 
         return parseFloat(finalRevenuePrice.toFixed(2))
     }

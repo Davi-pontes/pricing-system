@@ -32,8 +32,6 @@ export class CreateUserController implements IController {
             return ok<IUser>(userCreated)
 
         } catch (error) {
-            console.log(error);
-            
             return serverError()
         }
     }

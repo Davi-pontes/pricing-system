@@ -17,25 +17,25 @@ export class UpdateSpecificProductIngredientController implements IController {
         try {
             if (!httpRequest.body) return badRequest('Please specify a body')
 
-            const currentProductIngredient = httpRequest.body
+            const {changeInformation, idUser} = httpRequest.body
 
-            const getSpecificProductIngredient = new MySqlGetSpecificProductIngredientRepository()
-            // Get updated product
-            const ingredientPreviousProduct = await getSpecificProductIngredient.getSpecificProductIngredient(currentProductIngredient.id)
+            // const getSpecificProductIngredient = new MySqlGetSpecificProductIngredientRepository()
+            // // Get updated product
+            // const ingredientPreviousProduct = await getSpecificProductIngredient.getSpecificProductIngredient(currentProductIngredient.id)
 
-            if (!ingredientPreviousProduct) return badRequest('Not possible updated product ingredient')
+            //if (!ingredientPreviousProduct) return badRequest('Not possible updated product ingredient')
 
             const mySqlGetIngredientByNameRepository = new MySqlGetIngredientByNameRepository()
             // Get all products that have the ingredient
-            const ids_products = await mySqlGetIngredientByNameRepository.getIngredientByName(ingredientPreviousProduct.name)
+            const ingredientsInDataBaseByName = await mySqlGetIngredientByNameRepository.getIngredientByName(changeInformation.name,idUser)
 
-            if (ids_products.length === 0) return badRequest('Not possible updated product ingredient')
+            if (ingredientsInDataBaseByName.length === 0) return badRequest('Not possible updated product ingredient')
 
             const getProductRepository = new MySqlGetProductRepository()
 
             const updateProductsThatTheIngredientBelongsTo = new UpdateProductComingIngredientController(getProductRepository)
             // Updare numbers
-            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ids_products, ingredientPreviousProduct, currentProductIngredient)
+            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ingredientsInDataBaseByName, ingredientPreviousProduct, currentProductIngredient)
 
             if (!updatedNumbersIngredient) return badRequest('Not possible updated product ingredient')
 

@@ -61,7 +61,7 @@ export interface IGetAllProductIngredient{
 }
 
 export interface IGetIngredientByName{
-    getIngredientByName(name: string): Promise<Array<object>>
+    getIngredientByName(nameProductIngredient: string,idUser:string): Promise<Array<object>>
 }
 
 export interface IDeleteProductIngredientRepository{

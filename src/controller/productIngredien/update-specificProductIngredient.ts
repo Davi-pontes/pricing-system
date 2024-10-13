@@ -35,7 +35,7 @@ export class UpdateSpecificProductIngredientController implements IController {
 
             const updateProductsThatTheIngredientBelongsTo = new UpdateProductComingIngredientController(getProductRepository)
             // Updare numbers
-            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ingredientsInDataBaseByName, ingredientPreviousProduct, currentProductIngredient)
+            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ingredientsInDataBaseByName, ingredientPreviousProduct, changeInformation.price)
 
             if (!updatedNumbersIngredient) return badRequest('Not possible updated product ingredient')
 

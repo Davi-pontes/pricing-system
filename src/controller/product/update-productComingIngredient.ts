@@ -6,22 +6,26 @@ import { Calculate } from "@/utils/calculate";
 export class UpdateProductComingIngredientController implements IUpdateProductComingIngredientController {
     constructor(private readonly mySqlGetProductRepository: IGetProductRepository) { }
 
-    async updateProduct(ids_products: Array<IUpdateProductComingIngredient>, ingredientPreviousProduct: IProductIngredient, currentProductIngredient: IProductIngredient): Promise<IProductIngredient | null> {
-        let updatedProductIngredient = null
-        for (let { id_product } of ids_products) {
+    async updateProduct(allProductIngredientsByName: Array<IProductIngredient>, ingredientPreviousProduct: IProductIngredient, currentPrice: number): Promise<any> {
+        let quantityOfProductsChanged = 0
+        let updatedIngredientCost
+        
+        for (let { id_product } of allProductIngredientsByName) {
             const product = await this.mySqlGetProductRepository.getProductById(id_product)
 
-            const calculateNumbers = new Calculate(product, ingredientPreviousProduct, currentProductIngredient)
+            const calculateNumbers = new Calculate(product, ingredientPreviousProduct, currentPrice)
 
             const updatedNumbers = calculateNumbers.updateAllNumbersProductAndIngredients()
+
+            updatedIngredientCost = updatedNumbers.updatedIngredientCost
 
             const updateProductRepository = new MySqlUpdateProductRepository()
 
             await updateProductRepository.updateProduct(updatedNumbers.datasProduct.id_product, updatedNumbers.datasProduct)
 
-            updatedProductIngredient = updatedNumbers.currentProductIngredient
+            quantityOfProductsChanged++
         }
-        return updatedProductIngredient
+        return {quantityOfProductsChanged,updatedIngredientCost}
     }
 
 }

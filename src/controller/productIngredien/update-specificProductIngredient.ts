@@ -17,7 +17,7 @@ export class UpdateSpecificProductIngredientController implements IController {
         try {
             if (!httpRequest.body) return badRequest('Please specify a body')
 
-            const {changeInformation, idUser} = httpRequest.body
+            const { changeInformation, idUser } = httpRequest.body
 
             // const getSpecificProductIngredient = new MySqlGetSpecificProductIngredientRepository()
             // // Get updated product
@@ -27,25 +27,31 @@ export class UpdateSpecificProductIngredientController implements IController {
 
             const mySqlGetIngredientByNameRepository = new MySqlGetIngredientByNameRepository()
             // Get all products that have the ingredient
-            const ingredientsInDataBaseByName = await mySqlGetIngredientByNameRepository.getIngredientByName(changeInformation.name,idUser)
+            const ingredientsInDataBaseByName = await mySqlGetIngredientByNameRepository.getIngredientByName(changeInformation.name, idUser)
 
             if (ingredientsInDataBaseByName.length === 0) return badRequest('Not possible updated product ingredient')
 
             const getProductRepository = new MySqlGetProductRepository()
 
             const updateProductsThatTheIngredientBelongsTo = new UpdateProductComingIngredientController(getProductRepository)
-            // Updare numbers
-            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ingredientsInDataBaseByName, ingredientPreviousProduct, changeInformation.price)
+            // Update numbers
+            const updatedNumbersIngredient = await updateProductsThatTheIngredientBelongsTo.updateProduct(ingredientsInDataBaseByName, ingredientsInDataBaseByName[0], changeInformation.price)
 
             if (!updatedNumbersIngredient) return badRequest('Not possible updated product ingredient')
 
-            updatedNumbersIngredient.updated_at = GetDateAndHoursCurrent.dateTime()
+            const updateDateAndTime = GetDateAndHoursCurrent.dateTime()
 
-            const updateSpecificProductIngredient = await this.mySqlUpdateSpecificProducIngredientRepository.updateSpecificProductIngredientController(updatedNumbersIngredient.id, updatedNumbersIngredient)
+            let updatedIngredient
+            for(let ingredient of ingredientsInDataBaseByName){
+                ingredient.ingredient_cost = updatedNumbersIngredient.updatedIngredientCost
+                ingredient.price = changeInformation.price
+                ingredient.updated_at = updateDateAndTime
+                updatedIngredient = ingredient
+                const updateSpecificProductIngredient = await this.mySqlUpdateSpecificProducIngredientRepository.updateSpecificProductIngredientController(ingredient.id, ingredient)
+                if (updateSpecificProductIngredient === 0) return badRequest('Not possible updated product ingredient')
+            }
 
-            if (updateSpecificProductIngredient === 0) return badRequest('Not possible updated product ingredient')
-
-            return ok<IProductIngredient>(ingredientPreviousProduct)
+            return ok<IProductIngredient>({updatedNumbersIngredient,updatedIngredient})
 
         } catch (error) {
             return serverError()

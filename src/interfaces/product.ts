@@ -76,5 +76,5 @@ export interface IDeleteProductRepository {
 }
 
 export interface IUpdateProductComingIngredientController{
-    updateProduct(ids_products: Array<IUpdateProductComingIngredient>, ingredientPreviousProduct: IProductIngredient, currentProductIngredient: IProductIngredient): Promise<IProductIngredient | null>
+    updateProduct(allProductIngredientsByName: Array<IUpdateProductComingIngredient>, ingredientPreviousProduct: IProductIngredient, currentPrice: number): Promise<number>
 }

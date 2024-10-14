@@ -4,34 +4,36 @@ import { IProductIngredient } from "@/interfaces/productIngredients";
 export class Calculate {
     private datasProduct: IProduct;
     private ingredientPreviousProduct: IProductIngredient;
-    private currentProductIngredient: IProductIngredient;
+    private currentPrice: number;
+    private ingredientCost:number
 
-    constructor(datasProduct: IProduct, ingredientPreviousProduct: IProductIngredient, currentProductIngredient: IProductIngredient) {
+    constructor(datasProduct: IProduct, ingredientPreviousProduct: IProductIngredient, currentPrice: number) {
         this.datasProduct = datasProduct;
         this.ingredientPreviousProduct = ingredientPreviousProduct;
-        this.currentProductIngredient = currentProductIngredient
+        this.currentPrice = currentPrice
+        this.ingredientCost = 0
     }
     updateAllNumbersProductAndIngredients() {
-        this.currentProductIngredient.ingredient_cost = this.calculateIngredientCost(this.currentProductIngredient)
-        this.datasProduct.cost_of_all_ingredients = this.calculatecostOfAllIngredients(this.currentProductIngredient, this.datasProduct,this.ingredientPreviousProduct)
+        this.ingredientCost= this.calculateIngredientCost()
+        this.datasProduct.cost_of_all_ingredients = this.calculatecostOfAllIngredients(this.datasProduct,this.ingredientPreviousProduct)
         this.datasProduct.fixed_cost = this.calculateCostFixed(this.datasProduct)
         this.datasProduct.profit = this.calculateProfit(this.datasProduct)
         this.datasProduct.revenue_cost = this.calculateFinalRevenuePrice(this.datasProduct)
         this.datasProduct.price_per_unit = this.calculatePricePerUnit(this.datasProduct)
 
-        return { datasProduct: this.datasProduct, currentProductIngredient: this.currentProductIngredient }
+        return { datasProduct: this.datasProduct, currentPrice: this.currentPrice, updatedIngredientCost: this.ingredientCost }
     }
-    private calculateIngredientCost(currentProductIngredient: IProductIngredient,): number{
-        const totalCost = (currentProductIngredient.price / currentProductIngredient.weight) * currentProductIngredient.quantity
+    private calculateIngredientCost(): number{
+        const totalCost = (this.currentPrice / this.ingredientPreviousProduct.weight) * this.ingredientPreviousProduct.quantity
 
         return parseFloat(totalCost.toFixed(2))
     }
-    private calculatecostOfAllIngredients(currentProductIngredient: IProductIngredient,datasProduct: IProduct,ingredientPreviousProduct: IProductIngredient): number {
+    private calculatecostOfAllIngredients(datasProduct: IProduct,ingredientPreviousProduct: IProductIngredient): number {
         const renyLessIngredientPreviousProduct = datasProduct.cost_of_all_ingredients - ingredientPreviousProduct.ingredient_cost
 
-        const moreCurrentProductIngredient = renyLessIngredientPreviousProduct + currentProductIngredient.ingredient_cost
+        const morecurrentPrice = renyLessIngredientPreviousProduct + this.ingredientCost
 
-        return parseFloat(moreCurrentProductIngredient.toFixed(2))
+        return parseFloat(morecurrentPrice.toFixed(2))
     }
     private calculateCostFixed(datasProduct: IProduct): number {
         const costFixed = datasProduct.cost_of_all_ingredients * datasProduct.operacional_cost / 100

@@ -19,12 +19,6 @@ export class UpdateSpecificProductIngredientController implements IController {
 
             const { changeInformation, idUser } = httpRequest.body
 
-            // const getSpecificProductIngredient = new MySqlGetSpecificProductIngredientRepository()
-            // // Get updated product
-            // const ingredientPreviousProduct = await getSpecificProductIngredient.getSpecificProductIngredient(currentProductIngredient.id)
-
-            //if (!ingredientPreviousProduct) return badRequest('Not possible updated product ingredient')
-
             const mySqlGetIngredientByNameRepository = new MySqlGetIngredientByNameRepository()
             // Get all products that have the ingredient
             const ingredientsInDataBaseByName = await mySqlGetIngredientByNameRepository.getIngredientByName(changeInformation.name, idUser)

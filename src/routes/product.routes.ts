@@ -8,8 +8,12 @@ import { MySqlDeleteProductRepository } from "@/repository/product/delete-produc
 import { MySqlGetProductRepository } from "@/repository/product/get-product";
 import { MySqlUpdateProductRepository } from "@/repository/product/update-product";
 import { Router } from "express";
+import { storage } from "@/config/multerConfig";
+import multer from "multer";
 
 const routes = Router();
+
+const upload = multer({storage: storage})
 
 routes.get("/", async (req, res) => {
     const mySqlGetRepository = new MySqlGetProductRepository()
@@ -67,6 +71,14 @@ routes.post("/duplicate", async (req, res) => {
     })
 
     res.status(statusCode).send(body)
+})
+
+routes.post("/only",upload.single('image') ,async (req,res) => {
+    
+    console.log(req.file);
+    console.log(req.body);
+
+    res.status(200).send(req.file?.fieldname)
 })
 
 routes.put("/", async (req, res) => {

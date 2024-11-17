@@ -15,9 +15,16 @@ export interface IProduct {
     price_per_unit: number
     operacional_cost: number
     cost_of_all_ingredients: number
-    update_at: number | null
+    update_at?: number | null
     chengeIncome?: number
     id_category: string
+    description: string
+}
+export interface ISingleProduct{
+    nameProduct: string
+    priceProduct: number
+    descriptionProduct: string
+    idCategory: string
 }
 export interface ICreateProductParams {
     name: string
@@ -31,6 +38,8 @@ export interface ICreateProductParams {
     final_recipe_price: number
     cost_of_all_ingredients: number
     price_per_unit: number
+    id_category: string
+    description: string
 }
 
 export interface IUpdateProductParams {

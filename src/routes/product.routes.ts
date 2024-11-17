@@ -10,6 +10,7 @@ import { MySqlUpdateProductRepository } from "@/repository/product/update-produc
 import { Router } from "express";
 import { storage } from "@/config/multerConfig";
 import multer from "multer";
+import { CreateSingleProductController } from "@/controller/product/createSingle-product";
 
 const routes = Router();
 
@@ -75,10 +76,16 @@ routes.post("/duplicate", async (req, res) => {
 
 routes.post("/only",upload.single('image') ,async (req,res) => {
     
-    console.log(req.file);
-    console.log(req.body);
+    const mySqlCreateProductRepository = new MySqlCreateProductRepository();
 
-    res.status(200).send(req.file?.fieldname)
+    const createSingleProductController = new CreateSingleProductController(
+      mySqlCreateProductRepository
+    );
+  
+    const { body, statusCode } = await createSingleProductController.handle({
+      body: req.body,
+    });
+    res.status(statusCode).send(body);
 })
 
 routes.put("/", async (req, res) => {

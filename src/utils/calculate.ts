@@ -2,10 +2,10 @@ import { IProduct } from "@/interfaces/product";
 import { IProductIngredient } from "@/interfaces/productIngredients";
 
 export class Calculate {
-    private datasProduct: IProduct;
-    private ingredientPreviousProduct: IProductIngredient;
-    private currentPrice: number;
-    private ingredientCost:number
+    protected datasProduct: IProduct;
+    protected ingredientPreviousProduct: IProductIngredient;
+    protected currentPrice: number;
+    protected ingredientCost:number
 
     constructor(datasProduct: IProduct, ingredientPreviousProduct: IProductIngredient, currentPrice: number) {
         this.datasProduct = datasProduct;
@@ -13,7 +13,7 @@ export class Calculate {
         this.currentPrice = currentPrice
         this.ingredientCost = 0
     }
-    updateAllNumbersProductAndIngredients() {
+    public updateAllNumbersProductAndIngredients() {
         this.ingredientCost= this.calculateIngredientCost()
         this.datasProduct.cost_of_all_ingredients = this.calculatecostOfAllIngredients(this.datasProduct,this.ingredientPreviousProduct)
         this.datasProduct.fixed_cost = this.calculateCostFixed(this.datasProduct)

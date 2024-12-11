@@ -17,9 +17,7 @@ export class CreateSingleProductController implements IController{
     
             const formatedDatas = FormatedDatas.formatedDatasToProduct(dataProduct)
     
-            const idProduct = await IdGenerator.generator()
-    
-            formatedDatas.id_product = idProduct
+            formatedDatas.id_product = await IdGenerator.generator()
     
             const product = await this.createProductRepository.createProduct(formatedDatas)
     

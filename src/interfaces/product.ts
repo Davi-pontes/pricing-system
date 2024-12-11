@@ -19,12 +19,20 @@ export interface IProduct {
     chengeIncome?: number
     id_category: string
     description: string
+    tax: number 
+    freight: number 
+    workforce: number 
+    qtd_box: number 
 }
 export interface ISingleProduct{
     nameProduct: string
     priceProduct: number
     descriptionProduct: string
     idCategory: string
+    tax: number 
+    freight: number 
+    workforce: number 
+    qtd_box: number 
 }
 export interface ICreateProductParams {
     name: string

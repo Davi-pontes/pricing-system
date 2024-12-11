@@ -18,6 +18,10 @@ export class FormatedDatas {
       operacional_cost: 0,
       description: datas.descriptionProduct,
       id_category: datas.idCategory,
+      tax: datas.tax,
+      freight: datas.freight,
+      workforce: datas.workforce,
+      qtd_box: datas.qtd_box,
     };
     return newData;
   }

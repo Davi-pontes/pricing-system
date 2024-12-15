@@ -74,8 +74,7 @@ routes.post("/duplicate", async (req, res) => {
     res.status(statusCode).send(body)
 })
 
-routes.post("/only",upload.single('image') ,async (req,res) => {
-    
+routes.post("/only" ,async (req,res) => {
     const mySqlCreateProductRepository = new MySqlCreateProductRepository();
 
     const createSingleProductController = new CreateSingleProductController(

@@ -4,7 +4,7 @@ import { IGetProductRepository, IProduct } from "@/interfaces/product";
 export class MySqlGetProductRepository implements IGetProductRepository {
    async getProduct(user_id: string): Promise<IProduct[]> {
       const allProduct = await connection
-         .select('p.id_product','p.name','p.income','p.recipe_time','p.profit_percentage','p.revenue_cost','p.fixed_cost','p.labor','p.profit','p.final_recipe_price','p.price_per_unit','p.operacional_cost','p.cost_of_all_ingredients','p.is_joker','p.id_category')
+         .select('p.id_product','p.name','p.income','p.recipe_time','p.profit_percentage','p.revenue_cost','p.fixed_cost','p.labor','p.profit','p.final_recipe_price','p.price_per_unit','p.operacional_cost','p.cost_of_all_ingredients','p.is_joker','p.id_category', 'p.only')
          .from('category as c')
          .rightJoin('product as p', 'c.id', 'p.id_category')
          .where('c.user_id', user_id)
@@ -14,7 +14,7 @@ export class MySqlGetProductRepository implements IGetProductRepository {
    }
 
    async getProductById(id_product: string): Promise<IProduct> {
-      const Product = await connection.select('p.id_product','p.name','p.income','p.recipe_time','p.profit_percentage','p.revenue_cost','p.fixed_cost','p.labor','p.profit','p.final_recipe_price','p.price_per_unit','p.operacional_cost','p.cost_of_all_ingredients','p.is_joker','p.id_category')
+      const Product = await connection.select('p.id_product','p.name','p.income','p.recipe_time','p.profit_percentage','p.revenue_cost','p.fixed_cost','p.labor','p.profit','p.final_recipe_price','p.price_per_unit','p.operacional_cost','p.cost_of_all_ingredients','p.is_joker','p.id_category','p.freight', 'p.tax', 'p.description', 'p.qtd_box')
       .table('product as p')
       .where({ id_product })
 
@@ -22,7 +22,7 @@ export class MySqlGetProductRepository implements IGetProductRepository {
    }
 
    async getProductByIdCategory(id_category: string): Promise<IProduct[]> {
-         const Product = await connection.select('p.id_product','p.name','p.income','p.recipe_time','p.profit_percentage','p.revenue_cost','p.fixed_cost','p.labor','p.profit','p.final_recipe_price','p.price_per_unit','p.operacional_cost','p.cost_of_all_ingredients','p.is_joker','p.id_category')
+         const Product = await connection.select('p.id_product','p.name','p.income','p.recipe_time','p.profit_percentage','p.revenue_cost','p.fixed_cost','p.labor','p.profit','p.final_recipe_price','p.price_per_unit','p.operacional_cost','p.cost_of_all_ingredients','p.is_joker','p.id_category', 'p.only')
          .table('product as p')
          .where({ id_category })
    

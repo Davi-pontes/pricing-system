@@ -22,17 +22,24 @@ export interface IProduct {
     tax: number 
     freight: number 
     workforce: number 
-    qtd_box: number 
+    qtd_box: number
+    only: boolean
 }
 export interface ISingleProduct{
     nameProduct: string
     priceProduct: number
     descriptionProduct: string
     idCategory: string
+    fixedCost: number
+    profit: number
+    profitPecentage: number
     tax: number 
-    freight: number 
+    costProduct: number
+    freigth: number 
+    pricePerUnit: number
     workforce: number 
-    qtd_box: number 
+    qtdInBox: number
+    only: boolean
 }
 export interface ICreateProductParams {
     name: string
@@ -70,7 +77,11 @@ export interface IValidatePropsProduct {
     data?: ICreateProductParams
     error?: unknown
 }
-
+export interface IValidatePropsOnlyProduct {
+    success: boolean
+    data?: ISingleProduct
+    error?: any
+}
 export interface IUpdateProductComingIngredient {
     id_product: string
 }

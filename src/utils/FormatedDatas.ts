@@ -5,23 +5,24 @@ export class FormatedDatas {
     const newData = {
       id_product: "",
       name: datas.nameProduct,
-      income: 0,
+      income: datas.qtdInBox,
       recipe_time: 0,
-      profit_percentage: 0,
-      revenue_cost: 0,
-      fixed_cost: 0,
+      profit_percentage: datas.profitPecentage,
+      revenue_cost: datas.costProduct,
+      fixed_cost: datas.fixedCost,
       labor: 0,
-      profit: 0,
-      final_recipe_price: 0,
-      price_per_unit: datas.priceProduct,
+      profit: datas.profit,
+      final_recipe_price: datas.priceProduct,
+      price_per_unit: datas.pricePerUnit,
       cost_of_all_ingredients: 0,
       operacional_cost: 0,
       description: datas.descriptionProduct,
       id_category: datas.idCategory,
       tax: datas.tax,
-      freight: datas.freight,
+      freight: datas.freigth,
       workforce: datas.workforce,
-      qtd_box: datas.qtd_box,
+      qtd_box: datas.qtdInBox,
+      only: datas.only
     };
     return newData;
   }

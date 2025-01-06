@@ -35,17 +35,15 @@ export class UpdateSpecificProductIngredientController implements IController {
 
             const updateDateAndTime = GetDateAndHoursCurrent.dateTime()
 
-            let updatedIngredient
             for(let ingredient of ingredientsInDataBaseByName){
                 ingredient.ingredient_cost = updatedNumbersIngredient.updatedIngredientCost
                 ingredient.price = changeInformation.price
                 ingredient.updated_at = updateDateAndTime
-                updatedIngredient = ingredient
                 const updateSpecificProductIngredient = await this.mySqlUpdateSpecificProducIngredientRepository.updateSpecificProductIngredientController(ingredient.id, ingredient)
                 if (updateSpecificProductIngredient === 0) return badRequest('Not possible updated product ingredient')
             }
-
-            return ok<IProductIngredient>({updatedNumbersIngredient,updatedIngredient})
+        
+            return ok<IProductIngredient>({updatedNumbersIngredient,updatedIngredient: changeInformation})
 
         } catch (error) {
             return serverError()

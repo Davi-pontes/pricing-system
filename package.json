@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "tsx ./src/service/stock/output-stock.ts",
+    "testJest": "jest ./test/stock",
     "createDataBase": "tsx ./src/database/createDataBase.ts",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",

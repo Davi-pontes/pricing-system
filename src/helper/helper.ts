@@ -30,3 +30,15 @@ export const ok = <T>(body: any): HttpResponse<T> => ({
       body: "Unauthorized"
     }
   }
+  export const unprocessableEntity = (message: string): HttpResponse<string> => {
+    return {
+      statusCode: HttpStatusCode.UNPROCESSABLE_ENTITY,
+      body: message
+    }
+  }
+  export const noContent = (): HttpResponse<string> => {
+    return {
+      statusCode: HttpStatusCode.NO_CONTENT,
+      body: ""
+    }
+  }

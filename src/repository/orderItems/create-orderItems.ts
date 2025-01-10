@@ -1,0 +1,17 @@
+import { ICreateOrderItems, ICreateOrderItemsRepository, IOrderItems } from "@/interfaces/orderItems";
+import connection from "@/database/connectionKnex";
+
+export class MySqlCreateOrderItemsRepository implements ICreateOrderItemsRepository{
+    async createOrderItems(params: ICreateOrderItems[]): Promise<any> {
+        try {
+            await connection.insert(params).table("order_items")
+
+            const itemsOrder = await connection.select<IOrderItems>().table("order_items").where("id_order", params[0].id_order)
+
+            return itemsOrder
+        } catch (error) {
+            throw new Error("Not created order items.");
+        }
+    }
+
+}

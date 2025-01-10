@@ -36,6 +36,7 @@ export interface IOutPutStockRepository {
 }
 export interface IGetStockRepository {
   getById(idStock: number): Promise<IStockProduct>;
+  getByIdProduct(idProduct: string): Promise<IStockProduct>
 }
 export interface IUpdateStockRepository {
   incrementStock(params: IEntryStock): Promise<IEntryStock>;

@@ -7,6 +7,7 @@ export class CreateOrderItemsService implements ICreateOrderItemsService{
     async createOrderItems(params: ICreateOrderItems[]): Promise<any> {
 
         for(let items of params){
+            
             const createdOrderItems = await this.createOrderItemsRepository.createOrderItems(params)
 
 

@@ -28,4 +28,19 @@ export class StockOutPutService {
 
     return updatedStock
   }
+  async addOutputByProduct(dataOutput: IOutPutStock): Promise<IOutPutStock> {
+    // const stock = await this.getStockRepository.getById(dataOutput.id_stock);
+
+    // if (!stock || stock.quantity < dataOutput.quantity) {
+    //   throw new InsufficientStockError("Insufficient stock for output");
+    // }
+
+    await this.stockOutputRepository.registerOutPutStock(dataOutput);
+
+    const updatedStock = await this.updateStockRepository.decrementStock(
+      dataOutput
+    );
+
+    return updatedStock
+  }
 }

@@ -1,3 +1,5 @@
+import { IOrderItemsParams } from "./orderItems";
+
 export interface INecessaryStock {
   name: string;
   quantityCurrent: number;
@@ -16,6 +18,11 @@ export interface ICreateStockProduct {
   id_product: string;
 }
 export interface IOutPutStock {
+  id?: number;
+  quantity: number;
+  id_stock: number;
+}
+export interface IOutPutStockByProduct {
   id?: number;
   quantity: number;
   id_stock: number;
@@ -41,4 +48,5 @@ export interface IGetStockRepository {
 export interface IUpdateStockRepository {
   incrementStock(params: IEntryStock): Promise<IEntryStock>;
   decrementStock(params: IOutPutStock): Promise<IOutPutStock>;
+  decrementStockByProduct(params: IOrderItemsParams): Promise<IOutPutStock>;
 }

@@ -41,7 +41,8 @@ export class MySqlUpdateStockRepository implements IUpdateStockRepository {
         .where({ id: params.id_stock });
 
       return updatedStock[0]
-    } catch (error) {}
+    } catch (error) {console.log(error);
+    }
     throw new Error("Method not implemented.");
   }
 }

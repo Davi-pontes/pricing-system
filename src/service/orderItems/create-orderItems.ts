@@ -1,8 +1,8 @@
 import { ICreateOrderItems, ICreateOrderItemsRepository, ICreateOrderItemsService } from "@/interfaces/orderItems";
-import { MySqlUpdateStockRepository } from "@/repository/productIngredient/update-stock";
 import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
 import { MySqlOutPutStockRepository } from "@/repository/stock/output-stock";
 import { StockOutPutService } from "../stock/output-stock";
+import { MySqlUpdateStockRepository } from "@/repository/stock/update-stock";
 
 export class CreateOrderItemsService implements ICreateOrderItemsService {
 
@@ -23,8 +23,9 @@ export class CreateOrderItemsService implements ICreateOrderItemsService {
         for (let item of params) {
             await outputService.addOutput(item)
 
-            const createdOrderItems = await this.createOrderItemsRepository.createOrderItems(item)
-            
+            await this.createOrderItemsRepository.createOrderItems(
+                { quantity: item.quantity, id_product: item.id_product, id_order: item.id_order }
+            )
         }
 
         return ''

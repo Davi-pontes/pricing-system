@@ -16,7 +16,7 @@ export interface IOrderItemsParams {
 }
 
 export interface ICreateOrderItemsRepository {
-  createOrderItems(params: ICreateOrderItems[]): Promise<any>;
+  createOrderItems(params: ICreateOrderItems): Promise<any>;
 }
 export interface ICreateOrderItemsService {
   createOrderItems(params: ICreateOrderItems[]): Promise<any>;

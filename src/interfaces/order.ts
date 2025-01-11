@@ -3,7 +3,7 @@ import { IOrderItemsParams } from "./orderItems";
 export interface IOrder {
   id: number;
   discount: number;
-  type_payment_method: number;
+  type_payment_method: string;
   tax: number;
   sub_total: number;
   total: number;

@@ -8,6 +8,7 @@ export interface ICreateOrderItems {
   id_order: number;
   quantity: number;
   id_product: string;
+  id_stock: number
 }
 export interface IOrderItemsParams {
   quantity: number;

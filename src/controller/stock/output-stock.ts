@@ -31,7 +31,7 @@ export class StockOutPutController implements IController {
 
       return ok<any>(result);
     } catch (error) {
-      if (error instanceof InsufficientStockError){
+      if (error instanceof InsufficientStockError) {
         return unprocessableEntity(error.message)
       }
       return serverError();

@@ -1,8 +1,8 @@
-import { ICreateOrderItems, ICreateOrderItemsRepository, IOrderItems } from "@/interfaces/orderItems";
+import { ICreateOrderItemsRepository, IOrderItems, IOrderItemsParams } from "@/interfaces/orderItems";
 import connection from "@/database/connectionKnex";
 
 export class MySqlCreateOrderItemsRepository implements ICreateOrderItemsRepository{
-    async createOrderItems(params: ICreateOrderItems): Promise<any> {
+    async createOrderItems(params: IOrderItemsParams): Promise<any> {
         try {
             await connection.insert(params).table("order_items")
 
@@ -10,8 +10,6 @@ export class MySqlCreateOrderItemsRepository implements ICreateOrderItemsReposit
 
             return itemsOrder
         } catch (error) {
-            console.log(error);
-            
             throw new Error("Not created order items.");
         }
     }

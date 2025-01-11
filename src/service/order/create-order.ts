@@ -27,17 +27,11 @@ export class CreateOrderService implements ICreateOrderService {
       );
       const assemblingDataSendOrCreateTheOrder: ICreateOrderItems[] = itemsApproved.map((order: IOrder) => { return { ...order, id_order: createdOrder.id } })
 
-      // console.log(itemsApproved);
-      // console.log(createdOrder);
-      console.log(assemblingDataSendOrCreateTheOrder);
-
       const createOrderItemsRepository = new MySqlCreateOrderItemsRepository()
 
       const createOrderItemsService = new CreateOrderItemsService(createOrderItemsRepository)
 
-      const orderItemCreated = await createOrderItemsService.createOrderItems(assemblingDataSendOrCreateTheOrder)
-      
-      console.log(orderItemCreated);
+      await createOrderItemsService.createOrderItems(assemblingDataSendOrCreateTheOrder)
       
       return createdOrder;
     } catch (error) {
@@ -46,26 +40,26 @@ export class CreateOrderService implements ICreateOrderService {
   }
 }
 
-const order = {
-  orderSummary: {
-    discount: 0,
-    type_payment_method: "pix",
-    tax: 0,
-    sub_total: 100,
-    total: 100,
-    id_user: 'axcWKKyLk'
-  },
-  orderItems:
-    [
-      {
-        quantity: 2,
-        id_product: 'gEjm7gAsH'
-      }
-    ]
+// const order = {
+//   orderSummary: {
+//     discount: 0,
+//     type_payment_method: "pix",
+//     tax: 0,
+//     sub_total: 100,
+//     total: 100,
+//     id_user: 'axcWKKyLk'
+//   },
+//   orderItems:
+//     [
+//       {
+//         quantity: 2,
+//         id_product: 'gEjm7gAsH'
+//       }
+//     ]
 
-}
-const repository = new MySqlCreateOrderRepository()
+// }
+// const repository = new MySqlCreateOrderRepository()
 
-const service = new CreateOrderService(repository)
+// const service = new CreateOrderService(repository)
 
-service.createOrder(order)
+// service.createOrder(order)

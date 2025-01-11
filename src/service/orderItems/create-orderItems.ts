@@ -1,4 +1,4 @@
-import { ICreateOrderItems, ICreateOrderItemsRepository, ICreateOrderItemsService } from "@/interfaces/orderItems";
+import { ICreateOrderItems, ICreateOrderItemsRepository, ICreateOrderItemsService, IOrderItemsParams } from "@/interfaces/orderItems";
 import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
 import { MySqlOutPutStockRepository } from "@/repository/stock/output-stock";
 import { StockOutPutService } from "../stock/output-stock";

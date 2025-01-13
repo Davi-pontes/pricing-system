@@ -10,14 +10,11 @@ export class GetOrderService implements IGetOrderService{
         
         const allOrder = await this.getOrderRepository.getAllOrderByIdUserAndDay(idUser,dateFormated)
 
-        console.log(allOrder.length);
         return allOrder
     }
 
     async getAllOrderByIdUser(idUser: string): Promise<IOrder[]> {
         const allOrder = await this.getOrderRepository.getAllOrderByIdUser(idUser)
-        
-        console.log(allOrder);
         
         return allOrder
     }

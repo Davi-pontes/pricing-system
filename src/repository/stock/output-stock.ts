@@ -10,6 +10,8 @@ export class MySqlOutPutStockRepository implements IOutPutStockRepository{
 
             return result
         } catch (error) {
+            console.log(error);
+            
             throw new Error("Not register entry into stock.")
         }
     }

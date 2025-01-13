@@ -3,7 +3,7 @@ import { IOrderItemsParams } from "./orderItems";
 export interface IOrder {
   id: number;
   discount: number;
-  type_payment_method: number;
+  type_payment_method: string;
   tax: number;
   sub_total: number;
   total: number;
@@ -27,4 +27,12 @@ export interface ICreateOrderRepository {
 }
 export interface ICreateOrderService {
   createOrder(params: ICreateOrder): Promise<IOrder>;
+}
+export interface IGetOrderRepository{
+  getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
+  getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
+}
+export interface IGetOrderService{
+  getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
+  getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
 }

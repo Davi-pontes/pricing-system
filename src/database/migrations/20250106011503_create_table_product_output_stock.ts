@@ -5,9 +5,9 @@ export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable("product_output_stock", (table) => {
       table.increments("id").primary();
       table.integer("quantity").defaultTo(0);
-      table.integer('id_stock')
+      table.integer('id_stock').unsigned()
       table
-        .foreign("id")
+        .foreign("id_stock")
         .references("stock.id")
         .onDelete("CASCADE");
       table.timestamps(true, true);

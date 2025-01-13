@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable("orders", (table) => {
         table.increments("id").primary()
         table.float("discount").defaultTo(0)
-        table.integer("type_payment_method")
+        table.string("type_payment_method",50)
         table.float("tax").defaultTo(0)
         table.float("sub_total").notNullable()
         table.float("total").notNullable()

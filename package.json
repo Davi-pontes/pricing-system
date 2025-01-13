@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsx ./src/service/paymentMethod/get-paymentMethod.ts",
+    "test": "tsx ./src/service/order/get-order.ts",
     "testJest": "jest ./test/stock",
-    "createDataBase": "tsx ./src/database/createDataBase.ts",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",
     "start": "node ./dist/server.js",
     "migrate": "knex migrate:latest",
     "make": "knex migrate:make",
     "seed:make": "knex seed:make",
+    "seed": "knex seed:run",
     "delete": "tsx ./src/repository/category/delete-category.ts"
   },
   "keywords": [],

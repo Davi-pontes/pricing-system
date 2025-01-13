@@ -28,3 +28,11 @@ export interface ICreateOrderRepository {
 export interface ICreateOrderService {
   createOrder(params: ICreateOrder): Promise<IOrder>;
 }
+export interface IGetOrderRepository{
+  getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
+  getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
+}
+export interface IGetOrderService{
+  getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
+  getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
+}

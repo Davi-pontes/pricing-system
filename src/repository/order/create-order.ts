@@ -19,6 +19,8 @@ export class MySqlCreateOrderRepository implements ICreateOrderRepository{
 
                 return createdOrder[0]
         } catch (error) {
+            console.log(error);
+            
             throw new Error("Not created order.")
         }
     }

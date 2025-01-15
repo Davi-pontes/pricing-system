@@ -4,6 +4,7 @@ import { Date } from "@/utils/date";
 
 export class GetOrderService implements IGetOrderService{
     constructor(private readonly getOrderRepository: IGetOrderRepository){}
+    
     async getAllOrderByIdUserAndDay(idUser: string, date: Date): Promise<IOrder[]> {
 
        const dateFormated = Date.formatToYearMonthDay(date)
@@ -20,8 +21,8 @@ export class GetOrderService implements IGetOrderService{
     }
 }
 
-const repository = new MySqlGetOrderRepository()
+// const repository = new MySqlGetOrderRepository()
 
-const service = new GetOrderService(repository)
+// const service = new GetOrderService(repository)
 
-service.getAllOrderByIdUserAndDay('axcWKKyLk', '2025-01-10')
+// service.getAllOrderByIdUserAndDay('axcWKKyLk', '2025-01-10')

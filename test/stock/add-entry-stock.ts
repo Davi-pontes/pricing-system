@@ -1,6 +1,6 @@
 import { MySqlEntryStockRepository } from "@/repository/stock/entry-stock";
 import { MySqlUpdateStockRepository } from "@/repository/stock/update-stock";
-import { StockEntry } from "@/service/stock/entry-stock";
+import { StockEntryService } from "@/service/stock/entry-stock";
 
 test('Add product entry to stock', async () => {
     const entryStockRepository = {
@@ -13,7 +13,7 @@ test('Add product entry to stock', async () => {
     };
 
     // Instancia a classe com os mocks
-    const update = new StockEntry(
+    const update = new StockEntryService(
         entryStockRepository as unknown as MySqlEntryStockRepository,
         stockRepository as unknown as MySqlUpdateStockRepository
     );

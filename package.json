@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tsx ./src/service/order/get-order.ts",
-    "testJest": "jest ./test/stock",
+    "testJest": "jest",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",
     "start": "node ./dist/server.js",

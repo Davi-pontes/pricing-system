@@ -13,6 +13,15 @@ routes.get("/", async (req, res) => {
 
   res.status(statusCode).send(body);
 });
+routes.get("/day", async (req, res) => {
+  const orderController = new GetOrderController();
+
+  const { body, statusCode } = await orderController.handleQueryIdUserAndDay({
+    params: req.query,
+  });
+
+  res.status(statusCode).send(body);
+});
 
 routes.post("/", async (req,res) => {
   const createOrderController = new CreateOrderController()

@@ -20,9 +20,3 @@ export class GetOrderService implements IGetOrderService{
         return allOrder
     }
 }
-
-// const repository = new MySqlGetOrderRepository()
-
-// const service = new GetOrderService(repository)
-
-// service.getAllOrderByIdUserAndDay('axcWKKyLk', '2025-01-10')

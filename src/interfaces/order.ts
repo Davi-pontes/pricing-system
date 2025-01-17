@@ -1,5 +1,5 @@
 import { IOrderItemsParams } from "./orderItems";
-
+import { HttpRequest, HttpResponse } from "./http";
 export interface IOrder {
   id: number;
   discount: number;
@@ -9,7 +9,6 @@ export interface IOrder {
   total: number;
   id_user: string;
 }
-
 export interface ICreateOrderParams {
     discount: number;
     type_payment_method: number;
@@ -35,4 +34,8 @@ export interface IGetOrderRepository{
 export interface IGetOrderService{
   getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
   getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
+}
+export interface IGetOrderController{
+  handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<IOrder[] | string>>
+  handleQueryIdUserAndDay(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<IOrder[] | string>>
 }

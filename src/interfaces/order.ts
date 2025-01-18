@@ -8,6 +8,7 @@ export interface IOrder {
   sub_total: number;
   total: number;
   id_user: string;
+  created_at: string
 }
 export interface ICreateOrderParams {
     discount: number;
@@ -22,17 +23,19 @@ export interface ICreateOrder {
   orderItems: IOrderItemsParams[]
 }
 export interface ICreateOrderRepository {
-  createOrder(params: ICreateOrderParams): Promise<IOrder>;
+  createOrder(params: ICreateOrderParams): Promise<number>;
 }
 export interface ICreateOrderService {
   createOrder(params: ICreateOrder): Promise<IOrder>;
 }
 export interface IGetOrderRepository{
   getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
+  getOrderByIdOrder(idOrder: number): Promise<IOrder>
   getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
 }
 export interface IGetOrderService{
   getAllOrderByIdUser(idUser: string): Promise<IOrder[]>
+  getOrderByIdOrder(idOrder: number): Promise<IOrder>
   getAllOrderByIdUserAndDay(idUser: string, date: string): Promise<IOrder[]>
 }
 export interface IGetOrderController{

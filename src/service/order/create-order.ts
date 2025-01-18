@@ -10,6 +10,8 @@ import { MySqlCreateOrderRepository } from "@/repository/order/create-order";
 import { ICreateOrderItems } from "@/interfaces/orderItems";
 import { MySqlCreateOrderItemsRepository } from "@/repository/orderItems/create-orderItems";
 import { CreateOrderItemsService } from "../orderItems/create-orderItems";
+import { MySqlGetOrderRepository } from "@/repository/order/get-order";
+import { GetOrderService } from "./get-order";
 
 export class CreateOrderService implements ICreateOrderService {
   constructor(private readonly createOrderRepository: ICreateOrderRepository) { }
@@ -22,44 +24,26 @@ export class CreateOrderService implements ICreateOrderService {
 
       const itemsApproved = await validateStock.validateStock(params.orderItems);
 
-      const createdOrder = await this.createOrderRepository.createOrder(
+      const newOrderId = await this.createOrderRepository.createOrder(
         params.orderSummary
       );
-      const assemblingDataSendOrCreateTheOrder: ICreateOrderItems[] = itemsApproved.map((order: IOrder) => { return { ...order, id_order: createdOrder.id } })
+      const assemblingDataSendOrCreateTheOrder: ICreateOrderItems[] = itemsApproved.map((order: IOrder) => { return { ...order, id_order: newOrderId } })
 
       const createOrderItemsRepository = new MySqlCreateOrderItemsRepository()
 
       const createOrderItemsService = new CreateOrderItemsService(createOrderItemsRepository)
 
       await createOrderItemsService.createOrderItems(assemblingDataSendOrCreateTheOrder)
+
+      const getOrderRepository = new MySqlGetOrderRepository()
+
+      const getOrderService = new GetOrderService(getOrderRepository)
+
+      const orderCreated = await getOrderService.getOrderByIdOrder(newOrderId)
       
-      return createdOrder;
+      return orderCreated;
     } catch (error) {
       throw new Error("Not created order.")
     }
   }
 }
-
-// const order = {
-//   orderSummary: {
-//     discount: 0,
-//     type_payment_method: "pix",
-//     tax: 0,
-//     sub_total: 100,
-//     total: 100,
-//     id_user: 'axcWKKyLk'
-//   },
-//   orderItems:
-//     [
-//       {
-//         quantity: 2,
-//         id_product: 'gEjm7gAsH'
-//       }
-//     ]
-
-// }
-// const repository = new MySqlCreateOrderRepository()
-
-// const service = new CreateOrderService(repository)
-
-// service.createOrder(order)

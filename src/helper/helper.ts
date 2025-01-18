@@ -20,7 +20,7 @@ export const ok = <T>(body: any): HttpResponse<T> => ({
   export const serverError = (): HttpResponse<string> => {
     return {
       statusCode: HttpStatusCode.SERVER_ERROR,
-      body: "Something went wrong",
+      body: "Estamos enfrentando um problema no momento. Por favor, tente novamente mais tarde.",
     };
   };
 

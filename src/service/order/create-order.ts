@@ -7,17 +7,25 @@ import {
 import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
 import { ValidateStock } from "../stock/validate-stock";
 import { MySqlCreateOrderRepository } from "@/repository/order/create-order";
+import { ValidationErrorOrder } from "@/service/order/errors/validationError";
 import { ICreateOrderItems } from "@/interfaces/orderItems";
 import { MySqlCreateOrderItemsRepository } from "@/repository/orderItems/create-orderItems";
 import { CreateOrderItemsService } from "../orderItems/create-orderItems";
 import { MySqlGetOrderRepository } from "@/repository/order/get-order";
 import { GetOrderService } from "./get-order";
+import { VCreateOrder } from "@/validations/order/create-order";
 
 export class CreateOrderService implements ICreateOrderService {
   constructor(private readonly createOrderRepository: ICreateOrderRepository) { }
 
   async createOrder(params: ICreateOrder): Promise<IOrder> {
     try {
+      const validate = await VCreateOrder.validateOrderParams(params.orderSummary)
+
+      if(validate.error){
+        throw new ValidationErrorOrder(validate.message)
+      }
+
       const getStockRepository = new MySqlGetStockRepository();
 
       const validateStock = new ValidateStock(getStockRepository);
@@ -43,7 +51,11 @@ export class CreateOrderService implements ICreateOrderService {
       
       return orderCreated;
     } catch (error) {
-      throw new Error("Not created order.")
+      if (error instanceof ValidationErrorOrder) {
+        throw new ValidationErrorOrder(error.message);
+      }
+  
+      throw new Error("Not created order.");
     }
   }
 }

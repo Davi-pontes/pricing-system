@@ -1,9 +1,10 @@
-import { ok, serverError } from "@/helper/helper";
+import { badRequest, ok, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { ICreateOrder, IOrder } from "@/interfaces/order";
 import { MySqlCreateOrderRepository } from "@/repository/order/create-order";
 import { CreateOrderService } from "@/service/order/create-order";
+import { ValidationErrorOrder } from "@/service/order/errors/validationError";
 
 export class CreateOrderController implements IController{
     async handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>> {
@@ -18,6 +19,9 @@ export class CreateOrderController implements IController{
 
             return ok<IOrder>(orderCreated)
         } catch (error) {
+            if(error instanceof ValidationErrorOrder){
+                return badRequest(error.message)
+            }
             return serverError()
         }
     }

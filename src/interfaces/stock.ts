@@ -23,6 +23,7 @@ export interface IOutPutStock {
   id?: number;
   quantity: number;
   id_stock: number;
+  updated_at?: string
 }
 export interface IOutPutStockByProduct {
   id?: number;
@@ -33,6 +34,7 @@ export interface IEntryStock {
   id?: number;
   quantity: number;
   id_stock: number;
+  updated_at?: string
 }
 export interface ICreateStockRepository {
   createSctock(params: ICreateStockProduct): Promise<any>;

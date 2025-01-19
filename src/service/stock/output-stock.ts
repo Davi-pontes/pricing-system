@@ -6,6 +6,7 @@ import {
 } from "@/interfaces/stock";
 import { InsufficientStockError } from "./errors/insufficientStockError";
 import { ICreateOrderItems } from "@/interfaces/orderItems";
+import { CustomDateUtils } from "@/utils/date";
 
 export class StockOutPutService {
   constructor(
@@ -26,8 +27,9 @@ export class StockOutPutService {
     const updatedStock = await this.updateStockRepository.decrementStock(
       { quantity: dataOutput.quantity, id_stock: dataOutput.id_stock }
     );
-
-    return updatedStock
+    if(updatedStock.updated_at) updatedStock.updated_at = CustomDateUtils.formatToTableFrontEnd(updatedStock.updated_at)
+    
+      return updatedStock
   }
   async addOutputByProduct(dataOutput: IOutPutStock): Promise<IOutPutStock> {
     // const stock = await this.getStockRepository.getById(dataOutput.id_stock);

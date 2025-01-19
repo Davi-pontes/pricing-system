@@ -13,6 +13,7 @@ export interface IStockProduct {
   name: string
   id_stock: number;
   quantity: number;
+  updated_at: string
 }
 export interface ICreateStockProduct {
   quantity: number;

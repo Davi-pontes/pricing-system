@@ -21,9 +21,3 @@ export class GetStockProductService implements IGetStockProductService{
         }
     }
 }
-
-// const repository = new MySqlGetStockRepository()
-
-// const service = new GetStockProductService(repository)
-
-// service.getStockProductByIdUser('8oZ_9G8At')

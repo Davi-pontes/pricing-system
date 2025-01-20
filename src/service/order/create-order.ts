@@ -7,59 +7,68 @@ import {
 import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
 import { ValidateStock } from "../stock/validate-stock";
 import { MySqlCreateOrderRepository } from "@/repository/order/create-order";
+import { ValidationErrorOrder } from "@/service/order/errors/validationError";
 import { ICreateOrderItems } from "@/interfaces/orderItems";
 import { MySqlCreateOrderItemsRepository } from "@/repository/orderItems/create-orderItems";
 import { CreateOrderItemsService } from "../orderItems/create-orderItems";
+import { MySqlGetOrderRepository } from "@/repository/order/get-order";
+import { GetOrderService } from "./get-order";
+import { VCreateOrder } from "@/validations/order/create-order";
 
 export class CreateOrderService implements ICreateOrderService {
-  constructor(private readonly createOrderRepository: ICreateOrderRepository) { }
+  constructor(private readonly createOrderRepository: ICreateOrderRepository) {}
 
   async createOrder(params: ICreateOrder): Promise<IOrder> {
     try {
+      const validate = await VCreateOrder.validateOrderParams(
+        params.orderSummary
+      );
+
+      if (validate.error) {
+        throw new ValidationErrorOrder(validate.message);
+      }
+      if (params.orderItems.length === 0) {
+        throw new ValidationErrorOrder("Adicione 1 produto.");
+      }
       const getStockRepository = new MySqlGetStockRepository();
 
       const validateStock = new ValidateStock(getStockRepository);
 
-      const itemsApproved = await validateStock.validateStock(params.orderItems);
+      const itemsApproved = await validateStock.validateStock(
+        params.orderItems
+      );
 
-      const createdOrder = await this.createOrderRepository.createOrder(
+      const newOrderId = await this.createOrderRepository.createOrder(
         params.orderSummary
       );
-      const assemblingDataSendOrCreateTheOrder: ICreateOrderItems[] = itemsApproved.map((order: IOrder) => { return { ...order, id_order: createdOrder.id } })
+      const assemblingDataSendOrCreateTheOrder: ICreateOrderItems[] =
+        itemsApproved.map((order: IOrder) => {
+          return { ...order, id_order: newOrderId };
+        });
 
-      const createOrderItemsRepository = new MySqlCreateOrderItemsRepository()
+      const createOrderItemsRepository = new MySqlCreateOrderItemsRepository();
 
-      const createOrderItemsService = new CreateOrderItemsService(createOrderItemsRepository)
+      const createOrderItemsService = new CreateOrderItemsService(
+        createOrderItemsRepository
+      );
 
-      await createOrderItemsService.createOrderItems(assemblingDataSendOrCreateTheOrder)
-      
-      return createdOrder;
+      await createOrderItemsService.createOrderItems(
+        assemblingDataSendOrCreateTheOrder
+      );
+
+      const getOrderRepository = new MySqlGetOrderRepository();
+
+      const getOrderService = new GetOrderService(getOrderRepository);
+
+      const orderCreated = await getOrderService.getOrderByIdOrder(newOrderId);
+
+      return orderCreated;
     } catch (error) {
-      throw new Error("Not created order.")
+      if (error instanceof ValidationErrorOrder) {
+        throw new ValidationErrorOrder(error.message);
+      }
+
+      throw new Error("Not created order.");
     }
   }
 }
-
-// const order = {
-//   orderSummary: {
-//     discount: 0,
-//     type_payment_method: "pix",
-//     tax: 0,
-//     sub_total: 100,
-//     total: 100,
-//     id_user: 'axcWKKyLk'
-//   },
-//   orderItems:
-//     [
-//       {
-//         quantity: 2,
-//         id_product: 'gEjm7gAsH'
-//       }
-//     ]
-
-// }
-// const repository = new MySqlCreateOrderRepository()
-
-// const service = new CreateOrderService(repository)
-
-// service.createOrder(order)

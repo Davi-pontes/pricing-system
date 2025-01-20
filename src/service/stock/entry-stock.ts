@@ -3,6 +3,7 @@ import {
   IEntryStockRepository,
   IUpdateStockRepository,
 } from "@/interfaces/stock";
+import { CustomDateUtils } from "@/utils/date";
 
 export class StockEntryService {
   constructor(
@@ -11,10 +12,16 @@ export class StockEntryService {
   ) {}
 
   async addEntry(dataEntry: IEntryStock): Promise<IEntryStock> {
-    await this.entryStockRepository.registerStockEntry(dataEntry);
+    try {
+      await this.entryStockRepository.registerStockEntry(dataEntry);
+  
+      const updatedStock = await this.updateStockRepository.incrementStock(dataEntry);
 
-    const updatedStock = await this.updateStockRepository.incrementStock(dataEntry);
-
-    return updatedStock
+      if(updatedStock.updated_at) updatedStock.updated_at = CustomDateUtils.formatToTableFrontEnd(updatedStock.updated_at)
+  
+      return updatedStock
+    } catch (error) {
+      throw new Error('Not add entry.')
+    }
   }
 }

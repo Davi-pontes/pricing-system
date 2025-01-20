@@ -18,7 +18,7 @@ export class MySqlUpdateStockRepository implements IUpdateStockRepository {
         .where("id", params.id_stock);
 
       const updatedStock = await connection
-        .select("id", "quantity", "id_product")
+        .select("id", "quantity", "id_product", "updated_at")
         .table("stock")
         .where({ id: params.id_stock });
 
@@ -38,7 +38,7 @@ export class MySqlUpdateStockRepository implements IUpdateStockRepository {
         .where("id", params.id_stock);
 
       const updatedStock = await connection
-        .select("id", "quantity", "id_product")
+        .select("id", "quantity", "id_product", "updated_at")
         .table("stock")
         .where({ id: params.id_stock });
 

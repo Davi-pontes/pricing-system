@@ -1,10 +1,20 @@
 import { CalculateStockController } from "@/controller/stock/calculate-stock";
 import { StockEntryController } from "@/controller/stock/entry-stock";
+import { GetStockProductController } from "@/controller/stock/get-stockProduct";
 import { StockOutPutController } from "@/controller/stock/output-stock";
 import { Router } from "express";
 
 const routes = Router();
 
+routes.get("/", async (req,res) => {
+  const stockProductController = new GetStockProductController()
+
+  const {body,statusCode} = await stockProductController.handle({
+    params: req.query
+  })
+
+  res.status(statusCode).send(body);
+})
 routes.post("/", async (req, res) => {
   const stockController = new CalculateStockController();
 

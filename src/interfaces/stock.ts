@@ -9,9 +9,11 @@ export interface INecessaryStock {
 }
 
 export interface IStockProduct {
-  id: number;
-  quantity: number;
   id_product: string;
+  name: string
+  id_stock: number;
+  quantity: number;
+  updated_at: string
 }
 export interface ICreateStockProduct {
   quantity: number;
@@ -21,6 +23,7 @@ export interface IOutPutStock {
   id?: number;
   quantity: number;
   id_stock: number;
+  updated_at?: string
 }
 export interface IOutPutStockByProduct {
   id?: number;
@@ -31,6 +34,7 @@ export interface IEntryStock {
   id?: number;
   quantity: number;
   id_stock: number;
+  updated_at?: string
 }
 export interface ICreateStockRepository {
   createSctock(params: ICreateStockProduct): Promise<any>;
@@ -41,9 +45,13 @@ export interface IEntryStockRepository {
 export interface IOutPutStockRepository {
   registerOutPutStock(params: IOutPutStock): Promise<any>;
 }
+export interface IGetStockProductService{
+  getStockProductByIdUser(idUser: string): Promise<any>
+}
 export interface IGetStockRepository {
   getById(idStock: number): Promise<IStockProduct>;
   getByIdProduct(idProduct: string): Promise<IStockProduct>
+  getStockProductByIdUser(idUser: string): Promise<IStockProduct[]>
 }
 export interface IUpdateStockRepository {
   incrementStock(params: IEntryStock): Promise<IEntryStock>;

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsx ./src/service/order/get-order.ts",
+    "test": "tsx ./src/service/xlsx/xlsx.ts",
     "testJest": "jest",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",
@@ -47,6 +47,7 @@
     "mysql2": "^3.9.7",
     "shortid": "^2.2.16",
     "tsx": "^4.10.5",
+    "xlsx": "^0.18.5",
     "zod": "^3.23.8"
   }
 }

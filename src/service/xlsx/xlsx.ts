@@ -14,7 +14,6 @@ export class XLSXService {
 
         } catch (error) {
             console.log(error);
-
         }
     }
     private formatedData(sheets: any, file: any): any {

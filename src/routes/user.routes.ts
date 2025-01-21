@@ -1,6 +1,5 @@
 import { CreateUserController } from "@/controller/user/create-user";
 import { GetUserController } from "@/controller/user/get-user";
-import { MySqlCreateUserRepository } from "@/repository/user/create-user";
 import { MySqlGetUserRepository } from "@/repository/user/get-user";
 import { Router } from "express";
 
@@ -17,9 +16,7 @@ routes.get("/", async(req,res) => {
 })
 
 routes.post("/", async (req, res) => {
-    const mySqlCreateUserRepository = new MySqlCreateUserRepository()
-
-    const createUserController = new CreateUserController(mySqlCreateUserRepository)
+    const createUserController = new CreateUserController()
 
     const { body, statusCode } = await createUserController.handle({
         body: req.body

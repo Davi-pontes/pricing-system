@@ -33,6 +33,9 @@ export interface IUpdateUserParams{
 export interface ICreateUserRepository {
     createUser(params: ICreateUserParams): Promise<number>
 }
+export interface ICreateUserService {
+    createUser(params: ICreateUserParams): Promise<number>
+}
 
 export interface IGetUserRepository {
     getUser():Promise<IUser[]>

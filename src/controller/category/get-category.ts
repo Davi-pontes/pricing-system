@@ -4,8 +4,8 @@ import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { MySqlGetProductRepository } from "@/repository/product/get-product";
 
-export class GetCategoryController implements IController{
-    constructor(private readonly getCategoryRepository: IGetCategoryRepository) {}
+export class GetCategoryController implements IController {
+    constructor(private readonly getCategoryRepository: IGetCategoryRepository) { }
 
     async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
         try {
@@ -16,13 +16,13 @@ export class GetCategoryController implements IController{
             const categoriesProducts = await this.AssembleDatasCategoriesAndProducts(allCategory)
 
             return ok<Array<any>>(categoriesProducts)
-            
+
         } catch (error) {
             return serverError()
         }
     }
 
-    async getSpecificCategory(id_category: string): Promise<ICategory>{
+    async getSpecificCategory(id_category: string): Promise<ICategory> {
         try {
             const specificCategory = await this.getCategoryRepository.getSpecificCategory(id_category)
 
@@ -32,16 +32,19 @@ export class GetCategoryController implements IController{
         }
     }
 
-    private async  AssembleDatasCategoriesAndProducts(categories: Array<ICategory>){
+    private async AssembleDatasCategoriesAndProducts(categories: Array<ICategory>) {
         const datas = []
 
         const getProductByCategory = new MySqlGetProductRepository()
 
-        for(let category of categories){
+        for (let category of categories) {
             const categoryProducts = await getProductByCategory.getProductByIdCategory(category.id)
-            datas.push({category,products: categoryProducts})
+            
+            const addNameCategoryInAllProduct = categoryProducts.map((it) => ({ ...it, name_category: category.name }));
+            
+            datas.push({ category, products: addNameCategoryInAllProduct });
         }
-        
+
         return datas
     }
 

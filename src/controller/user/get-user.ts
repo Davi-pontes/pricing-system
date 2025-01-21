@@ -1,14 +1,18 @@
 import { ok, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
-import {  HttpResponse } from "@/interfaces/http";
-import { IGetUserRepository, IUser } from "@/interfaces/user";
+import { HttpResponse } from "@/interfaces/http";
+import { IUser } from "@/interfaces/user";
+import { MySqlGetUserRepository } from "@/repository/user/get-user";
+import { GetUserService } from "@/service/user/get-user";
 
-export class GetUserController implements IController{
-    constructor(private readonly getUserRepository: IGetUserRepository){}
-
+export class GetUserController implements IController {
     async handle(): Promise<HttpResponse<any>> {
         try {
-            const allUsers = await this.getUserRepository.getUser()
+            const getUserRepository = new MySqlGetUserRepository()
+
+            const getUserService = new GetUserService(getUserRepository)
+
+            const allUsers = await getUserService.getAllUser()
 
             return ok<IUser>(allUsers)
         } catch (error) {
@@ -16,11 +20,15 @@ export class GetUserController implements IController{
         }
     }
 
-    async getUserById(id_user:string): Promise<IUser | any>{
+    async getUserById(idUser: string): Promise<HttpResponse<IUser[] | string>> {
         try {
-            const user = await this.getUserRepository.getUserById(id_user)
+            const getUserRepository = new MySqlGetUserRepository()
 
-            return ok<IUser>(user)
+            const getUserService = new GetUserService(getUserRepository)
+
+            const user = await getUserService.getUserById(idUser)
+
+            return ok<IUser[]>(user)
         } catch (error) {
             return serverError()
         }

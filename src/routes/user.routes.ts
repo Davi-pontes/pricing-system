@@ -6,9 +6,7 @@ import { Router } from "express";
 const routes = Router();
 
 routes.get("/", async(req,res) => {
-    const mySqlGetUserRepository = new MySqlGetUserRepository()
-
-    const getUserController = new GetUserController(mySqlGetUserRepository)
+    const getUserController = new GetUserController()
 
     const {body,statusCode} = await getUserController.handle()
 

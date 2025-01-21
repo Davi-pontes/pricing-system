@@ -1,24 +1,25 @@
 import { IdGenerator } from "@/generators/idGenerator";
-import { ICreateUserParams, ICreateUserRepository, ICreateUserService } from "@/interfaces/user";
+import { ICreateUserParams, ICreateUserRepository, ICreateUserService, IUser } from "@/interfaces/user";
 import { MySqlCreatePaymentMethodRepository } from "@/repository/paymentMthod/create-paymentMethod";
 import { Hash } from "@/utils/hash";
 import { CreatePaymentMethodService } from "../paymentMethod/create-paymentMethod";
 import { TypePayment } from "@/interfaces/paymentMethod";
 import { MySqlGetUserRepository } from "@/repository/user/get-user";
 import { GetUserController } from "@/controller/user/get-user";
+import { GetUserService } from "./get-user";
 
 export class CreateUserService implements ICreateUserService {
     constructor(private readonly createUserRespository: ICreateUserRepository) { }
 
-    async createUser(params: ICreateUserParams): Promise<number> {
+    async createUser(params: ICreateUserParams): Promise<IUser> {
         try {
             const dataForCreateUser = params
             
-            dataForCreateUser.id = await IdGenerator.generator()
+            dataForCreateUser.id = IdGenerator.generator()
 
             dataForCreateUser.password = Hash.create(dataForCreateUser.password)
 
-            let userCreated = await this.createUserRespository.createUser(dataForCreateUser)
+            await this.createUserRespository.createUser(dataForCreateUser)
 
             const paymentMethodRepository = new MySqlCreatePaymentMethodRepository()
 
@@ -59,9 +60,9 @@ export class CreateUserService implements ICreateUserService {
 
             const getUserRepository = new MySqlGetUserRepository()
 
-            const getUserController = new GetUserController(getUserRepository)
+            const getUserService = new GetUserService(getUserRepository)
 
-            userCreated = await getUserController.getUserById(dataForCreateUser.id)
+            const userCreated = await getUserService.getUserById(dataForCreateUser.id)
             
             return userCreated
         } catch (error) {

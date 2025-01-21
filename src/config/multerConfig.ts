@@ -8,6 +8,17 @@ export const storage = multer.diskStorage({
     filename:(req,file,callback) => {
         const time = new Date().getTime()
         
-        callback(null,`${time}_${file.originalname}`)
+        callback(null,`${time}-${file.originalname}`)
     }
 })
+
+export const uploadXlsx = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        const ext = path.extname(file.originalname);
+        if (ext !== '.xlsx' && ext !== '.xls') {
+            return cb(new Error('Only Excel files are allowed'));
+        }
+        cb(null, true);
+    }
+});

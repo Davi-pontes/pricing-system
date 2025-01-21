@@ -15,7 +15,7 @@ export class GetCategoryController implements IController {
 
             const categoriesProducts = await this.AssembleDatasCategoriesAndProducts(allCategory)
 
-            return ok<Array<any>>(categoriesProducts)
+            return ok<any>({ cetegory: allCategory, products: categoriesProducts })
 
         } catch (error) {
             return serverError()
@@ -39,10 +39,10 @@ export class GetCategoryController implements IController {
 
         for (let category of categories) {
             const categoryProducts = await getProductByCategory.getProductByIdCategory(category.id)
-            
+
             const addNameCategoryInAllProduct = categoryProducts.map((it) => ({ ...it, name_category: category.name }));
-            
-            datas.push({ category, products: addNameCategoryInAllProduct });
+
+            datas.push(...addNameCategoryInAllProduct);
         }
 
         return datas

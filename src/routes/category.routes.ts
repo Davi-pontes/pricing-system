@@ -22,6 +22,18 @@ routes.get("/", async (req,res) => {
     res.status(statusCode).send(body)
 })
 
+routes.get("/only", async (req,res) => {
+    const mySqlGetCategoryRepository = new MySqlGetCategoryRepository()
+
+    const getCategoryController = new GetCategoryController(mySqlGetCategoryRepository)
+
+    const {body,statusCode} = await getCategoryController.getOnlyCategory({
+        params: req.query
+    })
+
+    res.status(statusCode).send(body)
+})
+
 routes.post("/", async(req,res) => {
     const mySqlCreateCategoryRepository = new MySqlCreateCategoryRepository()
 

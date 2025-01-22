@@ -15,7 +15,7 @@ export class GetCategoryController implements IController {
 
             const categoriesProducts = await this.AssembleDatasCategoriesAndProducts(allCategory)
 
-            return ok<any>({ cetegory: allCategory, products: categoriesProducts })
+            return ok<any>({ category: allCategory, products: categoriesProducts })
 
         } catch (error) {
             return serverError()

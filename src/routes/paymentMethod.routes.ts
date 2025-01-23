@@ -1,4 +1,4 @@
-import { GetPaymentMethodController } from "@/controller/paumentMethod/get-paymentMethod";
+import { GetPaymentMethodController } from "@/controller/paymentMethod/get-paymentMethod";
 import { Router } from "express";
 const routes = Router();
 

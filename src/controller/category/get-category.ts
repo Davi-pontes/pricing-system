@@ -15,20 +15,20 @@ export class GetCategoryController implements IController {
 
             const categoriesProducts = await this.AssembleDatasCategoriesAndProducts(allCategory)
 
-            return ok<any>({ cetegory: allCategory, products: categoriesProducts })
+            return ok<any>({ category: allCategory, products: categoriesProducts })
 
         } catch (error) {
             return serverError()
         }
     }
 
-    async getSpecificCategory(id_category: string): Promise<ICategory> {
+    async getSpecificCategory(id_category: string): Promise<HttpResponse<any>> {
         try {
             const specificCategory = await this.getCategoryRepository.getSpecificCategory(id_category)
 
-            return specificCategory
+            return ok<any>(specificCategory)
         } catch (error) {
-            throw new Error('Not possible get category.')
+            return serverError()
         }
     }
 
@@ -46,6 +46,17 @@ export class GetCategoryController implements IController {
         }
 
         return datas
+    }
+    async getOnlyCategory(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>>{
+        try {
+            const idUser = httpRequest.params.idUser
+
+            const allCategory = await this.getCategoryRepository.getCategory(idUser)
+
+            return ok<any>(allCategory)
+        } catch (error) {
+           return serverError() 
+        }
     }
 
 }

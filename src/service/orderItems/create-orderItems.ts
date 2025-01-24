@@ -1,8 +1,8 @@
 import { ICreateOrderItems, ICreateOrderItemsRepository, ICreateOrderItemsService, IOrderItemsParams } from "@/interfaces/orderItems";
-import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
-import { MySqlOutPutStockRepository } from "@/repository/stock/output-stock";
+import { MySqlGetStockRepository } from "@/repository/stockProduct/get-stock";
+import { MySqlOutPutStockRepository } from "@/repository/stockProduct/output-stock";
 import { StockOutPutService } from "../stock/output-stock";
-import { MySqlUpdateStockRepository } from "@/repository/stock/update-stock";
+import { MySqlUpdateStockRepository } from "@/repository/stockProduct/update-stock";
 
 export class CreateOrderItemsService implements ICreateOrderItemsService {
 

@@ -1,5 +1,5 @@
 import { IGetStockProductService, IGetStockRepository, IStockProduct } from "@/interfaces/stock";
-import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
+import { MySqlGetStockRepository } from "@/repository/stockProduct/get-stock";
 import { CustomDateUtils } from "@/utils/date";
 
 export class GetStockProductService implements IGetStockProductService{

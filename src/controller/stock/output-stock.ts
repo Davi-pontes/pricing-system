@@ -2,9 +2,9 @@ import { ok, serverError, unprocessableEntity } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { IOutPutStock } from "@/interfaces/stock";
-import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
-import { MySqlOutPutStockRepository } from "@/repository/stock/output-stock";
-import { MySqlUpdateStockRepository } from "@/repository/stock/update-stock";
+import { MySqlGetStockRepository } from "@/repository/stockProduct/get-stock";
+import { MySqlOutPutStockRepository } from "@/repository/stockProduct/output-stock";
+import { MySqlUpdateStockRepository } from "@/repository/stockProduct/update-stock";
 import { InsufficientStockError } from "@/service/stock/errors/insufficientStockError";
 import { StockOutPutService } from "@/service/stock/output-stock";
 

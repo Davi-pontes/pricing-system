@@ -9,7 +9,7 @@ export class UpdatePaymentMethodController implements IController {
     httpRequest: HttpRequest<any>
   ): Promise<HttpResponse<unknown>> {
     try {
-      const { paymentMethod } = httpRequest.body;
+      const { paymentMethods } = httpRequest.body;
       const idUser = httpRequest.params.idUser;
       const updatePaymentMethodRepository =
         new MySqlUpdatePaymentMethodRepository();
@@ -18,7 +18,7 @@ export class UpdatePaymentMethodController implements IController {
         updatePaymentMethodRepository
       );
 
-      const result = await updatePaymentMethodService.update(paymentMethod,idUser);
+      const result = await updatePaymentMethodService.update(paymentMethods,idUser);
 
       return ok<any>(result)
     } catch (error) {

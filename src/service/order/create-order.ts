@@ -4,7 +4,7 @@ import {
   ICreateOrderService,
   IOrder,
 } from "@/interfaces/order";
-import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
+import { MySqlGetStockRepository } from "@/repository/stockProduct/get-stock";
 import { ValidateStock } from "../stock/validate-stock";
 import { MySqlCreateOrderRepository } from "@/repository/order/create-order";
 import { ValidationErrorOrder } from "@/service/order/errors/validationError";

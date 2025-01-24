@@ -3,7 +3,7 @@ import { badRequest, created, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { ICreateProductRepository, IProduct } from "@/interfaces/product";
-import { MySqlCreateStockRepository } from "@/repository/stock/create-stock";
+import { MySqlCreateStockRepository } from "@/repository/stockProduct/create-stock";
 import { FormatedDatas } from "@/utils/FormatedDatas";
 import { VProduct } from "@/validations/product/product";
 

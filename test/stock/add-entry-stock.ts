@@ -1,5 +1,5 @@
-import { MySqlEntryStockRepository } from "@/repository/stock/entry-stock";
-import { MySqlUpdateStockRepository } from "@/repository/stock/update-stock";
+import { MySqlEntryStockRepository } from "@/repository/stockProduct/entry-stock";
+import { MySqlUpdateStockRepository } from "@/repository/stockProduct/update-stock";
 import { StockEntryService } from "@/service/stock/entry-stock";
 
 test('Add product entry to stock', async () => {

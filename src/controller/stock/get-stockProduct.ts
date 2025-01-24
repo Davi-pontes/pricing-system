@@ -2,7 +2,7 @@ import { badRequest, ok, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { IStockProduct } from "@/interfaces/stock";
-import { MySqlGetStockRepository } from "@/repository/stock/get-byIdStock";
+import { MySqlGetStockRepository } from "@/repository/stockProduct/get-stock";
 import { GetStockProductService } from "@/service/stock/get-stockProduct";
 
 export class GetStockProductController implements IController{

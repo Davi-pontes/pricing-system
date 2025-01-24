@@ -6,9 +6,8 @@ export class MySqlGetPaymentMethodRepository implements IGetPaymentMethodReposit
         try {
             const allPaymentMethodTheUser = 
             connection
-            .select('id', 'type', 'tax')
+            .select('id', 'type', 'tax', 'status')
             .table('payment_method')
-            .where('status',1)
             .where('id_user', idUser)
 
             return allPaymentMethodTheUser

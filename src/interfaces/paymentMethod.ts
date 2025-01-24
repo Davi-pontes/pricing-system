@@ -32,7 +32,7 @@ export interface ICreatePaymentMethodRepository{
     createPaymentMehod(params: ICreatePaymentMethod[]): Promise<IPaymentMethod>
 }
 export interface IUpdatePaymentMethodRepository{
-    updatePaymentMehod(params: IUpdatePaymentMethod[],idUser: string): Promise<any>
+    updatePaymentMehod(params: IUpdatePaymentMethod,idUser: string): Promise<number>
 }
 export interface ICreatePaymentMethodService{
     create(params: ICreatePaymentMethod[]): Promise<IPaymentMethod>
@@ -44,5 +44,5 @@ export interface IGetPaymentMethodService{
     getByActiveUserId(idUser: string): Promise<IPaymentMethod[]>
 }
 export interface IUpdatePaymentMethodService{
-    update(paymentMethod: IUpdatePaymentMethod[]): Promise<IPaymentMethod[]>
+    update(paymentMethod: IUpdatePaymentMethod[], idUser:string): Promise<IPaymentMethod[]>
 }

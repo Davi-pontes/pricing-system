@@ -2,12 +2,13 @@ import { IPaymentMethod, IUpdatePaymentMethod, IUpdatePaymentMethodRepository } 
 import connection from "@/database/connectionKnex";
 
 export class MySqlUpdatePaymentMethodRepository implements IUpdatePaymentMethodRepository {
-    async updatePaymentMehod(params: IUpdatePaymentMethod[], idUser: string): Promise<any> {
+    async updatePaymentMehod(params: IUpdatePaymentMethod, idUser: string): Promise<number> {
         try {
             const result = await connection
             .update(params)
             .table('payment_method')
             .where('id_user', idUser)
+            .where('id', params.id)
 
             return result
         } catch (error) {

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "tsx ./src/service/xlsx/xlsx.ts",
-    "testJest": "jest",
+    "test-jest": "jest",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",
     "start": "node ./dist/server.js",
@@ -12,7 +12,8 @@
     "make": "knex migrate:make",
     "seed:make": "knex seed:make",
     "seed": "knex seed:run",
-    "delete": "tsx ./src/repository/category/delete-category.ts"
+    "delete": "tsx ./src/repository/category/delete-category.ts",
+    "create:database": "tsx ./src/database/createDataBase.ts"
   },
   "keywords": [],
   "author": "",

@@ -1,61 +1,25 @@
 version: '3.8'
 
 services:
-  mysqldb:
-    image: mysql:8.0.39
-    container_name: db_precification
-    restart: unless-stopped
-    env_file:
-      - ./.env
-    environment:
-      - MYSQL_ROOT_PASSWORD=$KNEX_PASSWORD
-      - MYSQL_DATABASE=$KNEX_DATABASE
-      - MYSQL_TCP_PORT=$MYSQL_DOCKER_PORT
-      - TZ=America/Sao_Paulo
-    ports:
-      - $MYSQL_DOCKER_PORT:$MYSQL_DOCKER_PORT
-    expose:
-      - $MYSQL_DOCKER_PORT:$MYSQL_DOCKER_PORT
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - precification_network
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
   app:
-    depends_on:
-      mysqldb:
-        condition: service_healthy
-    build:
+    build: 
       context: ./
       dockerfile: Dockerfile
-    image: davjose/back-end-precification:latest
-    working_dir: /PRECIFICATION-BACK-END
-    container_name: back-end-precification
+    container_name: back-end-helqui
     restart: unless-stopped
-    env_file:
-      - ./.env
     environment:
-      - KNEX_HOST=mysqldb
-      - KNEX_PORT=$MYSQL_DOCKER_PORT
-      - KNEX_DATABASE=$KNEX_DATABASE
-      - KNEX_USER=$KNEX_USER
-      - KNEX_PASSWORD=$KNEX_PASSWORD
+      - KNEX_HOST
+      - KNEX_CLIENT
+      - KNEX_USER
+      - KNEX_PASSWORD
+      - KNEX_PORT
+      - KNEX_DATABASE
+      - MYSQL_DOCKER_PORT
     ports:
       - $SERVER_PORT:$SERVER_PORT
     networks:
-      - precification_network
-    volumes:
-      - .:/PRECIFICATION-BACK-END
-      - /PRECIFICATION-BACK-END/node_modules
-    command: ["sh", "-c", "npm install && npm run createDataBase && npm run migrate && npm run build && npm run start"]
+      - helqui_network
 
 networks:
-  precification_network:
+  helqui_network:
     external: true
-volumes:
-  db_data:

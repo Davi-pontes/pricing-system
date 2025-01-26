@@ -53,3 +53,5 @@ jobs:
           SCRIPT_AFTER: |
             echo "Pulling Docker Image..."
             docker pull davjose/back-end-precification:v1.21
+            docker stop backendprecification5 || true
+            docker run -d --name backendprecification6 --network precification_network -p 3000:3000 davjose/back-end-precification:v1.21

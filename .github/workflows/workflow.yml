@@ -48,6 +48,8 @@ jobs:
           REMOTE_HOST: ${{vars.REMOTE_HOST}}
           REMOTE_USER: ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
+          SCRIPT_BEFORE: |
+            ls
           SCRIPT_AFTER: |
             echo "Pulling Docker Image..."
             docker pull davjose/back-end-precification:v1.21

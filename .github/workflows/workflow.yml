@@ -51,7 +51,15 @@ jobs:
           SCRIPT_BEFORE: |
             ls
           SCRIPT_AFTER: |
-            echo "Pulling Docker Image..."
+            echo "Starting deploy..."
             docker pull davjose/back-end-precification:v1.21
-            docker stop backendprecification5 || true
-            docker run -d --name backendprecification6 --network precification_network -p 3000:3000 davjose/back-end-precification:v1.21
+            docker stop backendprecification || true
+            docker rm backendprecification || true
+            cd helqui
+            docker run -d \
+              --name backendprecification \
+              --env-file .env \
+              --network precification_network \
+              -p 3000:3000 davjose/back-end-precification:latest
+              
+            echo "Deploy completed."

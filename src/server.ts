@@ -7,5 +7,5 @@ config()
 const port = process.env.PORT || 3000
 
 app.listen(port,() => {
-    console.log(`Servidor iniciado na porta, ${port} em ${moment().toDate()}`)
+    console.log(`Servidor iniciado na porta,versão v1.21.2 ${port} em ${moment().toDate()}`)
 })

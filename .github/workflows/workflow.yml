@@ -36,7 +36,7 @@ jobs:
 
       - name: Push Docker Images
         run: |
-          docker push davjose/back-end-precification:vv1.21.2
+          docker push davjose/back-end-precification:v1.21.2
           docker push davjose/back-end-precification:latest
 
       - name: Hostinger Deployment

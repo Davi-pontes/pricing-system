@@ -32,3 +32,8 @@ jobs:
         run: |
           docker build -t davjose/back-end-precification:v1.20 .
           docker build -t davjose/back-end-precification:latest .
+          
+      - name: Push Docker Images
+        run: |
+          docker push davjose/back-end-precification:v1.20
+          docker push davjose/back-end-precification:latest

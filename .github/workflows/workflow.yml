@@ -22,18 +22,32 @@ jobs:
         run: |
           npm install
           npm run build
+
       - name: Docker Login
         uses: docker/login-action@v3
         with:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_PASSWORD}}
-        
+
       - name: Build Docker Image
         run: |
-          docker build -t davjose/back-end-precification:v1.20 .
+          docker build -t davjose/back-end-precification:v1.21 .
           docker build -t davjose/back-end-precification:latest .
-          
+
       - name: Push Docker Images
         run: |
-          docker push davjose/back-end-precification:v1.20
+          docker push davjose/back-end-precification:v1.21
           docker push davjose/back-end-precification:latest
+
+      - name: Hostinger Deployment
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{secrets.SERVER_SSH_KEY}}
+          ARGS: "-RLGOdZVC --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{vars.REMOTE_HOST}}
+          REMOTE_USER: ${{vars.REMOTE_USER}}
+          REMOTE_PORT: ${{vars.REMOTE_PORT}}
+          SCRIPT_AFTER: |
+            echo "Pulling Docker Image..."
+            docker pull davjose/back-end-precification:v1.21

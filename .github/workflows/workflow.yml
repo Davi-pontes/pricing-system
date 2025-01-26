@@ -60,6 +60,6 @@ jobs:
               --name backendprecification \
               --env-file .env \
               --network precification_network \
-              -p 3000:3000 davjose/back-end-precification:latest
+              -p 3000:3000 davjose/back-end-precification:v1.21.2
 
             echo "Deploy completed."

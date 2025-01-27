@@ -15,7 +15,7 @@ routes.post("/", async (req, res) => {
     })
 
     res.cookie('token', body.token, {
-        maxAge: 1800000,
+        maxAge: 1000 * 30,
         httpOnly: true,
         secure: false
     })

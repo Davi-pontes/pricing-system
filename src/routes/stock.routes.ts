@@ -2,9 +2,14 @@ import { CalculateStockController } from "@/controller/stock/calculate-stock";
 import { StockEntryController } from "@/controller/stock/entry-stock";
 import { GetStockProductController } from "@/controller/stock/get-stockProduct";
 import { StockOutPutController } from "@/controller/stock/output-stock";
+import { AuthMidlleware } from "@/middleware/auth";
 import { Router } from "express";
 
 const routes = Router();
+
+const authMidlleware = new AuthMidlleware()
+
+routes.use(authMidlleware.validateToken)
 
 routes.get("/", async (req,res) => {
   const stockProductController = new GetStockProductController()

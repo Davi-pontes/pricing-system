@@ -11,10 +11,15 @@ import { Router } from "express";
 import { storage } from "@/config/multerConfig";
 import multer from "multer";
 import { CreateSingleProductController } from "@/controller/product/createSingle-product";
+import { AuthMidlleware } from "@/middleware/auth";
 
 const routes = Router();
 
 const upload = multer({storage: storage})
+
+const authMidlleware = new AuthMidlleware()
+
+routes.use(authMidlleware.validateToken)
 
 routes.get("/", async (req, res) => {
     const mySqlGetRepository = new MySqlGetProductRepository()

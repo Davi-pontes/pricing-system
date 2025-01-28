@@ -14,7 +14,7 @@ export class Auth {
     create(): string {
         try {
             const payload = {
-                exp: Math.floor(Date.now() / 1000) + 1800,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 8),
                 iat: Math.floor(Date.now() / 1000),
                 data: this.informationUser
             }
@@ -26,10 +26,11 @@ export class Auth {
         }
     }
 
-    static validate(token: string): string| JWT.JwtPayload {
-            const secret = process.env.SECRET || 'testeprocessenv'
-            const validate = JWT.verify(token, secret)
+    static validate(token: string): string | JWT.JwtPayload {
+        const secret = process.env.SECRET || crypto.randomUUID()
+        
+        const validate = JWT.verify(token, secret)
 
-            return validate
+        return validate
     }
 }

@@ -7,8 +7,13 @@ import { MySqlUpdateSpecificProductIngredientRepository } from "@/repository/pro
 import { UpdateSpecificProductIngredientController } from "@/controller/productIngredien/update-specificProductIngredient";
 import { MySqlUpdateStockRepository } from "@/repository/productIngredient/update-stock";
 import { UpdateStockController } from "@/controller/productIngredien/update-stock";
+import { AuthMidlleware } from "@/middleware/auth";
 
 const routes = Router();
+
+const authMidlleware = new AuthMidlleware()
+
+routes.use(authMidlleware.validateToken)
 
 routes.get("/", async (req, res) => {
     const mySqlGetProductIngredientRepository = new MySqlGetProductIngredientRepository()

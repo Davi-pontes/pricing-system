@@ -1,3 +1,5 @@
+import { NextFunction } from "express";
+
 export enum HttpStatusCode {
     OK = 200,
     CREATED = 201,
@@ -19,4 +21,7 @@ export interface HttpRequest<B> {
     body?: B
     file?: B
     cookies?: any
+}
+
+export interface HttpNext extends NextFunction{
 }

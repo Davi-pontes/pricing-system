@@ -2,6 +2,7 @@ import { CreateCategoryController } from "@/controller/category/create-category"
 import { DeleteCategoryController } from "@/controller/category/delete-category";
 import { GetCategoryController } from "@/controller/category/get-category";
 import { UpdateCategoryController } from "@/controller/category/update-category";
+import { AuthMidlleware } from "@/middleware/auth";
 import { MySqlCreateCategoryRepository } from "@/repository/category/create-category";
 import { MySqlDeleteCategoryRepository } from "@/repository/category/delete-category";
 import { MySqlGetCategoryRepository } from "@/repository/category/get-category";
@@ -9,6 +10,10 @@ import { MySqlUpdateCategoryRepository } from "@/repository/category/update-cate
 import { Router } from "express";
 
 const routes = Router();
+
+const authMidlleware = new AuthMidlleware()
+
+routes.use(authMidlleware.validateToken)
 
 routes.get("/", async (req,res) => {
     const mySqlGetCategoryRepository = new MySqlGetCategoryRepository()

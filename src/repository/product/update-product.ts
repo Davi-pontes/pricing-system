@@ -17,6 +17,8 @@ export class MySqlUpdateProductRepository implements IUpdateProductRepository {
             }
             return product[0]
         } catch (error) {
+            console.log(error);
+            
             throw new Error('Product not update')
         }
     }

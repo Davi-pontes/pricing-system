@@ -1,7 +1,12 @@
 import { GetPaymentMethodController } from "@/controller/paymentMethod/get-paymentMethod";
 import { UpdatePaymentMethodController } from "@/controller/paymentMethod/update-paymentMethod";
+import { AuthMidlleware } from "@/middleware/auth";
 import { Router } from "express";
 const routes = Router();
+
+const authMidlleware = new AuthMidlleware()
+
+routes.use(authMidlleware.validateToken)
 
 routes.get("/", async(req,res) => {
     const paymentMethodController = new GetPaymentMethodController()

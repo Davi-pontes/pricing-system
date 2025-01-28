@@ -32,7 +32,7 @@ export class CreateSingleProductController implements IController {
 
       const formatedDatas = FormatedDatas.formatedDatasToProduct(datasProduct);
 
-      formatedDatas.id_product = await IdGenerator.generator();
+      formatedDatas.id_product = IdGenerator.generator();
 
       const product = await this.createProductRepository.createProduct(
         formatedDatas
@@ -40,7 +40,7 @@ export class CreateSingleProductController implements IController {
 
       const createStockRepository = new MySqlCreateStockRepository()
 
-      await createStockRepository.createSctock({quantity: 0, id_product: formatedDatas.id_product})
+      await createStockRepository.createSctock({quantity: datasProduct.qtdStock, id_product: formatedDatas.id_product})
 
       return created<IProduct>(product);
     } catch (error) {

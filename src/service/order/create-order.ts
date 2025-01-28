@@ -14,6 +14,7 @@ import { CreateOrderItemsService } from "../orderItems/create-orderItems";
 import { MySqlGetOrderRepository } from "@/repository/order/get-order";
 import { GetOrderService } from "./get-order";
 import { VCreateOrder } from "@/validations/order/create-order";
+import { InsufficientStockError } from "../stock/errors/insufficientStockError";
 
 export class CreateOrderService implements ICreateOrderService {
   constructor(private readonly createOrderRepository: ICreateOrderRepository) {}
@@ -66,6 +67,9 @@ export class CreateOrderService implements ICreateOrderService {
     } catch (error) {
       if (error instanceof ValidationErrorOrder) {
         throw new ValidationErrorOrder(error.message);
+      }
+      if (error instanceof InsufficientStockError) {
+        throw new InsufficientStockError("Estoque insuficiente.");
       }
 
       throw new Error("Not created order.");

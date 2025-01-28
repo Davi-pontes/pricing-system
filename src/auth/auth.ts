@@ -14,7 +14,7 @@ export class Auth {
     create(): string {
         try {
             const payload = {
-                exp: Math.floor(Date.now() / 1000) + 1800,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 8),
                 iat: Math.floor(Date.now() / 1000),
                 data: this.informationUser
             }

@@ -7,11 +7,11 @@ export class AuthController implements IController {
     async handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>> {
         try {
             const token = httpRequest.cookies?.token || httpRequest.headers.authorization?.split(' ')[1];
-
+            
             if (!token) {
                 return unauthorized()
             }
-
+            
             const authValidate = Auth.validate(token)
 
             return ok<string>(authValidate)

@@ -44,4 +44,9 @@ export interface IGetUserRepository {
     getUser():Promise<IUser[]>
     getUserById(id_User: string): Promise<IUser>
 }
-
+export interface IUpdateUserRepository{
+    updateUser(dataUserToUpdate: IUpdateUserParams, idUser: string): Promise<number>
+}
+export interface IUpdateUserService{
+    updateUser(dataUserToUpdate: IUpdateUserParams, idUser: string): Promise<IUser>
+}

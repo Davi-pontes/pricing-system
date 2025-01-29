@@ -27,7 +27,6 @@ export class GetUserService implements IGetUserService {
     try {
       const result = await this.getUserRepository.getUserPassword(
         idUser,
-        oldPassword
       );
 
       const validatePassword = Hash.validate(oldPassword, result.password);

@@ -8,3 +8,7 @@ export class Hash{
         return this.create(password) === hashedPassword
     }
 }
+
+// const t = Hash.create('123456')
+
+// console.log(t);

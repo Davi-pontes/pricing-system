@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsx ./src/service/xlsx/xlsx.ts",
+    "test": "tsx ./src/utils/hash.ts",
     "test-jest": "jest",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",

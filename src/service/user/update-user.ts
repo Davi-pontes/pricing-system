@@ -24,11 +24,9 @@ export class UpdateUserService implements IUpdateUserService {
       const getUserService = new GetUserService(getUserRepository);
 
       if (dataUserToUpdate.password) {
-        //const passwordWithHash = Hash.create(dataUserToUpdate.password.oldPassword);
+        await getUserService.validateUserPassword(idUser,dataUserToUpdate.password.oldPassword)
         
-        await getUserService.validateUserPassword(dataUserToUpdate.password.oldPassword, idUser)
-        
-        dataUserToUpdate.password = dataUserToUpdate.password?.newPassword
+        dataUserToUpdate.password = Hash.create(dataUserToUpdate.password?.newPassword)
       }
 
       await this.mySqlUpdateUserRepository.updateUser(dataUserToUpdate, idUser);

@@ -46,7 +46,6 @@ export interface IGetUserRepository {
   getUserById(id_User: string): Promise<IUser>;
   getUserPassword(
     idUser: string,
-    oldPassword: string
   ): Promise<{ id: string; password: string }>;
 }
 export interface IUpdateUserRepository {

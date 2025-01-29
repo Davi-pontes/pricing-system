@@ -23,6 +23,8 @@ export class MySqlGetUserRepository implements IGetUserRepository {
 
       return user[0];
     } catch (error) {
+      console.log(error);
+      
       throw new Error("Not possible get user.");
     }
   }
@@ -30,7 +32,7 @@ export class MySqlGetUserRepository implements IGetUserRepository {
     try {
         const user = await connection
         .select("id", "password")
-        .table("user")
+        .table("users")
         .where("id", idUser)
 
         return user[0]

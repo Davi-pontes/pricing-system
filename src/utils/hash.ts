@@ -9,6 +9,6 @@ export class Hash{
     }
 }
 
-// const t = Hash.create('123456')
+// const t = Hash.create('Davi8693')
 
 // console.log(t);

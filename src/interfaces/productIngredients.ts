@@ -17,11 +17,11 @@ export interface ICreateProductIngredientParams{
     weight: number
     unit1: string
     price: number
-    unit2: string
     ingredient_cost: number
+    quantity: number
     id_product: string
-    quantity_in_stock: number
-    total_cash_in_stock: number
+    quantity_in_stock?: number
+    total_cash_in_stock?: number
 }
 
 export interface IUpdateProductIngredient{
@@ -47,7 +47,7 @@ export interface ICreateProductIngredientRepository {
 }
 
 export interface ICreateProductController {
-    handle(params: Array<ICreateProductIngredientParams>, id_product:string): Promise<IProductIngredient>
+    handle(params: Array<ICreateProductIngredientParams>): Promise<IProductIngredient>
 }
 
 export interface IGetProductIngredient{

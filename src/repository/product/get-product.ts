@@ -60,11 +60,14 @@ export class MySqlGetProductRepository implements IGetProductRepository {
           "s.quantity as qtdStock"
         )
         .from("product as p")
-        .rightJoin("stock as s", "p.id_product", "s.id_product")
+        .leftJoin("stock as s", "p.id_product", "s.id_product")
         .where("p.id_product", id_product);
+
 
       return Product[0];
     } catch (error) {
+      console.log(error);
+      
       throw new Error("Not possible get product only.");
     }
   }

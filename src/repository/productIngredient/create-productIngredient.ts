@@ -13,8 +13,6 @@ export class MySqlCreateProductIngredientRepository implements ICreateProductIng
 
             return productIngredients[0]
         } catch (error) {
-            console.log(error);
-            
             throw new Error("Product ingredient not created")
         }
     }

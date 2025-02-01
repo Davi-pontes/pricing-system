@@ -19,12 +19,12 @@ export class UpdateProductAndProductIngredientController
       if (!httpRequest.body) return badRequest("Please specify a body");
 
       if (!httpRequest.params) return badRequest("Please specify a params");
-
+      
       const id_product = httpRequest.params.id;
 
-      const productInformation = httpRequest.body.data.productInformation;
+      const productInformation = httpRequest.body.productInformation;
 
-      const productIngredient = httpRequest.body.data.productIngredients;
+      const productIngredient = httpRequest.body.productIngredients;
 
       const productUpdate =
         await this.mySqlUpdateProductRepository.updateProduct(
@@ -45,6 +45,8 @@ export class UpdateProductAndProductIngredientController
 
       return ok<IProduct>(productUpdate);
     } catch (error) {
+      console.log(error);
+      
       return serverError();
     }
   }
@@ -55,9 +57,9 @@ export class UpdateProductAndProductIngredientController
       if (!httpRequest.body) return badRequest("Please specify a body");
 
       if (!httpRequest.params) return badRequest("Please specify a params");
-
+      
       const idProduct = httpRequest.params.id;
-
+      
       const productInformation = httpRequest.body;
 
       const formatedDatas =

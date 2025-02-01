@@ -16,6 +16,7 @@ export class AuthController implements IController {
 
             return ok<string>(authValidate)
         } catch (error: any) {
+            (error)
             if (error.message && error.message === 'invalid token') {
                 return unauthorized()
             } else {

@@ -15,7 +15,7 @@ export class UpdateProductIngredientController implements IUpdateProductIngredie
 
             const createProductIngredientRepository = new CreateProductIngredientController(mySqlCreateProductIngredientRepository)
 
-            const productIngredientCreated = await createProductIngredientRepository.handle(params,id_product)
+            const productIngredientCreated = await createProductIngredientRepository.handle(params)
 
             if(!productIngredientCreated) throw new Error("Product ingredient not atualized");
 

@@ -1,5 +1,5 @@
 import { HttpRequest } from "./http"
-import { IProductIngredient } from "./productIngredients"
+import { ICreateProductIngredientParams, IProductIngredient } from "./productIngredients"
 
 export interface IProduct {
     id_product: string
@@ -41,20 +41,24 @@ export interface ISingleProduct{
     qtdInBox: number
     only: boolean
 }
+export interface ICreateProductProps{
+    productInformation: ICreateProductParams
+    productIngredients: Array<ICreateProductIngredientParams>
+}
 export interface ICreateProductParams {
     name: string
     income: number
     recipe_time: number
     profit_percentage: number
-    revenue_cost: number
     fixed_cost: number
+    revenue_cost: number
     labor: number
     profit: number
     final_recipe_price: number
     cost_of_all_ingredients: number
     price_per_unit: number
     id_category: string
-    description: string
+    description?: string
 }
 
 export interface IUpdateProductParams {

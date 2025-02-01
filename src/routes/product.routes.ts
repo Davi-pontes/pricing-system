@@ -123,7 +123,7 @@ routes.put("/", async (req, res) => {
 
   const { body, statusCode } =
     await updateProductAndProductIngredientController.handle({
-      params: req.body.params,
+      params: req.query,
       body: req.body,
     });
 

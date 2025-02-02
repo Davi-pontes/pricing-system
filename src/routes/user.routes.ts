@@ -1,4 +1,3 @@
-import { CreateUserController } from "@/controller/user/create-user";
 import { GetUserController } from "@/controller/user/get-user";
 import { UpdateUserController } from "@/controller/user/update-user";
 import { AuthMidlleware } from "@/middleware/auth";
@@ -22,15 +21,6 @@ routes.get("/:id", async (req, res) => {
 
     const { body, statusCode } = await getUserController.getUserById(req.params.id)
 
-    res.status(statusCode).send(body)
-})
-
-routes.post("/", async (req, res) => {
-    const createUserController = new CreateUserController()
-
-    const { body, statusCode } = await createUserController.handle({
-        body: req.body
-    })
     res.status(statusCode).send(body)
 })
 

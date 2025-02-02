@@ -8,6 +8,7 @@ import { LoginRoutes } from "./routes/login.routes";
 import { OrderRoutes } from "./routes/order.routes";
 import { PaymentMethodRoutes } from "./routes/paymentMethod.routes";
 import { UploadXlsx } from "./routes/upload-xlsx.routes";
+import { PublicUserRoutes } from "./routes/public/user.routes";
 
 const routes = Router()
 
@@ -17,6 +18,7 @@ routes.use('/product/ingredient', ProductIngredientRoutes)
 routes.use('/category', CategoryRoutes)
 routes.use('/stock', StockRoutes)
 routes.use('/user', UserRoutes)
+routes.use('/user/sign-up', PublicUserRoutes)
 routes.use('/login', LoginRoutes)
 routes.use('/order', OrderRoutes)
 routes.use('/payment/method', PaymentMethodRoutes)

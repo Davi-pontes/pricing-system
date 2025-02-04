@@ -24,9 +24,15 @@ export class UpdateUserService implements IUpdateUserService {
       const getUserService = new GetUserService(getUserRepository);
 
       if (dataUserToUpdate.password) {
-        await getUserService.validateUserPassword(idUser,dataUserToUpdate.password.oldPassword)
-        
-        dataUserToUpdate.password = Hash.create(dataUserToUpdate.password?.newPassword)
+        await getUserService.validateUserPassword(
+          idUser,
+          dataUserToUpdate.password.oldPassword
+        );
+
+        const passwordAsHash = Hash.create(
+          dataUserToUpdate.password?.newPassword
+        );
+        dataUserToUpdate.password = passwordAsHash;
       }
 
       await this.mySqlUpdateUserRepository.updateUser(dataUserToUpdate, idUser);
@@ -36,10 +42,34 @@ export class UpdateUserService implements IUpdateUserService {
       return updatedUser;
     } catch (error: unknown) {
       if (error instanceof ValidationErrorpasswordDivergent) {
-        throw new ValidationErrorpasswordDivergent("Senha atual não está correta.");
+        throw new ValidationErrorpasswordDivergent(
+          "Senha atual não está correta."
+        );
       } else {
-        throw new Error("Not possible get user.");
+        throw new Error("Not possible update user.");
       }
+    }
+  }
+
+  async updateFirstAccessUser(idUSer: string): Promise<number> {
+    try {
+      const updatedAccess =
+        await this.mySqlUpdateUserRepository.updateFirstAccessUser(idUSer);
+
+      return updatedAccess;
+    } catch (error) {
+      throw new Error("Not possible update user.");
+    }
+  }
+
+  async updateLastAccessUser(idUSer: string): Promise<number> {
+    try {
+      const updatedAccess =
+        await this.mySqlUpdateUserRepository.updateLastAccessUser(idUSer);
+
+      return updatedAccess;
+    } catch (error) {
+      throw new Error("Not possible update user.");
     }
   }
 }

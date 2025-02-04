@@ -8,6 +8,7 @@ export interface ILogin {
 export interface ILoginAuthorized {
     id: string
     name: string
+    first_access: Date
 }
 
 export interface IGetLoginRepository {

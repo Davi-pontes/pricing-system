@@ -1,36 +1,28 @@
 import { ILoginAuthorized } from "@/interfaces/login";
-import 'dotenv/config'
-import JWT from 'jsonwebtoken'
+import 'dotenv/config';
+import JWT from 'jsonwebtoken';
 
 export class Auth {
-    private secret: string
-    private informationUser: ILoginAuthorized
+    private static secret: string = process.env.SECRET || 'testeprocessenv';
 
-    constructor(informationUser: ILoginAuthorized) {
-        this.secret = process.env.SECRET || 'testeprocessenv'
-        this.informationUser = informationUser
-    }
-
-    create(): string {
+    static create(informationUser: ILoginAuthorized): string {
         try {
             const payload = {
-                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 8),
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 8), // 8 horas
                 iat: Math.floor(Date.now() / 1000),
-                data: this.informationUser
-            }
-            const token = JWT.sign(payload, this.secret, { algorithm: 'HS256' })
-
-            return token
+                data: informationUser
+            };
+            return JWT.sign(payload, Auth.secret, { algorithm: 'HS256' });
         } catch (error) {
-            throw new Error('Not created token.')
+            throw new Error("Falha ao criar token.");
         }
     }
 
     static validate(token: string): string | JWT.JwtPayload {
-        const secret = process.env.SECRET || crypto.randomUUID()
-        
-        const validate = JWT.verify(token, secret)
-
-        return validate
+        try {
+            return JWT.verify(token, Auth.secret);
+        } catch (error) {
+            throw new Error("Token inválido.");
+        }
     }
 }

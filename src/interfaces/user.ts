@@ -53,10 +53,14 @@ export interface IUpdateUserRepository {
     dataUserToUpdate: IUpdateUserParams,
     idUser: string
   ): Promise<number>;
+  updateFirstAccessUser(idUSer: string): Promise<number>
+  updateLastAccessUser(idUSer: string): Promise<number>
 }
 export interface IUpdateUserService {
   updateUser(
     dataUserToUpdate: IUpdateUserParams,
     idUser: string
   ): Promise<IUser>;
+  updateFirstAccessUser(idUSer: string): Promise<number>
+  updateLastAccessUser(idUSer: string): Promise<number>
 }

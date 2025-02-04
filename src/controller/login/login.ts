@@ -3,24 +3,33 @@ import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { ILogin } from "@/interfaces/login";
 import { MySqlLoginRepository } from "@/repository/login/login";
+import { MySqlUpdateUserRepository } from "@/repository/user/update-user";
 import { LoginService } from "@/service/login/login";
+import { UpdateUserService } from "@/service/user/update-user";
 
 export class LoginController implements IController {
+  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
+    try {
+      if (!httpRequest.body) return badRequest("Informe o email e a senha.");
 
-    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
-        try {
-            if (!httpRequest.body) return badRequest('Informe o email e a senha.')
+      const mysqlLoginRepository = new MySqlLoginRepository();
 
-            const mysqlLoginRepository = new MySqlLoginRepository()
+      const mySqlUpdateUserRepository = new MySqlUpdateUserRepository();
 
-            const loginController = new LoginService(mysqlLoginRepository)
+      const updateUserService = new UpdateUserService(
+        mySqlUpdateUserRepository
+      );
 
-            const datasUser = await loginController.loginService(httpRequest.body)
+      const loginController = new LoginService(
+        mysqlLoginRepository,
+        updateUserService
+      );
 
-            return ok<ILogin>(datasUser)
-        } catch (error) {
-            return serverError()
-        }
+      const datasUser = await loginController.loginService(httpRequest.body);
+
+      return ok<ILogin>(datasUser);
+    } catch (error) {
+      return serverError();
     }
-
+  }
 }

@@ -1,38 +1,23 @@
-import { Auth } from "@/auth/auth";
-import { ok, serverError, unauthorized } from "@/helper/helper";
+import { badRequest, ok, serverError, unauthorized } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
-import { IGetLogin, ILogin } from "@/interfaces/login";
-import { Hash } from "@/utils/hash";
+import { ILogin } from "@/interfaces/login";
+import { MySqlLoginRepository } from "@/repository/login/login";
+import { LoginService } from "@/service/login/login";
 
 export class LoginController implements IController {
-    constructor(private readonly mysqlLoginRepository: IGetLogin) { }
+
     async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
         try {
-            const dataForLogin = httpRequest.body
+            if (!httpRequest.body) return badRequest('Informe o email e a senha.')
 
-            dataForLogin.password = Hash.create(dataForLogin.password)
+            const mysqlLoginRepository = new MySqlLoginRepository()
 
-            const getLogin = await this.mysqlLoginRepository.getLogin(dataForLogin)
+            const loginController = new LoginService(mysqlLoginRepository)
 
-            if (!getLogin) {
-                return unauthorized()
-            }
-
-            const createToken = new Auth(getLogin)
-
-            const token = createToken.create()
-
-            const datasUser = {
-                user: {
-                    id: getLogin.id,
-                    name: getLogin.name
-                },
-                token: token
-            }
+            const datasUser = await loginController.loginService(httpRequest.body)
 
             return ok<ILogin>(datasUser)
-
         } catch (error) {
             return serverError()
         }

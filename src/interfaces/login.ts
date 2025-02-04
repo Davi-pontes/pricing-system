@@ -1,13 +1,23 @@
+import type { JwtPayload } from 'jsonwebtoken'
+
 export interface ILogin {
     email: string
     password: string
 }
 
-export interface ILoginAuthorized{
+export interface ILoginAuthorized {
     id: string
     name: string
 }
 
-export interface IGetLogin{
+export interface IGetLoginRepository {
     getLogin(params: ILogin): Promise<ILoginAuthorized>
+}
+
+export interface ILoginService {
+    loginService(dataForLogin: ILogin): Promise<any>
+}
+
+export interface IValidateTokenService {
+    validateToken(token: string): string | JwtPayload
 }

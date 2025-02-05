@@ -1,6 +1,7 @@
 import { IGetUserRepository, IGetUserService, IUser } from "@/interfaces/user";
 import { ValidationErrorpasswordDivergent } from "./error/validationError";
 import { Hash } from "@/utils/hash";
+import { FormatePropsUser } from "@/utils/formateUser";
 
 export class GetUserService implements IGetUserService {
   constructor(private readonly getUserRepository: IGetUserRepository) {}
@@ -8,8 +9,10 @@ export class GetUserService implements IGetUserService {
   async getAllUser(): Promise<IUser[]> {
     try {
       const allUsers = await this.getUserRepository.getUser();
-
-      return allUsers;
+      
+      const dataFormated = FormatePropsUser.formatPropertiesForGetUser(allUsers)
+      
+      return dataFormated;
     } catch (error) {
       throw new Error("Not possible get user.");
     }

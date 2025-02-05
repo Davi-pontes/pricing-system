@@ -1,41 +1,35 @@
-import { Auth } from "@/auth/auth";
-import { ok, serverError, unauthorized } from "@/helper/helper";
+import { badRequest, ok, serverError, unauthorized } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
-import { IGetLogin, ILogin } from "@/interfaces/login";
-import { Hash } from "@/utils/hash";
+import { ILogin } from "@/interfaces/login";
+import { MySqlLoginRepository } from "@/repository/login/login";
+import { MySqlUpdateUserRepository } from "@/repository/user/update-user";
+import { LoginService } from "@/service/login/login";
+import { UpdateUserService } from "@/service/user/update-user";
 
 export class LoginController implements IController {
-    constructor(private readonly mysqlLoginRepository: IGetLogin) { }
-    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
-        try {
-            const dataForLogin = httpRequest.body
+  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
+    try {
+      if (!httpRequest.body) return badRequest("Informe o email e a senha.");
 
-            dataForLogin.password = Hash.create(dataForLogin.password)
+      const mysqlLoginRepository = new MySqlLoginRepository();
 
-            const getLogin = await this.mysqlLoginRepository.getLogin(dataForLogin)
+      const mySqlUpdateUserRepository = new MySqlUpdateUserRepository();
 
-            if (!getLogin) {
-                return unauthorized()
-            }
+      const updateUserService = new UpdateUserService(
+        mySqlUpdateUserRepository
+      );
 
-            const createToken = new Auth(getLogin)
+      const loginController = new LoginService(
+        mysqlLoginRepository,
+        updateUserService
+      );
 
-            const token = createToken.create()
+      const datasUser = await loginController.loginService(httpRequest.body);
 
-            const datasUser = {
-                user: {
-                    id: getLogin.id,
-                    name: getLogin.name
-                },
-                token: token
-            }
-
-            return ok<ILogin>(datasUser)
-
-        } catch (error) {
-            return serverError()
-        }
+      return ok<ILogin>(datasUser);
+    } catch (error) {
+      return serverError();
     }
-
+  }
 }

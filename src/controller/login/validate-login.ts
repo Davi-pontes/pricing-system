@@ -1,22 +1,22 @@
-import { Auth } from "@/auth/auth";
 import { ok, serverError, unauthorized } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
+import { ValidateLoginService } from "@/service/login/validate-login";
 
 export class ValidateLoginController implements IController {
     async handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>> {
         try {
             const authorization = httpRequest.cookies.token
 
-            if(!authorization){
+            if (!authorization) {
                 return unauthorized()
             }
 
-            const token = authorization.replace('Bearer ', '')
+            const validateToken = new ValidateLoginService()
 
-            const validate = Auth.validate(token)
+            const result = validateToken.validateToken(authorization)
 
-            return ok<string>(validate)
+            return ok<string>(result)
         } catch (error: any) {
             if (error.message && error.message === 'invalid token') {
                 return unauthorized()

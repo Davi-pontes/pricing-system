@@ -7,6 +7,10 @@ export interface IUser {
   is_admin: boolean;
   created_at: string;
   updated_at: string;
+  first_access: string;
+  last_access: string;
+  active: number
+  product_count: string
 }
 export interface ICreateUserParams {
   id: string;
@@ -42,7 +46,7 @@ export interface IGetUserService {
   validateUserPassword(idUser: string, oldPassword: string): Promise<boolean>;
 }
 export interface IGetUserRepository {
-  getUser(): Promise<IUser[]>;
+  getUser(): Promise<any>;
   getUserById(id_User: string): Promise<IUser>;
   getUserPassword(
     idUser: string,
@@ -53,10 +57,14 @@ export interface IUpdateUserRepository {
     dataUserToUpdate: IUpdateUserParams,
     idUser: string
   ): Promise<number>;
+  updateFirstAccessUser(idUSer: string): Promise<number>
+  updateLastAccessUser(idUSer: string): Promise<number>
 }
 export interface IUpdateUserService {
   updateUser(
     dataUserToUpdate: IUpdateUserParams,
     idUser: string
   ): Promise<IUser>;
+  updateFirstAccessUser(idUSer: string): Promise<number>
+  updateLastAccessUser(idUSer: string): Promise<number>
 }

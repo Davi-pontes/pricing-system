@@ -14,5 +14,29 @@ export class MySqlUpdateUserRepository implements IUpdateUserRepository {
             throw new Error("Not update user.");
         }
     }
+    async updateFirstAccessUser(idUSer: string): Promise<number>{
+        try {
+            const result = await connection
+            .update('first_access', connection.fn.now())
+            .table('users')
+            .where('id', idUSer)
+
+            return result
+        } catch (error) {
+            throw new Error("Not update user.");
+        }
+    }
+    async updateLastAccessUser(idUSer: string): Promise<number>{
+        try {
+            const result = await connection
+            .update('last_access', connection.fn.now())
+            .table('users')
+            .where('id', idUSer)
+
+            return result
+        } catch (error) {
+            throw new Error("Not update user.");
+        }
+    }
 
 }

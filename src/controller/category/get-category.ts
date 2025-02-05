@@ -3,6 +3,7 @@ import { ICategory, IGetCategoryRepository } from "@/interfaces/category";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { MySqlGetProductRepository } from "@/repository/product/get-product";
+import { CalculateAverage } from "@/service/calculation/calculation-averageProfit";
 
 export class GetCategoryController implements IController {
     constructor(private readonly getCategoryRepository: IGetCategoryRepository) { }
@@ -15,7 +16,13 @@ export class GetCategoryController implements IController {
 
             const categoriesProducts = await this.AssembleDatasCategoriesAndProducts(allCategory)
 
-            return ok<any>({ category: allCategory, products: categoriesProducts })
+            const averageProfit = CalculateAverage.calculateAverageProductProfit(categoriesProducts)
+
+            return ok<any>({ 
+                category: allCategory, 
+                products: categoriesProducts, 
+                totalProducts: categoriesProducts.length,
+                averageProfit })
 
         } catch (error) {
             return serverError()

@@ -1,18 +1,20 @@
 import { ok, serverError } from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
-import { IGetProductRepository, IProduct } from "@/interfaces/product";
+import { IGetProduct, IGetProductRepository, IProduct } from "@/interfaces/product";
 
 export class GetProductController implements IController{
     constructor(private readonly getProductRepository: IGetProductRepository){}
 
-    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<IProduct[] | string>> {
+    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<IGetProduct | string>> {
        try {
         const idUser = httpRequest.params.idUser
 
         const allProducts = await this.getProductRepository.getProduct(idUser)
 
-        return ok<IProduct[]>(allProducts)
+        const totalProducts = allProducts.length
+
+        return ok<IGetProduct>({totalProducts,allProducts})
         
        } catch (error) {
         return serverError()

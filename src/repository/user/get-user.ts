@@ -2,11 +2,14 @@ import connection from "@/database/connectionKnex";
 import { IGetUserRepository, IUser } from "@/interfaces/user";
 
 export class MySqlGetUserRepository implements IGetUserRepository {
-  async getUser(): Promise<IUser[]> {
+  async getUser(): Promise<any> {
     try {
       const user = await connection
-        .select("id", "name", "phone_number", "email", "is_admin")
-        .table("users");
+        .select("u.id", "u.name", "u.phone_number", "u.email", "u.is_admin","u.first_access","u.last_access","u.active").count("p.name as product_count")
+        .from("users as u")
+        .leftJoin("category as c", "u.id", "c.user_id")
+        .leftJoin("product as p", "c.id", "p.id_category")
+        .groupBy("u.id");
 
       return user;
     } catch (error) {

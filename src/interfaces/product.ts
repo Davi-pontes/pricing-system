@@ -1,4 +1,3 @@
-import { HttpRequest } from "./http"
 import { ICreateProductIngredientParams, IProductIngredient } from "./productIngredients"
 
 export interface IProduct {
@@ -40,6 +39,10 @@ export interface ISingleProduct{
     workforce: number 
     qtdInBox: number
     only: boolean
+}
+export interface IGetProduct{
+    totalProduct: number
+    allProducts: IProduct[]
 }
 export interface ICreateProductProps{
     productInformation: ICreateProductParams

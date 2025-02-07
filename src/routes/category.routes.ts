@@ -11,68 +11,79 @@ import { Router } from "express";
 
 const routes = Router();
 
-const authMidlleware = new AuthMidlleware()
+const authMidlleware = new AuthMidlleware();
 
-routes.use(authMidlleware.validateToken)
+routes.use(authMidlleware.validateToken);
 
-routes.get("/", async (req,res) => {
-    const mySqlGetCategoryRepository = new MySqlGetCategoryRepository()
+routes.get("/", async (req, res) => {
+  const mySqlGetCategoryRepository = new MySqlGetCategoryRepository();
 
-    const getCategoryController = new GetCategoryController(mySqlGetCategoryRepository)
+  const getCategoryController = new GetCategoryController(
+    mySqlGetCategoryRepository
+  );
 
-    const {body,statusCode} = await getCategoryController.handle({
-        params: req.query
-    })
+  const { body, statusCode } = await getCategoryController.handle({
+    params: req.query,
+  });
 
-    res.status(statusCode).send(body)
-})
+  res.status(statusCode).send(body);
+});
 
-routes.get("/only", async (req,res) => {
-    const mySqlGetCategoryRepository = new MySqlGetCategoryRepository()
+routes.get("/only", async (req, res) => {
+  const mySqlGetCategoryRepository = new MySqlGetCategoryRepository();
 
-    const getCategoryController = new GetCategoryController(mySqlGetCategoryRepository)
+  const getCategoryController = new GetCategoryController(
+    mySqlGetCategoryRepository
+  );
 
-    const {body,statusCode} = await getCategoryController.getOnlyCategory({
-        params: req.query
-    })
+  const { body, statusCode } = await getCategoryController.getOnlyCategory({
+    params: req.query,
+  });
 
-    res.status(statusCode).send(body)
-})
+  res.status(statusCode).send(body);
+});
 
-routes.post("/", async(req,res) => {
-    const mySqlCreateCategoryRepository = new MySqlCreateCategoryRepository()
+routes.post("/", async (req, res) => {
+  const mySqlCreateCategoryRepository = new MySqlCreateCategoryRepository();
 
-    const createCategoryController = new CreateCategoryController(mySqlCreateCategoryRepository)
+  const createCategoryController = new CreateCategoryController(
+    mySqlCreateCategoryRepository
+  );
 
-    const{body,statusCode} = await createCategoryController.handle({
-        body: req.body
-    })
+  const { body, statusCode } = await createCategoryController.handle({
+    body: req.body,
+  });
 
-    res.status(statusCode).send(body)
-})
+  res.status(statusCode).send(body);
+});
 
-routes.patch("/", async(req,res) => {
-    const mySqlUpdateCategoryRepository = new MySqlUpdateCategoryRepository()
+routes.patch("/", async (req, res) => {
+  const mySqlUpdateCategoryRepository = new MySqlUpdateCategoryRepository();
 
-    const updateCategoryController = new UpdateCategoryController(mySqlUpdateCategoryRepository)
+  const updateCategoryController = new UpdateCategoryController(
+    mySqlUpdateCategoryRepository
+  );
 
-    const {body,statusCode} = await updateCategoryController.handle({
-        body: req.body
-    })
+  const { body, statusCode } = await updateCategoryController.handle({
+    body: req.body,
+    params: req.query,
+  });
 
-    res.status(statusCode).send(body)
-})
+  res.status(statusCode).send(body);
+});
 
-routes.delete("/", async(req,res) => {
-    const mySqlDeleteCategoryRepository = new MySqlDeleteCategoryRepository()
+routes.delete("/", async (req, res) => {
+  const mySqlDeleteCategoryRepository = new MySqlDeleteCategoryRepository();
 
-    const deleteCategoryController = new DeleteCategoryController(mySqlDeleteCategoryRepository)
+  const deleteCategoryController = new DeleteCategoryController(
+    mySqlDeleteCategoryRepository
+  );
 
-    const {body,statusCode} = await deleteCategoryController.handle({
-        params: req.query
-    })
+  const { body, statusCode } = await deleteCategoryController.handle({
+    params: req.query,
+  });
 
-    res.status(statusCode).send(body)
-})
+  res.status(statusCode).send(body);
+});
 
-export {routes as CategoryRoutes}
+export { routes as CategoryRoutes };

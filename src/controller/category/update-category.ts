@@ -7,30 +7,40 @@ import { GetCategoryController } from "./get-category";
 import { ICategory } from "@/interfaces/category";
 
 export class UpdateCategoryController implements IController {
-    constructor(private readonly mySqlUpdateCategoryRepository: MySqlUpdateCategoryRepository) { }
-    async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
-        try {
-            if (!httpRequest.body) return badRequest('Please specify a body')
+  constructor(
+    private readonly mySqlUpdateCategoryRepository: MySqlUpdateCategoryRepository
+  ) {}
+  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
+    try {
+      if (!httpRequest.body)
+        return badRequest("Corpo da solicitação incorreto.");
+      if (!httpRequest.params) return badRequest("Parametros incompleto.");
 
-            const body = httpRequest.body
+      const categoryNameToChange = httpRequest.body;
 
-            const id_category = body.idCategory
+      const idCategory = httpRequest.params.id;
 
-            const params = body.params
+      const categoryUpdated =
+        await this.mySqlUpdateCategoryRepository.updateCategory(
+          idCategory,
+          categoryNameToChange
+        );
 
-            const categoryUpdated = await this.mySqlUpdateCategoryRepository.updateCategory(id_category, params)
+      if (categoryUpdated === 0) return serverError();
 
-            if(categoryUpdated === 0) return serverError()
+      const mySqlGetCategoryRepository = new MySqlGetCategoryRepository();
 
-            const mySqlGetCategoryRepository = new MySqlGetCategoryRepository()
+      const getCategoryController = new GetCategoryController(
+        mySqlGetCategoryRepository
+      );
 
-            const getCategoryController = new GetCategoryController(mySqlGetCategoryRepository)
+      const { body } = await getCategoryController.getSpecificCategory(
+        idCategory
+      );
 
-            const specificCategory = await getCategoryController.getSpecificCategory(id_category)
-
-            return ok<ICategory>(specificCategory)
-        } catch (error) {
-            return serverError()
-        }
+      return ok<ICategory>(body);
+    } catch (error) {
+      return serverError();
     }
+  }
 }

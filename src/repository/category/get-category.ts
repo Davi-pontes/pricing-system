@@ -9,9 +9,15 @@ export class MySqlGetCategoryRepository implements IGetCategoryRepository{
     }
 
     async getCategory(user_id: string): Promise<ICategory[]> {
-        const allCategory = await connection.select('*').table('category').where({user_id})
+        const specificCategory = await connection
+        .select("c.id", "c.name", "c.user_id")
+        .count("p.name as product_count") // Adicionando alias
+        .from("category as c")
+        .leftJoin("product as p", "c.id", "p.id_category")
+        .where("c.user_id", user_id)
+        .groupBy("c.id", "c.name", "c.user_id"); // Agrupar pela categoria
 
-        return allCategory
+    return specificCategory;
     }
 
 }

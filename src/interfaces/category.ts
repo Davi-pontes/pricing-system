@@ -6,7 +6,6 @@ export interface ICategory {
 export interface IUpdateCategoryParams {
     id: string
     name: string
-    updated_at: string
 }
 export interface IGetCategoryRepository {
     getCategory(user_id: string): Promise<ICategory[]>
@@ -18,7 +17,7 @@ export interface ICreateCategoryRepository {
 }
 
 export interface IUpdateCategoryRepository {
-    updateCategory(id_category: string, params: IUpdateCategoryParams): Promise<number>
+    updateCategory(idCategory: string, params: IUpdateCategoryParams): Promise<number>
 }
 
 export interface IDeleteCategoryRepository {

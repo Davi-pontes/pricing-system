@@ -23,8 +23,10 @@ export class PricingCalculator implements IPricingCalculator {
   }
 
   getProfitPercentage(costProduct: number, sellingPrice: number): number {
-    const absolutProfit = costProduct - sellingPrice;
+    const absolutProfit = Math.abs(costProduct - sellingPrice);
 
-    return Math.abs(absolutProfit / costProduct);
+    const profitPercentage = absolutProfit / costProduct;
+
+    return costProduct > sellingPrice ? -profitPercentage : profitPercentage;
   }
 }

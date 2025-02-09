@@ -40,7 +40,7 @@ export class PricingService {
     }
     let profit = 0;
 
-    if (this.basesCalculation.profitPercentage > 0)
+    if (this.basesCalculation.profitPercentage != 0)
       profit = this.calculator.getProfit(
         costProduct,
         this.basesCalculation.profitPercentage

@@ -72,6 +72,29 @@ describe("Calculate product without ingredient", () => {
     expect(result.profitPercentage).toBeCloseTo(1.9911242603550294,10);
     expect(result.profit).toBeCloseTo(13.459999999999999);
   });
+  test("Calculate product with lower sales price", () => {
+    const productDatas = {
+      tax: 0,
+      fixedCost: 0,
+      freigth: 0,
+      priceProduct: 7,
+      qtyInBox: 1,
+      sellingPrice: 5,
+      profitPercentage: 0,
+    };
+
+    const calculator = new PricingCalculator();
+
+    const pricingService = new PricingService(productDatas, calculator);
+
+    const result = pricingService.calculate();
+
+    expect(result.costProduct).toBeCloseTo(7);
+    expect(result.pricePerUnit).toBeCloseTo(7, 10);
+    expect(result.priceWithProfit).toBeCloseTo(5, 10);
+    expect(result.profitPercentage).toBeCloseTo(-0.2857142857142857,10);
+    expect(result.profit).toBeCloseTo(-2);
+  });
   test("Calculates the product with just 1 value filled in and with sales price", () => {
     const productDatas = {
       tax: 3,
@@ -101,7 +124,7 @@ describe("Calculate product without ingredient", () => {
       fixedCost: 1.22,
       freigth: 2.5,
       priceProduct: 2.72,
-      qtyInBox: 0, // Caso especial
+      qtyInBox: 0,
       sellingPrice: 3.37,
       profitPercentage: 0.5,
     };

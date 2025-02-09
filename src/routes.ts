@@ -11,19 +11,13 @@ import { UploadXlsx } from "./routes/upload-xlsx.routes";
 //import { PublicUserRoutes } from "./routes/public/user.routes";
 import { CreateUserController } from "./controller/user/create-user";
 import { CalculateRoutes } from "./routes/calculation.routes";
+import { SignUpRoutes } from "./routes/signUp.routes";
 
 const routes = Router()
 
 routes.get("/",(req,res)=> {res.json({message: "hello"})})
-routes.post("/user/sign-up", async (req, res) => {
-    const createUserController = new CreateUserController()
 
-    const { body, statusCode } = await createUserController.handle({
-        body: req.body
-    })
-    res.status(statusCode).send(body)
-})
-//routes.use('/sign-up', PublicUserRoutes)
+routes.use('/sign-up', SignUpRoutes)
 routes.use('/product', ProductRoutes)
 routes.use('/product/ingredient', ProductIngredientRoutes)
 routes.use('/category', CategoryRoutes)

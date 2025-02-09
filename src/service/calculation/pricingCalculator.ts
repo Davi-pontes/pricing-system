@@ -1,38 +1,30 @@
-import { ICalculateParams } from "@/interfaces/calculate";
+import { IBasesCalculation, IPricingCalculator } from "@/interfaces/calculate";
 
-export class PricingCalculator {
-  private data: ICalculateParams;
-
-  constructor(data: ICalculateParams) {
-    this.data = data;
+export class PricingCalculator implements IPricingCalculator {
+  getTotalCost(data: any): number {
+    return data.tax + data.fixedCost + data.freigth + data.priceProduct;
   }
 
-  getTotalCost(): number {
-    return (
-      this.data.tax +
-      this.data.fixedCost +
-      this.data.freigth +
-      this.data.priceProduct
-    );
+  getPricePerUnit(costProduct: any, qtyInBox: any): number {
+    return costProduct / qtyInBox;
   }
 
-  getPricePerUnit(): number {
-    return this.getTotalCost() / this.data.qtyInBox;
+  getPricePerUnitWithProfit(
+    costProduct: number,
+    profit: number,
+    qtyInBox: number
+  ): number {
+    return (costProduct + profit) / qtyInBox;
   }
 
-  getPricePerUnitWithProfit(): number {
-    return (this.getTotalCost() + this.data.profit) / this.data.qtyInBox;
+  getProfit(costProduct: any, profitPercentage: any): number {
+    const profitAmount = costProduct * profitPercentage;
+    return profitAmount;
   }
 
-  getProfit(): number {
-    const profitAmount = (this.getTotalCost() * this.data.profitPercentage) / 100;
-    return this.getTotalCost() / this.data.qtyInBox + profitAmount;
-  }
+  getProfitPercentage(costProduct: number, sellingPrice: number): number {
+    const absolutProfit = costProduct - sellingPrice;
 
-  getProfitPercentage(): number {
-    const costPerUnit = this.getTotalCost() / this.data.qtyInBox;
-    const profitPerUnit = this.data.sellingPrice - costPerUnit;
-
-    return profitPerUnit / costPerUnit;
+    return Math.abs(absolutProfit / costProduct);
   }
 }

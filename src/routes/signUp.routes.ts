@@ -12,4 +12,4 @@ routes.post("/", async (req, res) => {
     res.status(statusCode).send(body)
 })
 
-export { routes as PublicUserRoutes }
+export { routes as SignUpRoutes }

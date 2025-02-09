@@ -10,6 +10,7 @@ import { PaymentMethodRoutes } from "./routes/paymentMethod.routes";
 import { UploadXlsx } from "./routes/upload-xlsx.routes";
 //import { PublicUserRoutes } from "./routes/public/user.routes";
 import { CreateUserController } from "./controller/user/create-user";
+import { CalculateRoutes } from "./routes/calculation.routes";
 
 const routes = Router()
 
@@ -32,5 +33,6 @@ routes.use('/login', LoginRoutes)
 routes.use('/order', OrderRoutes)
 routes.use('/payment/method', PaymentMethodRoutes)
 routes.use('/upload', UploadXlsx)
+routes.use('/calculate',CalculateRoutes)
 
 export { routes }

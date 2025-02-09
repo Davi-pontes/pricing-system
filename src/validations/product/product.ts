@@ -9,7 +9,7 @@ import { z } from "zod";
 export class VProduct {
   static async ValidatePropsProduct(
     params: ICreateProductParams
-  ): Promise<IValidatePropsProduct> {
+  ): Promise<any> {
     const productSchema = z.object({
       name: z
         .string({ message: "Nome do produto é obrigatório." })

@@ -28,6 +28,18 @@ export interface IPricingCalculator {
   getProfit(costProduct: number, profitPercentage: number): number;
   getProfitPercentage(costProduct: number, sellingPrice: number): number;
 }
+export interface IPricingProductWithIngredientCalculator {
+  getTotalCostAllIngredients(data: any): number;
+  getCostFixed(costAllIngredient: number, operationalCost: number): number;
+  getPricePerUnit(cost: number, qtyInBox: number): number;
+  getPricePerUnitWithProfit(
+    cost: number,
+    profit: number,
+    qtyInBox: number
+  ): number;
+  getProfit(cost: number, profitPercentage: number): number;
+  getProfitPercentage(cost: number, sellingPrice: number): number;
+}
 
 export type ValidationResult<T> =
   | { success: true; data: T }

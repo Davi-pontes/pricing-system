@@ -1,32 +1,24 @@
-import { IBasesCalculation, IPricingCalculator } from "@/interfaces/calculate";
+import { IPricingCalculator } from "@/interfaces/calculate";
+import { BaseCalculator } from "./baseCalculator";
 
-export class PricingCalculator implements IPricingCalculator {
+export class PricingCalculator extends BaseCalculator implements IPricingCalculator {
   getTotalCost(data: any): number {
     return data.tax + data.fixedCost + data.freigth + data.priceProduct;
   }
 
-  getPricePerUnit(costProduct: any, qtyInBox: any): number {
-    return costProduct / qtyInBox;
+  getPricePerUnit(cost: number, qtyInBox: number): number {
+    return super.getPricePerUnit(cost, qtyInBox);
   }
 
-  getPricePerUnitWithProfit(
-    costProduct: number,
-    profit: number,
-    qtyInBox: number
-  ): number {
-    return (costProduct + profit) / qtyInBox;
+  getPricePerUnitWithProfit(cost: number, profit: number, qtyInBox: number): number {
+    return super.getPricePerUnit(cost + profit, qtyInBox);
   }
 
-  getProfit(costProduct: any, profitPercentage: any): number {
-    const profitAmount = costProduct * profitPercentage;
-    return profitAmount;
+  getProfit(cost: number, profitPercentage: number): number {
+    return super.getProfit(cost, profitPercentage);
   }
 
-  getProfitPercentage(costProduct: number, sellingPrice: number): number {
-    const absolutProfit = Math.abs(costProduct - sellingPrice);
-
-    const profitPercentage = absolutProfit / costProduct;
-
-    return costProduct > sellingPrice ? -profitPercentage : profitPercentage;
+  getProfitPercentage(cost: number, sellingPrice: number): number {
+    return super.getProfitPercentage(cost, sellingPrice);
   }
 }

@@ -13,7 +13,9 @@ export class UpdateProductComingIngredientController implements IUpdateProductCo
         for (let { id_product } of allProductIngredientsByName) {
             const product = await this.mySqlGetProductRepository.getProductById(id_product)
 
-            const calculateNumbers = new Calculate(product, ingredientPreviousProduct, currentPrice)
+            const { qtdStock, ...productWithoutQtdStock } = product as any;
+
+            const calculateNumbers = new Calculate(productWithoutQtdStock, ingredientPreviousProduct, currentPrice)
 
             const updatedNumbers = calculateNumbers.updateAllNumbersProductAndIngredients()
 

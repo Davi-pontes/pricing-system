@@ -66,8 +66,6 @@ export class MySqlGetProductRepository implements IGetProductRepository {
 
       return Product[0];
     } catch (error) {
-      console.log(error);
-      
       throw new Error("Not possible get product only.");
     }
   }

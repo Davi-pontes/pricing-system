@@ -1,4 +1,4 @@
-import { PricingService } from "@/service/calculation/pricing";
+import { PricingService } from "@/service/calculation/pricingProductWithoutIngredient";
 import { PricingCalculator } from "@/service/calculation/pricingCalculator";
 
 describe("Calculate product without ingredient", () => {

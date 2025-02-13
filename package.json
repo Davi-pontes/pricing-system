@@ -1,7 +1,7 @@
 {
   "name": "precification-back-end",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.30.0",
+  "main": "./dist/src/app.js",
   "scripts": {
     "test": "tsx ./src/utils/hash.ts",
     "test-jest": "jest",

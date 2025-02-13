@@ -8,9 +8,7 @@ export class ValidateLoginController implements IController {
         try {
             const authorization = httpRequest.cookies.token
 
-            if (!authorization) {
-                return unauthorized()
-            }
+            if (!authorization) return unauthorized()
 
             const validateToken = new ValidateLoginService()
 

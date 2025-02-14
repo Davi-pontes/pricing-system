@@ -5,18 +5,11 @@ describe("Calculate product with ingredient", () => {
   test("Calculate product with ingredient", () => {
     const productIngredientDatas = {
       productInformation: {
-        name: "Brigadeiro",
         income: 1,
         recipe_time: 0,
         profit_percentage: 1,
-        revenue_cost: 0,
-        fixed_cost: 0.1,
         labor: 0,
-        profit: 0,
-        final_recipe_price: 0,
-        price_per_unit: 0,
         operacional_cost: 2.32,
-        id_category: "J27rPfsUv",
         cost_of_all_ingredients: 0,
       },
       productIngredients: [
@@ -39,32 +32,25 @@ describe("Calculate product with ingredient", () => {
       );
     const result = calculateProductIngredientService.calculate();
 
-    expect(result.productInformation.cost_of_all_ingredients).toBeCloseTo(4.43);
-    expect(result.productInformation.fixed_cost).toBeCloseTo(0.102776, 10);
-    expect(result.productInformation.revenue_cost).toBeCloseTo(4.532776, 10);
-    expect(result.productInformation.profit).toBeCloseTo(4.532776, 10);
-    expect(result.productInformation.final_recipe_price).toBeCloseTo(
+    expect(result.cost_of_all_ingredients).toBeCloseTo(4.43);
+    expect(result.fixed_cost).toBeCloseTo(0.102776, 10);
+    expect(result.revenue_cost).toBeCloseTo(4.532776, 10);
+    expect(result.profit).toBeCloseTo(4.532776, 10);
+    expect(result.final_recipe_price).toBeCloseTo(
       9.065552,
       10
     );
-    expect(result.productInformation.price_per_unit).toBeCloseTo(9.065552, 10);
+    expect(result.price_per_unit).toBeCloseTo(9.065552, 10);
   });
 
   test("Calculate product with multiple ingredients", () => {
     const productIngredientDatas = {
       productInformation: {
-        name: "Cake",
         income: 1,
         recipe_time: 0,
         profit_percentage: 1,
-        revenue_cost: 0,
-        fixed_cost: 0,
         labor: 0,
-        profit: 0,
-        final_recipe_price: 0,
-        price_per_unit: 0,
         operacional_cost: 3.5,
-        id_category: "J27rPfsUv",
         cost_of_all_ingredients: 0,
       },
       productIngredients: [
@@ -95,29 +81,22 @@ describe("Calculate product with ingredient", () => {
       );
     const result = calculateProductIngredientService.calculate();
 
-    expect(result.productInformation.cost_of_all_ingredients).toBeCloseTo(3.7);
-    expect(result.productInformation.fixed_cost).toBeCloseTo(0.13);
-    expect(result.productInformation.revenue_cost).toBeCloseTo(3.83);
-    expect(result.productInformation.profit).toBeCloseTo(3.83);
-    expect(result.productInformation.final_recipe_price).toBeCloseTo(7.659000000000001,6);
-    expect(result.productInformation.price_per_unit).toBeCloseTo(7.659000000000001,6);
+    expect(result.cost_of_all_ingredients).toBeCloseTo(3.7);
+    expect(result.fixed_cost).toBeCloseTo(0.13);
+    expect(result.revenue_cost).toBeCloseTo(3.83);
+    expect(result.profit).toBeCloseTo(3.83);
+    expect(result.final_recipe_price).toBeCloseTo(7.659000000000001,6);
+    expect(result.price_per_unit).toBeCloseTo(7.659000000000001,6);
   });
 
   test("Calculate product with zero fixed cost", () => {
     const productIngredientDatas = {
       productInformation: {
-        name: "Juice",
         income: 1,
         recipe_time: 0,
         profit_percentage: 1,
-        revenue_cost: 0,
-        fixed_cost: 0,
         labor: 0,
-        profit: 0,
-        final_recipe_price: 0,
-        price_per_unit: 0,
         operacional_cost: 0,
-        id_category: "J27rPfsUv",
         cost_of_all_ingredients: 0,
       },
       productIngredients: [
@@ -140,29 +119,22 @@ describe("Calculate product with ingredient", () => {
       );
     const result = calculateProductIngredientService.calculate();
 
-    expect(result.productInformation.cost_of_all_ingredients).toBeCloseTo(2);
-    expect(result.productInformation.fixed_cost).toBeCloseTo(0);
-    expect(result.productInformation.revenue_cost).toBeCloseTo(2);
-    expect(result.productInformation.profit).toBeCloseTo(2);
-    expect(result.productInformation.final_recipe_price).toBeCloseTo(4);
-    expect(result.productInformation.price_per_unit).toBeCloseTo(4);
+    expect(result.cost_of_all_ingredients).toBeCloseTo(2);
+    expect(result.fixed_cost).toBeCloseTo(0);
+    expect(result.revenue_cost).toBeCloseTo(2);
+    expect(result.profit).toBeCloseTo(2);
+    expect(result.final_recipe_price).toBeCloseTo(4);
+    expect(result.price_per_unit).toBeCloseTo(4);
   });
 
   test("Calculate product with income greater than 1", () => {
     const productIngredientDatas = {
       productInformation: {
-        name: "Cookies",
         income: 10,
         recipe_time: 0,
         profit_percentage: 1,
-        revenue_cost: 0,
-        fixed_cost: 0,
         labor: 0,
-        profit: 0,
-        final_recipe_price: 0,
-        price_per_unit: 0,
         operacional_cost: 2,
-        id_category: "J27rPfsUv",
         cost_of_all_ingredients: 0,
       },
       productIngredients: [
@@ -185,23 +157,16 @@ describe("Calculate product with ingredient", () => {
       );
     const result = calculateProductIngredientService.calculate();
 
-    expect(result.productInformation.price_per_unit).toBeCloseTo(0.61);
+    expect(result.price_per_unit).toBeCloseTo(0.61);
   });
   test("Calculate product real", () => {
     const productIngredientDatas = {
       productInformation: {
-        name: "pudding",
         income: 2,
         recipe_time: 90,
         profit_percentage: 1,
-        revenue_cost: 0,
-        fixed_cost: 0,
         labor: 0,
-        profit: 1,
-        final_recipe_price: 0,
-        price_per_unit: 0,
         operacional_cost: 15,
-        id_category: "J27rPfsUv",
         cost_of_all_ingredients: 0,
       },
       productIngredients: [
@@ -272,11 +237,11 @@ describe("Calculate product with ingredient", () => {
       );
     const result = calculateProductIngredientService.calculate();
 
-    expect(result.productInformation.cost_of_all_ingredients).toBeCloseTo(30.41,5);
-    expect(result.productInformation.fixed_cost).toBeCloseTo(4.56);
-    expect(result.productInformation.revenue_cost).toBeCloseTo(34.9715,5);
-    expect(result.productInformation.profit).toBeCloseTo(34.9715,5);
-    expect(result.productInformation.final_recipe_price).toBeCloseTo(69.943,5);
-    expect(result.productInformation.price_per_unit).toBeCloseTo(34.9715,5);
+    expect(result.cost_of_all_ingredients).toBeCloseTo(30.41,5);
+    expect(result.fixed_cost).toBeCloseTo(4.56);
+    expect(result.revenue_cost).toBeCloseTo(34.9715,5);
+    expect(result.profit).toBeCloseTo(34.9715,5);
+    expect(result.final_recipe_price).toBeCloseTo(69.943,5);
+    expect(result.price_per_unit).toBeCloseTo(34.9715,5);
   });
 });

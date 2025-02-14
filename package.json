@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsx ./src/utils/hash.ts",
-    "test-jest": "jest",
+    "test": "jest --verbose",
+    "test-local": "tsx ./src/utils/hash.ts",
     "dev": "tsx watch ./src/server.ts",
     "build": "tsup src",
     "start": "node ./dist/server.js",

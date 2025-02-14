@@ -1,10 +1,17 @@
 import { IPricingProductWithIngredientCalculator } from "@/interfaces/calculate";
 import { BaseCalculator } from "./baseCalculator";
+import { ICreateProductIngredientParams } from "@/interfaces/productIngredients";
 
-export class PricingProductWithIngredientCalculator extends BaseCalculator implements IPricingProductWithIngredientCalculator {
-  getTotalCostAllIngredients(data: any): number {
+export class PricingProductWithIngredientCalculator
+  extends BaseCalculator
+  implements IPricingProductWithIngredientCalculator
+{
+  getTotalCostAllIngredients(
+    data: Array<ICreateProductIngredientParams>
+  ): number {
     return data.reduce(
-      (acc: number, data: any) => acc + data.ingredient_cost,
+      (acc: number, data: ICreateProductIngredientParams) =>
+        acc + data.ingredient_cost,
       0
     );
   }
@@ -17,12 +24,15 @@ export class PricingProductWithIngredientCalculator extends BaseCalculator imple
     return super.getPricePerUnit(cost, qtyInBox);
   }
 
-  getPricePerUnitWithProfit(
-    cost: number,
-    profit: number,
-    qtyInBox: number
+  getRevenueCost(
+    costAllIngredient: number,
+    fixedCost: number,
   ): number {
-    return super.getPricePerUnit(cost + profit, qtyInBox);
+    return costAllIngredient + fixedCost;
+  }
+
+  getFinalRevenuePrice(profit: number, revenueCost: number): number {
+    return profit + revenueCost
   }
 
   getProfit(cost: number, profitPercentage: number): number {

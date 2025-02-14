@@ -25,6 +25,9 @@ export class CreateProductController implements IController {
       }
       const dataProduct = httpRequest.body;
 
+      console.log(dataProduct);
+      
+
       const validatePropsProduct = await VProduct.ValidatePropsProduct(
         dataProduct.productInformation
       );

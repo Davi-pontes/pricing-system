@@ -19,7 +19,7 @@ export interface ICreateProductIngredientParams{
     price: number
     ingredient_cost: number
     quantity: number
-    id_product: string
+    id_product?: string
     quantity_in_stock?: number
     total_cash_in_stock?: number
 }

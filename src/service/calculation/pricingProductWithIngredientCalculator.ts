@@ -4,9 +4,8 @@ import { ICreateProductIngredientParams } from "@/interfaces/productIngredients"
 
 export class PricingProductWithIngredientCalculator
   extends BaseCalculator
-  implements IPricingProductWithIngredientCalculator
 {
-  getTotalCostAllIngredients(
+  protected getTotalCostAllIngredients(
     data: Array<ICreateProductIngredientParams>
   ): number {
     return data.reduce(
@@ -16,30 +15,30 @@ export class PricingProductWithIngredientCalculator
     );
   }
 
-  getCostFixed(costAllIngredient: number, operationalCost: number) {
+  protected getCostFixed(costAllIngredient: number, operationalCost: number) {
     return (costAllIngredient * operationalCost) / 100;
   }
 
-  getPricePerUnit(cost: number, qtyInBox: number): number {
+  protected getPricePerUnit(cost: number, qtyInBox: number): number {
     return super.getPricePerUnit(cost, qtyInBox);
   }
 
-  getRevenueCost(
+  protected getRevenueCost(
     costAllIngredient: number,
     fixedCost: number,
   ): number {
     return costAllIngredient + fixedCost;
   }
 
-  getFinalRevenuePrice(profit: number, revenueCost: number): number {
+  protected getFinalRevenuePrice(profit: number, revenueCost: number): number {
     return profit + revenueCost
   }
 
-  getProfit(cost: number, profitPercentage: number): number {
+  protected getProfit(cost: number, profitPercentage: number): number {
     return super.getProfit(cost, profitPercentage);
   }
 
-  getProfitPercentage(cost: number, sellingPrice: number): number {
+  protected getProfitPercentage(cost: number, sellingPrice: number): number {
     return super.getProfitPercentage(cost, sellingPrice);
   }
 }

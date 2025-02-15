@@ -1,6 +1,6 @@
 import { IProduct } from "@/interfaces/product";
 import { IProductIngredient } from "@/interfaces/productIngredients";
-import { Calculate } from "./calculate";
+import { Calculate } from "../service/calculation/calculateUpdateProduct";
 
 export class CalculateOnlyProduct extends Calculate {
   constructor(datasProduct: IProduct, currentPrice: number) {

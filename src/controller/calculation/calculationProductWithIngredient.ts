@@ -15,7 +15,7 @@ export class CalculationDataProductWitIngredientController
     httpRequest: HttpRequest<unknown>
   ): Promise<HttpResponse<unknown>> {
     try {
-      if (!httpRequest.body) return badRequest("Nenhuma dado fornecido.");
+      if (!httpRequest.body) return badRequest("Nenhum dado fornecido.");
 
       const datasToBasesCalculation = httpRequest.body;
 

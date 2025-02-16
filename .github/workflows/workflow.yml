@@ -22,7 +22,11 @@ jobs:
         run: |
           npm install
           npm run build
-
+          
+      - name: Test aplication
+        run: |
+          npm test
+          
       - name: Get version the package.json
         id: package_version
         run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV

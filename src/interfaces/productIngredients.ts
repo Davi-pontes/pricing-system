@@ -5,12 +5,12 @@ export interface IProductIngredient{
     unit1: string
     price: number
     quantity: number
-    unit2: string
+    unit2?: string
     ingredient_cost: number
     id_product: string
     quantity_in_stock: number
     total_cash_in_stock: number
-    updated_at: string
+    updated_at?: string
 }
 export interface ICreateProductIngredientParams{
     name: string
@@ -19,7 +19,7 @@ export interface ICreateProductIngredientParams{
     price: number
     ingredient_cost: number
     quantity: number
-    id_product: string
+    id_product?: string
     quantity_in_stock?: number
     total_cash_in_stock?: number
 }

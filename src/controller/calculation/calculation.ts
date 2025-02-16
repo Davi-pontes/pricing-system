@@ -3,7 +3,7 @@ import { badRequest, ok, serverError } from "@/helper/helper";
 import { IBasesCalculation } from "@/interfaces/calculate";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
-import { PricingService } from "@/service/calculation/pricing";
+import { PricingService } from "@/service/calculation/pricingProductWithoutIngredient";
 import { PricingCalculator } from "@/service/calculation/pricingCalculator";
 
 export class CalculationDataProductWithouIngredientController

@@ -1,31 +1,54 @@
-import { IGetProductRepository, IUpdateProductComingIngredient, IUpdateProductComingIngredientController } from "@/interfaces/product";
+import {
+  IGetProductRepository,
+  IProduct,
+  IUpdateProductComingIngredient,
+  IUpdateProductComingIngredientController,
+} from "@/interfaces/product";
 import { IProductIngredient } from "@/interfaces/productIngredients";
 import { MySqlUpdateProductRepository } from "@/repository/product/update-product";
-import { Calculate } from "@/utils/calculate";
+import { CalculatedUpdate } from "@/service/calculation/calculateUpdateProduct";
 
 export class UpdateProductComingIngredientController implements IUpdateProductComingIngredientController {
-    constructor(private readonly mySqlGetProductRepository: IGetProductRepository) { }
+  constructor(
+    private readonly mySqlGetProductRepository: IGetProductRepository
+  ) {}
 
-    async updateProduct(allProductIngredientsByName: Array<IProductIngredient>, ingredientPreviousProduct: IProductIngredient, currentPrice: number): Promise<any> {
-        let quantityOfProductsChanged = 0
-        let updatedIngredientCost
-        
-        for (let { id_product } of allProductIngredientsByName) {
-            const product = await this.mySqlGetProductRepository.getProductById(id_product)
+  async updateProduct(
+    allProductIngredientsByName: Array<IProductIngredient>,
+    ingredientPreviousProduct: IProductIngredient,
+    currentPrice: number
+  ): Promise<any> {
+    let quantityOfProductsChanged = 0;
+    let productUpdated: Array<IProduct> = [];
 
-            const calculateNumbers = new Calculate(product, ingredientPreviousProduct, currentPrice)
+    for (let { id_product } of allProductIngredientsByName) {
+      //Get product by id
+      const product = await this.mySqlGetProductRepository.getProductById(
+        id_product
+      );
+      //Remove qtdStock
+      let { qtdStock, ...productWithoutQtdStock } = product as any;
+      
+      //Update precification the product
+      productWithoutQtdStock.cost_of_all_ingredients =
+        productWithoutQtdStock.cost_of_all_ingredients -
+        ingredientPreviousProduct.ingredient_cost +
+        currentPrice;
 
-            const updatedNumbers = calculateNumbers.updateAllNumbersProductAndIngredients()
+      const calculateNumbers = new CalculatedUpdate(productWithoutQtdStock);
 
-            updatedIngredientCost = updatedNumbers.updatedIngredientCost
+      const updatedNumbers = calculateNumbers.updateNumberProduct();
 
-            const updateProductRepository = new MySqlUpdateProductRepository()
+      const updateProductRepository = new MySqlUpdateProductRepository();
 
-            await updateProductRepository.updateProduct(updatedNumbers.datasProduct.id_product, updatedNumbers.datasProduct)
+      await updateProductRepository.updateProduct(
+        updatedNumbers.id_product,
+        updatedNumbers
+      );
 
-            quantityOfProductsChanged++
-        }
-        return {quantityOfProductsChanged,updatedIngredientCost}
+      quantityOfProductsChanged++;
+      productUpdated.push(productWithoutQtdStock);
     }
-
+    return { quantityOfProductsChanged, productUpdated };
+  }
 }

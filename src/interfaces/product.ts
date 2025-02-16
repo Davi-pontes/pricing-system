@@ -57,6 +57,7 @@ export interface ICreateProductParams {
     revenue_cost: number
     labor: number
     profit: number
+    operacional_cost: number
     final_recipe_price: number
     cost_of_all_ingredients: number
     price_per_unit: number

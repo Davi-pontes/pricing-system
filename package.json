@@ -1,6 +1,6 @@
 {
   "name": "precification-back-end",
-  "version": "1.34.0",
+  "version": "1.34.1",
   "main": "./dist/src/app.js",
   "scripts": {
     "test": "jest --verbose",

@@ -28,8 +28,8 @@ export class UpdateProductComingIngredientController implements IUpdateProductCo
       );
       //Remove qtdStock
       let { qtdStock, ...productWithoutQtdStock } = product as any;
+      
       //Update precification the product
-
       productWithoutQtdStock.cost_of_all_ingredients =
         productWithoutQtdStock.cost_of_all_ingredients -
         ingredientPreviousProduct.ingredient_cost +

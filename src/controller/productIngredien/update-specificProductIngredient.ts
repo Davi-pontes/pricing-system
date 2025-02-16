@@ -13,7 +13,7 @@ import { CalculatorCostOfAnIngredient } from "@/service/calculation/ingredientUs
 export class UpdateSpecificProductIngredientController implements IController {
   constructor(
     private readonly mySqlUpdateSpecificProducIngredientRepository: MySqlUpdateSpecificProductIngredientRepository
-  ) {}
+  ) { }
 
   async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
     try {
@@ -23,7 +23,7 @@ export class UpdateSpecificProductIngredientController implements IController {
 
       const mySqlGetIngredientByNameRepository =
         new MySqlGetIngredientByNameRepository();
-      // Get all products that have the ingredient
+      // Get all products and ingredient that have the ingredient
       const ingredientsInDataBaseByName =
         await mySqlGetIngredientByNameRepository.getIngredientByName(
           changeInformation.name,
@@ -32,27 +32,28 @@ export class UpdateSpecificProductIngredientController implements IController {
 
       if (ingredientsInDataBaseByName.length === 0)
         return badRequest("Not possible updated product ingredient");
-
-      const getProductRepository = new MySqlGetProductRepository();
-
-      const updateProductsThatTheIngredientBelongsTo =
-        new UpdateProductComingIngredientController(getProductRepository);
-      // Update pricing the product
-      const updatedNumbersIngredient =
-        await updateProductsThatTheIngredientBelongsTo.updateProduct(
-          ingredientsInDataBaseByName,
-          ingredientsInDataBaseByName[0],
-          changeInformation.price
-        );
-
-      if (!updatedNumbersIngredient)
-        return badRequest("Not possible updated product ingredient");
-
-      const updateDateAndTime = GetDateAndHoursCurrent.dateTime();
-
+      let updatedNumbersIngredient
       for (let ingredient of ingredientsInDataBaseByName) {
-        ingredient.ingredient_cost =
-          CalculatorCostOfAnIngredient.calculate(ingredient);
+        const ingredientWithUpdatedPrice = {...ingredient, price: changeInformation.price}
+        const updatedCost =
+          CalculatorCostOfAnIngredient.calculate(ingredientWithUpdatedPrice);
+
+        const getProductRepository = new MySqlGetProductRepository();
+
+        const updateProductsThatTheIngredientBelongsTo = new UpdateProductComingIngredientController(getProductRepository);
+        // Update pricing the product
+        updatedNumbersIngredient =
+          await updateProductsThatTheIngredientBelongsTo.updateProduct(
+            ingredientsInDataBaseByName,
+            ingredient,
+            updatedCost
+          );
+
+        if (!updatedNumbersIngredient)
+          return badRequest("Not possible updated product ingredient");
+
+        const updateDateAndTime = GetDateAndHoursCurrent.dateTime();
+
         ingredient.price = changeInformation.price;
         ingredient.updated_at = updateDateAndTime;
         const updateSpecificProductIngredient =

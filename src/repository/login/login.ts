@@ -9,7 +9,7 @@ export class MySqlLoginRepository implements IGetLoginRepository {
   async getLogin(params: ILogin): Promise<ILoginAuthorized> {
     try {
       const login = await connection
-        .select("id", "name","first_access")
+        .select("id", "name","first_access","active")
         .table("users")
         .where({ email: params.email })
         .andWhere({ password: params.password });

@@ -9,6 +9,7 @@ export interface ILoginAuthorized {
     id: string
     name: string
     first_access: Date
+    active: number
 }
 
 export interface IGetLoginRepository {

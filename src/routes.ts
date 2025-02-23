@@ -12,12 +12,14 @@ import { UploadXlsx } from "./routes/upload-xlsx.routes";
 import { CreateUserController } from "./controller/user/create-user";
 import { CalculateRoutes } from "./routes/calculation.routes";
 import { SignUpRoutes } from "./routes/signUp.routes";
+import { DashboardRoutes } from "./routes/dashboard.routes";
 
 const routes = Router()
 
 routes.get("/",(req,res)=> {res.json({message: "hello"})})
 
 routes.use('/sign-up', SignUpRoutes)
+routes.use('/dashboard', DashboardRoutes)
 routes.use('/product', ProductRoutes)
 routes.use('/product/ingredient', ProductIngredientRoutes)
 routes.use('/category', CategoryRoutes)

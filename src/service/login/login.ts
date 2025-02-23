@@ -37,6 +37,7 @@ export class LoginService implements ILoginService {
       const datasUser = {
         user: {
           id: getLogin.id,
+          email: getLogin.email,
           name: getLogin.name,
           firstAccess: firstAccess,
         },

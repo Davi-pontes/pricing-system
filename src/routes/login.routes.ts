@@ -7,6 +7,14 @@ const routes = Router();
 routes.post("/", async (req, res) => {
     const loginController = new LoginController()
 
+    const userAgent = req.headers["user-agent"];
+
+    const mobileRegex = /mobile|android|iphone|ipad|phone/i;
+
+    if (userAgent && mobileRegex.test(userAgent)) {
+        return res.status(403).send({ message: "Infelizmente no momento não é possivel acessar nosso sistema pelo celular." });
+    }
+
     const { body, statusCode } = await loginController.handle({
         body: req.body
     })

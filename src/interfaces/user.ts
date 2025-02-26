@@ -59,6 +59,8 @@ export interface IUpdateUserRepository {
   ): Promise<number>;
   updateFirstAccessUser(idUSer: string): Promise<number>
   updateLastAccessUser(idUSer: string): Promise<number>
+  updateDeactivateUser(idUSer: string): Promise<number>
+  updateActivateUser(idUSer: string): Promise<number>
 }
 export interface IUpdateUserService {
   updateUser(
@@ -67,10 +69,6 @@ export interface IUpdateUserService {
   ): Promise<IUser>;
   updateFirstAccessUser(idUSer: string): Promise<number>
   updateLastAccessUser(idUSer: string): Promise<number>
-}
-export interface IDeactivateService{
-  
-}
-export interface IDeactivateRepository{
-
+  updateDeactivateUser(idUSer: string): Promise<number>
+  updateActivateUser(idUSer: string): Promise<number>
 }

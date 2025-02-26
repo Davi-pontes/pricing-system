@@ -37,4 +37,38 @@ export class UpdateUserController implements IController {
       }
     }
   }
+  async deactivateUser(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>>{
+    try {
+      if (!httpRequest.params) return badRequest("Specify user id.");
+
+      const idUser = httpRequest.params.idUser;
+
+      const updateUserRepository = new MySqlUpdateUserRepository();
+
+      const updateUserService = new UpdateUserService(updateUserRepository);
+
+      await updateUserService.updateDeactivateUser(idUser)
+
+      return ok<number>("Usuario desativado com sucesso!")
+    } catch (error) {
+      return serverError()
+    }
+  }
+  async activateUser(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>>{
+    try {
+      if (!httpRequest.params) return badRequest("Specify user id.");
+
+      const idUser = httpRequest.params.idUser;
+
+      const updateUserRepository = new MySqlUpdateUserRepository();
+
+      const updateUserService = new UpdateUserService(updateUserRepository);
+
+      await updateUserService.updateActivateUser(idUser)
+
+      return ok<number>("Usuario ativado com sucesso!")
+    } catch (error) {
+      return serverError()
+    }
+  }
 }

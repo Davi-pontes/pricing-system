@@ -37,34 +37,34 @@ export class UpdateUserController implements IController {
       }
     }
   }
-  async deactivateUser(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>>{
+  async deactivateUser(httpRequest: HttpRequest<any>): Promise<HttpResponse<unknown>>{
     try {
-      if (!httpRequest.params) return badRequest("Specify user id.");
+      if (!httpRequest.body) return badRequest("Specify a body.");
 
-      const idUser = httpRequest.params.idUser;
+      const informationUser = httpRequest.body;
 
       const updateUserRepository = new MySqlUpdateUserRepository();
 
       const updateUserService = new UpdateUserService(updateUserRepository);
 
-      await updateUserService.updateDeactivateUser(idUser)
+      await updateUserService.updateDeactivateUser(informationUser.idUser)
 
       return ok<number>("Usuario desativado com sucesso!")
     } catch (error) {
       return serverError()
     }
   }
-  async activateUser(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>>{
+  async activateUser(httpRequest: HttpRequest<any>): Promise<HttpResponse<unknown>>{
     try {
-      if (!httpRequest.params) return badRequest("Specify user id.");
+      if (!httpRequest.body) return badRequest("Specify a body.");
 
-      const idUser = httpRequest.params.idUser;
+      const informationUser = httpRequest.body;
 
       const updateUserRepository = new MySqlUpdateUserRepository();
 
       const updateUserService = new UpdateUserService(updateUserRepository);
 
-      await updateUserService.updateActivateUser(idUser)
+      await updateUserService.updateActivateUser(informationUser.idUser)
 
       return ok<number>("Usuario ativado com sucesso!")
     } catch (error) {

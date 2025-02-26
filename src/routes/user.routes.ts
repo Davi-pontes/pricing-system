@@ -40,7 +40,7 @@ routes.patch("/disable", async (req, res) => {
   const updateUserController = new UpdateUserController();
 
   const { body, statusCode } = await updateUserController.deactivateUser({
-    params: req.query,
+    body: req.body,
   });
   
   res.status(statusCode).send(body);
@@ -49,7 +49,7 @@ routes.patch("/activate", async (req, res) => {
   const updateUserController = new UpdateUserController();
 
   const { body, statusCode } = await updateUserController.activateUser({
-    params: req.query,
+    body: req.body,
   });
 
   res.status(statusCode).send(body);

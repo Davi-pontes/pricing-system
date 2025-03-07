@@ -9,6 +9,7 @@ export interface ILoginAuthorized {
     id: string
     name: string
     email: string
+    is_admin: number
     first_access: Date
     active: number
 }

@@ -38,6 +38,7 @@ export class LoginService implements ILoginService {
         user: {
           id: getLogin.id,
           email: getLogin.email,
+          isAdmin: getLogin.is_admin,
           name: getLogin.name,
           firstAccess: firstAccess,
         },

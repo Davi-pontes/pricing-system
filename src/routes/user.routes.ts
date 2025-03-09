@@ -9,13 +9,6 @@ const authMidlleware = new AuthMidlleware();
 
 routes.use(authMidlleware.validateToken);
 
-routes.get("/", async (req, res) => {
-  const getUserController = new GetUserController();
-
-  const { body, statusCode } = await getUserController.handle();
-
-  res.status(statusCode).send(body);
-});
 routes.get("/:id", async (req, res) => {
   const getUserController = new GetUserController();
 

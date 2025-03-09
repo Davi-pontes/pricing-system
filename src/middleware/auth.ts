@@ -14,5 +14,16 @@ export class AuthMidlleware {
             res.status(statusCode).send(body)
         }
     }
+    async validateUserIsAdmin(req: Request, res: Response, next: NextFunction): Promise<any> {
+        const authController = new AuthController()
+        
+        const { body, statusCode } = await authController.userIsAdmin(req)
+        
+        if (statusCode === 200) {
+            next()
+        } else {
+            res.status(statusCode).send(body)
+        }
+    }
 
 }

@@ -9,8 +9,10 @@ export class MySqlGetUserRepository implements IGetUserRepository {
         .from("users as u")
         .leftJoin("category as c", "u.id", "c.user_id")
         .leftJoin("product as p", "c.id", "p.id_category")
-        .groupBy("u.id");
-
+        .groupBy("u.id")
+        .orderBy("u.name", "asc")
+        .orderBy("u.active", "asc");
+        
       return user;
     } catch (error) {
       throw new Error("Not possible get user.");

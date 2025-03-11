@@ -72,4 +72,22 @@ export class UpdateUserService implements IUpdateUserService {
       throw new Error("Not possible update user.");
     }
   }
+  async updateDeactivateUser(idUSer: string): Promise<number>{
+    try {
+      const userDisabled = await this.mySqlUpdateUserRepository.updateDeactivateUser(idUSer)
+
+      return userDisabled
+    } catch (error) {
+      throw new Error("Not possible update user.");
+    }
+  }
+  async updateActivateUser(idUSer: string): Promise<number>{
+    try {
+      const userActivated = await this.mySqlUpdateUserRepository.updateActivateUser(idUSer)
+
+      return userActivated
+    } catch (error) {
+      throw new Error("Not possible update user.");
+    }
+  }
 }

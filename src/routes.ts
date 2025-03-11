@@ -13,12 +13,14 @@ import { CreateUserController } from "./controller/user/create-user";
 import { CalculateRoutes } from "./routes/calculation.routes";
 import { SignUpRoutes } from "./routes/signUp.routes";
 import { DashboardRoutes } from "./routes/dashboard.routes";
+import { AdminUserRoutes } from "./routes/admin/admin.user.routes";
 
 const routes = Router()
 
 routes.get("/",(req,res)=> {res.json({message: "hello"})})
 
 routes.use('/sign-up', SignUpRoutes)
+routes.use('/admin/user', AdminUserRoutes)
 routes.use('/dashboard', DashboardRoutes)
 routes.use('/product', ProductRoutes)
 routes.use('/product/ingredient', ProductIngredientRoutes)

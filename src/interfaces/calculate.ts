@@ -1,5 +1,5 @@
 import { ZodError } from "zod";
-import { ICreateProductParams } from "./product";
+import { ICreateProductParams, IProduct } from "./product";
 import { ICreateProductIngredientParams } from "./productIngredients";
 
 export interface IBasesCalculation {
@@ -58,6 +58,9 @@ export interface IPricingProductWithIngredientCalculator {
   getFinalRevenuePrice(profit: number, revenueCost: number): number;
   getProfit(cost: number, profitPercentage: number): number;
   getProfitPercentage(cost: number, sellingPrice: number): number;
+}
+export interface IGrossProfitMarginCalculator {
+  grossProfitMargin(calculationBasis: IProduct): any
 }
 
 export type ValidationResult<T> =

@@ -14,6 +14,8 @@ export class MySqlCreateProductRepository implements ICreateProductRepository {
             return product[0]
 
         } catch (error) {
+            console.log(error);
+            
             throw new Error("Product not created")
         }
 

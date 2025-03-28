@@ -15,7 +15,7 @@ export class VProduct {
         .string({ message: "Nome do produto é obrigatório." })
         .max(150, { message: "O máximo de caracteres para o produto é 150." }),
       income: z.number({ message: "Rendimento é obrigatório." }).min(1,{message: "O minimo para o rendimeto é 1."}),
-      description: z.string().max(150,{message: 'Descrição muito longa.'}).optional(),
+      description: z.string().max(150,{message: 'Descrição muito longa.'}).optional().nullable(),
       recipe_time: z.number({ message: "Tempo de receita é obrigatório." }),
       profit_percentage: z.number({
         message: "Porcentagem de lucro é obrigatório.",

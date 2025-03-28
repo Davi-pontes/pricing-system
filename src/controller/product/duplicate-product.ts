@@ -14,7 +14,7 @@ export class DuplicateProductController implements IController {
     async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<any>> {
         try {
 
-            const idProduct = httpRequest.body.idProduct
+            const idProduct = httpRequest.params.id
 
             const productToDuplicate = await this.assembleProduct(idProduct)
 

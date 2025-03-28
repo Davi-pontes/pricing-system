@@ -57,6 +57,7 @@ export class MySqlGetProductRepository implements IGetProductRepository {
           "p.tax",
           "p.description",
           "p.qtd_box",
+          "p.only",
           "s.quantity as qtdStock"
         )
         .from("product as p")

@@ -25,9 +25,6 @@ export class CreateProductController implements IController {
       }
       const dataProduct = httpRequest.body;
 
-      console.log(dataProduct);
-      
-
       const validatePropsProduct = await VProduct.ValidatePropsProduct(
         dataProduct.productInformation
       );
@@ -41,33 +38,39 @@ export class CreateProductController implements IController {
 
       dataProduct.productInformation.id_product = idProduct;
 
+      if (dataProduct.productInformation.qtdStock)
+        delete dataProduct.productInformation.qtdStock;
+      if (dataProduct.productInformation.name_category)
+        delete dataProduct.productInformation.name_category;
+
       const product = await this.createProductRepository.createProduct(
         dataProduct.productInformation
       );
+      if (!dataProduct.productInformation.only) {
+        const createProductIngredientRepository =
+          new MySqlCreateProductIngredientRepository();
 
-      const createProductIngredientRepository =
-        new MySqlCreateProductIngredientRepository();
+        const createProductIngredientController =
+          new CreateProductIngredientController(
+            createProductIngredientRepository
+          );
 
-      const createProductIngredientController =
-        new CreateProductIngredientController(
-          createProductIngredientRepository
+        const dataToCreateProductIngredient =
+          dataProduct.productIngredients as ICreateProductIngredientParams[];
+
+        const addIngredientProductId = dataToCreateProductIngredient.map(
+          (param) => ({ ...param, id_product: idProduct })
         );
 
-      const dataToCreateProductIngredient =
-        dataProduct.productIngredients as ICreateProductIngredientParams[];
+        await createProductIngredientController.handle(addIngredientProductId);
 
-      const addIngredientProductId = dataToCreateProductIngredient.map(
-        (param) => ({ ...param, id_product: idProduct })
-      );
+        const createStockRepository = new MySqlCreateStockRepository();
 
-      await createProductIngredientController.handle(addIngredientProductId);
-
-      const createStockRepository = new MySqlCreateStockRepository();
-
-      await createStockRepository.createSctock({
-        quantity: 0,
-        id_product: idProduct,
-      });
+        await createStockRepository.createSctock({
+          quantity: 0,
+          id_product: idProduct,
+        });
+      }
 
       return created<IProduct>(product);
     } catch (error: unknown) {

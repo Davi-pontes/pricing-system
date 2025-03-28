@@ -77,7 +77,7 @@ routes.post("/duplicate", async (req, res) => {
   const duplicateProduct = new DuplicateProductController();
 
   const { body, statusCode } = await duplicateProduct.handle({
-    params: req.query,
+    body: req.body,
   });
 
   res.status(statusCode).send(body);

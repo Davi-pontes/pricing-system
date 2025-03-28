@@ -58,9 +58,11 @@ export class MySqlGetProductRepository implements IGetProductRepository {
           "p.description",
           "p.qtd_box",
           "p.only",
+          "c.name as name_category",
           "s.quantity as qtdStock"
         )
-        .from("product as p")
+        .from("category as c")
+        .innerJoin("product as p", "c.id", "p.id_category")
         .leftJoin("stock as s", "p.id_product", "s.id_product")
         .where("p.id_product", id_product);
 

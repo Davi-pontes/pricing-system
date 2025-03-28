@@ -38,7 +38,10 @@ export class CreateProductController implements IController {
 
       dataProduct.productInformation.id_product = idProduct;
 
-      delete dataProduct.productInformation.qtdStock;
+      if (dataProduct.productInformation.qtdStock)
+        delete dataProduct.productInformation.qtdStock;
+      if (dataProduct.productInformation.name_category)
+        delete dataProduct.productInformation.name_category;
 
       const product = await this.createProductRepository.createProduct(
         dataProduct.productInformation

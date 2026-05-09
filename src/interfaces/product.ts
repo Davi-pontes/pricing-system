@@ -22,6 +22,7 @@ export interface IProduct {
     freight: number 
     workforce: number 
     qtd_box: number
+    name_category: string
     only: boolean
 }
 export interface ISingleProduct{

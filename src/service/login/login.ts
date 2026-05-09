@@ -9,7 +9,7 @@ import { UnauthorizedError } from "./errors/unuathorizedUserError";
 export class LoginService implements ILoginService {
   constructor(
     private readonly getLoginRepository: IGetLoginRepository,
-    private readonly updateUserService: UpdateUserService
+    private readonly updateUserService: UpdateUserService,
   ) {}
 
   async loginService(dataForLogin: ILogin): Promise<any> {
@@ -21,8 +21,8 @@ export class LoginService implements ILoginService {
       if (!getLogin) {
         throw new ValidationError("Login ou senha incorreto.");
       }
-      if(getLogin && getLogin.active === 0){
-        throw new UnauthorizedError('Unauthorized user.')
+      if (getLogin && getLogin.active === 0) {
+        throw new UnauthorizedError("Unauthorized user.");
       }
       const token = Auth.create(getLogin);
 
@@ -41,14 +41,18 @@ export class LoginService implements ILoginService {
           isAdmin: getLogin.is_admin,
           name: getLogin.name,
           firstAccess: firstAccess,
+          active: getLogin.active,
+          phoneNumber: getLogin.phone_number,
         },
         token: token,
       };
       return datasUser;
-    } catch (error:unknown) {
-      if(error instanceof UnauthorizedError){
-        throw new UnauthorizedError('Unauthorized user.')
-      }else{
+    } catch (error: unknown) {
+      if (error instanceof UnauthorizedError) {
+        throw new UnauthorizedError("Unauthorized user.");
+      } else if (error instanceof ValidationError) {
+        throw new ValidationError("Login ou senha incorreto.");
+      } else {
         throw new Error("Method not implemented.");
       }
     }

@@ -21,6 +21,7 @@ export class MySqlGetProductRepository implements IGetProductRepository {
           "p.cost_of_all_ingredients",
           "p.is_joker",
           "p.id_category",
+          "c.name as name_category",
           "p.only"
         )
         .from("category as c")

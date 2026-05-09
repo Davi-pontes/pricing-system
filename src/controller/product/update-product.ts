@@ -24,7 +24,7 @@ export class UpdateProductAndProductIngredientController
 
       const productInformation = httpRequest.body.productInformation;
 
-      const productIngredient = httpRequest.body.productIngredients;
+      const productIngredient = httpRequest.body.productIngredient;
 
       const productUpdate =
         await this.mySqlUpdateProductRepository.updateProduct(

@@ -1,4 +1,11 @@
-import { badRequest, forbidden, ok, serverError, unauthorized } from "@/helper/helper";
+import { ValidationError } from "@/global/errors/validationError";
+import {
+  badRequest,
+  forbidden,
+  ok,
+  serverError,
+  unauthorized,
+} from "@/helper/helper";
 import { IController } from "@/interfaces/global";
 import { HttpRequest, HttpResponse } from "@/interfaces/http";
 import { ILogin } from "@/interfaces/login";
@@ -18,21 +25,23 @@ export class LoginController implements IController {
       const mySqlUpdateUserRepository = new MySqlUpdateUserRepository();
 
       const updateUserService = new UpdateUserService(
-        mySqlUpdateUserRepository
+        mySqlUpdateUserRepository,
       );
 
       const loginController = new LoginService(
         mysqlLoginRepository,
-        updateUserService
+        updateUserService,
       );
 
       const datasUser = await loginController.loginService(httpRequest.body);
 
       return ok<ILogin>(datasUser);
-    } catch (error:unknown) {
-      if(error instanceof UnauthorizedError){
-        return forbidden('Seu usuario está desativado.')
-      }else{
+    } catch (error: unknown) {
+      if (error instanceof UnauthorizedError) {
+        return forbidden("Seu usuario está desativado.");
+      } else if (error instanceof ValidationError) {
+        return unauthorized();
+      } else {
         return serverError();
       }
     }

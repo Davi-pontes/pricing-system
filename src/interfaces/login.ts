@@ -12,6 +12,7 @@ export interface ILoginAuthorized {
     is_admin: number
     first_access: Date
     active: number
+    phone_number: string
 }
 
 export interface IGetLoginRepository {
